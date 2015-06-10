@@ -1,6 +1,9 @@
 package cdio3.gwt.client.service;
 
 import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.ProduktBatchDTO;
+import cdio3.gwt.client.model.ProduktBatchKompDTO;
+import cdio3.gwt.client.model.RaavareBatchDTO;
 import cdio3.gwt.client.model.RaavareDTO;
 import cdio3.gwt.client.model.ReceptDTO;
 
@@ -28,5 +31,17 @@ public interface DBServiceAsync {
 	void getReceptList(AsyncCallback callback);
 	@SuppressWarnings("rawtypes")
 	void createRecept(ReceptDTO rec,AsyncCallback callback);
+	@SuppressWarnings("rawtypes")
+	void getRaavareBatchList(AsyncCallback callback);
+	@SuppressWarnings("rawtypes")
+	void createRaavareBatch(RaavareBatchDTO rec,AsyncCallback callback);
+	@SuppressWarnings("rawtypes")
+	void getProduktBatchList(AsyncCallback callback);
+	@SuppressWarnings("rawtypes")
+	void createProduktBatch(ProduktBatchDTO rec,AsyncCallback callback);
+	@SuppressWarnings("rawtypes")
+	void getProduktBatchKomponentList(AsyncCallback callback);
+	@SuppressWarnings("rawtypes")
+	void createProduktBatchKomponent(ProduktBatchKompDTO rec,AsyncCallback callback);
 	
 }

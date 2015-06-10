@@ -8,6 +8,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import cdio3.gwt.server.Connector;
 import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.ProduktBatchDTO;
+import cdio3.gwt.client.model.ProduktBatchKompDTO;
+import cdio3.gwt.client.model.RaavareBatchDTO;
 import cdio3.gwt.client.model.RaavareDTO;
 import cdio3.gwt.client.model.ReceptDTO;
 import cdio3.gwt.client.service.DBService;
@@ -337,5 +340,158 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 			e.printStackTrace();
 		}
 		return rec;
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public ArrayList<RaavareBatchDTO> getRaavareBatchList() {
+		ResultSet rs = null;
+		RaavareBatchDTO rb = null;
+		ArrayList<RaavareBatchDTO> rbList = new ArrayList<RaavareBatchDTO>();
+		Connector conn = null;
+		
+		try {
+			conn = new Connector();
+			rs = conn.doQuery("SELECT * FROM raavarebatch");
+		}catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			if(!rs.first()) return null;
+			while(rs.next()){
+				rb = new RaavareBatchDTO();
+				rb.setRbId(rs.getInt("rb_id"));
+				rb.setRaavareId(rs.getInt("raavare_id"));
+				rb.setMaengde(rs.getInt("maengde"));
+				rbList.add(rb);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rbList;
+	}
+
+	@Override
+	public RaavareBatchDTO createRaavareBatch(RaavareBatchDTO rec) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public ArrayList<ProduktBatchDTO> getProduktBatchList() {
+		ResultSet rs = null;
+		ProduktBatchDTO pb = null;
+		ArrayList<ProduktBatchDTO> pbList = new ArrayList<ProduktBatchDTO>();
+		Connector conn = null;
+		
+		try {
+			conn = new Connector();
+			rs = conn.doQuery("SELECT * FROM produktbatch");
+		}catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			if(!rs.first()) return null;
+			while(rs.next()){
+				pb = new ProduktBatchDTO();
+				pb.setPbId(rs.getInt("pb_id"));
+				pb.setReceptId(rs.getInt("recept_id"));
+				pb.setStatus(rs.getInt("status"));
+				pbList.add(pb);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pbList;
+	}
+
+	@Override
+	public ProduktBatchDTO createProduktBatch(ProduktBatchDTO rec) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public ArrayList<ProduktBatchKompDTO> getProduktBatchKomponentList() {
+		ResultSet rs = null;
+		ProduktBatchKompDTO pbk = null;
+		ArrayList<ProduktBatchKompDTO> pbkList = new ArrayList<ProduktBatchKompDTO>();
+		Connector conn = null;
+		
+		try {
+			conn = new Connector();
+			rs = conn.doQuery("SELECT * FROM produktbatchkomponent");
+		}catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			if(!rs.first()) return null;
+			while(rs.next()){
+				pbk = new ProduktBatchKompDTO();
+				pbk.setPbId(rs.getInt("pb_id"));
+				pbk.setRbId(rs.getInt("recept_id"));
+				pbk.setTara(rs.getDouble("status"));
+				pbk.setNetto(rs.getDouble("netto"));
+				pbk.setOprId(rs.getInt("opr_id"));
+				pbkList.add(pbk);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pbkList;
+	}
+
+	@Override
+	public ProduktBatchKompDTO createProduktBatchKomponent(
+			ProduktBatchKompDTO rec) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

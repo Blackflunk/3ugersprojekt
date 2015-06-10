@@ -6,6 +6,9 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.ProduktBatchDTO;
+import cdio3.gwt.client.model.ProduktBatchKompDTO;
+import cdio3.gwt.client.model.RaavareBatchDTO;
 import cdio3.gwt.client.model.RaavareDTO;
 import cdio3.gwt.client.model.ReceptDTO;
 
@@ -22,4 +25,10 @@ public interface DBService extends RemoteService {
 	RaavareDTO createRaavare(RaavareDTO raa);
 	ArrayList<ReceptDTO> getReceptList();
 	ReceptDTO createRecept(ReceptDTO rec);
+	ArrayList<RaavareBatchDTO> getRaavareBatchList();
+	RaavareBatchDTO createRaavareBatch(RaavareBatchDTO rec);
+	ArrayList<ProduktBatchDTO> getProduktBatchList();
+	ProduktBatchDTO createProduktBatch(ProduktBatchDTO rec);
+	ArrayList<ProduktBatchKompDTO> getProduktBatchKomponentList();
+	ProduktBatchKompDTO createProduktBatchKomponent(ProduktBatchKompDTO rec);
 }
