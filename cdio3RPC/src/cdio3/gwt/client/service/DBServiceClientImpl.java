@@ -72,16 +72,16 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 				OperatoerDTO opr = (OperatoerDTO) result;
 				maingui.displayOperatoer(opr);
 			}
-			else if(result instanceof Boolean){
+			else if(result instanceof Integer){
 				if(loggedin == 0){
-					boolean svar = (Boolean) result;
+					Integer svar = (Integer) result;
 					maingui.authenticateOperatoer(svar);
+					}
 				}
-				else{
+				else if(result instanceof Boolean){
 					boolean svar = (Boolean) result;
 					maingui.deletedOperatoer(svar);
 				}
-			}
 			else if(result instanceof ArrayList<?>){
 				ArrayList oprList = (ArrayList<OperatoerDTO>) result;
 				maingui.displayOperatoerListe(oprList);
