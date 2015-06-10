@@ -15,8 +15,9 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 
 	@SuppressWarnings("static-access")
 	@Override
-	public Boolean authenticateUser(String username, String password) {
+	public int authenticateUser(String username, String password) {
 		ResultSet rs = null;
+		int rettighedsniveau = 0;
 		try {
 			Connector conn = new Connector();
 			rs = conn.doQuery("SELECT * FROM operatoer WHERE opr_navn = \"" + username + "\" AND password = \"" + password + "\"");
@@ -32,11 +33,17 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 			e.printStackTrace();
 		}
 		try {
-			if(!rs.first()) return false;
+			if(!rs.first()) rettighedsniveau = 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return true;
+		try {
+			if (rs.first()) rettighedsniveau = rs.getInt("rettighedsniveau");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rettighedsniveau;
 	}
 
 	@SuppressWarnings("static-access")
@@ -101,6 +108,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 				opr.setIni(rs.getString("ini"));
 				opr.setCpr(rs.getString("cpr"));
 				opr.setPassword(rs.getString("password"));
+				opr.setRettighedsniveau(rs.getInt("rettighedsniveau"));
 				oprList.add(opr);
 			}
 

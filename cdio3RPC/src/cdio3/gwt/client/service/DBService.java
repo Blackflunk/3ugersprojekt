@@ -10,7 +10,7 @@ import cdio3.gwt.client.model.OperatoerDTO;
 @RemoteServiceRelativePath("dbservice")
 public interface DBService extends RemoteService {
 	
-	Boolean authenticateUser(String username, String password);
+	int authenticateUser(String username, String password);
 	OperatoerDTO getUser(int oprId);
 	ArrayList<OperatoerDTO> getUserList();
 	Boolean deleteUser(int oprId);
