@@ -9,7 +9,6 @@ public class ConsoleController {
 	TUI tui = new TUI();
 	
 	public String getUserInput() {
-		tui.printMessage("Enter your Operatoer number: ");
 		String n = "";
 		try {
 			n = tui.getResponse();
