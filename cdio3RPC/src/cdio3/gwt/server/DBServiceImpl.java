@@ -8,6 +8,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import cdio3.gwt.server.Connector;
 import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.RaavareDTO;
+import cdio3.gwt.client.model.ReceptDTO;
 import cdio3.gwt.client.service.DBService;
 
 @SuppressWarnings("serial")
@@ -196,5 +198,144 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 			e.printStackTrace();
 		}
 		return opr;
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public ArrayList<RaavareDTO> getRaavareList() {
+		ResultSet rs = null;
+		RaavareDTO raa = null;
+		ArrayList<RaavareDTO> raaList = new ArrayList<RaavareDTO>();
+		Connector conn = null;
+		
+		try {
+			conn = new Connector();
+			rs = conn.doQuery("SELECT * FROM raavare");
+		}catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			if(!rs.first()) return null;
+			while(rs.next()){
+				raa = new RaavareDTO();
+				raa.setRaavareId(rs.getInt("raavare_id"));
+				raa.setRaavareNavn(rs.getString("raavare_navn"));
+				raa.setLeverandoer(rs.getString("leverandoer"));
+				raaList.add(raa);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return raaList;
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public RaavareDTO createRaavare(RaavareDTO raa) {
+		Connector conn = null;
+		try {
+			conn = new Connector();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			conn.doUpdate(
+					"INSERT INTO raavare(raavare_id, raavare_navn, leverandoer, cpr) "
+					+ "VALUES(" + raa.getRaavareId() + ", '" + raa.getRaavareNavn() + "', '" + raa.getLeverandoer() + "'); "
+				);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return raa;
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public ArrayList<ReceptDTO> getReceptList() {
+		ResultSet rs = null;
+		ReceptDTO rec = null;
+		ArrayList<ReceptDTO> recList = new ArrayList<ReceptDTO>();
+		Connector conn = null;
+		
+		try {
+			conn = new Connector();
+			rs = conn.doQuery("SELECT * FROM recept");
+		}catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			if(!rs.first()) return null;
+			while(rs.next()){
+				rec = new ReceptDTO();
+				rec.setReceptId(rs.getInt("recept_id"));
+				rec.setReceptNavn(rs.getString("recept_navn"));
+				recList.add(rec);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return recList;
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public ReceptDTO createRecept(ReceptDTO rec) {
+		Connector conn = null;
+		try {
+			conn = new Connector();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			conn.doUpdate(
+					"INSERT INTO recept(recept_id, recept_navn) "
+					+ "VALUES(" + rec.getReceptId() + ", '" + rec.getReceptId() + "'); "
+				);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return rec;
 	}
 }

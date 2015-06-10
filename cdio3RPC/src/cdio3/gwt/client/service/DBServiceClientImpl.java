@@ -8,11 +8,14 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 import cdio3.gwt.client.gui.MainGUI;
 import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.RaavareDTO;
+import cdio3.gwt.client.model.ReceptDTO;
 
 public class DBServiceClientImpl implements DBServiceClientInt {
 	private DBServiceAsync service;
 	private MainGUI maingui;
-	private int loggedin = 0;
+	private int rettighedsniveau = 0;
+	
 	
 	public DBServiceClientImpl(String url) {
 		System.out.println(url);
@@ -56,6 +59,30 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 		return this.maingui;
 	}
 	
+	@Override
+	public void getRaavareList() {
+		this.service.getRaavareList(new DefaultCallback());
+		
+	}
+
+	@Override
+	public void createRaavare(RaavareDTO raa) {
+		this.service.createRaavare(raa,new DefaultCallback());
+		
+	}
+
+	@Override
+	public void getReceptList() {
+		this.service.getReceptList(new DefaultCallback());
+		
+	}
+
+	@Override
+	public void createRecept(ReceptDTO rec) {
+		this.service.createRecept(rec,new DefaultCallback());
+		
+	}
+	
 	@SuppressWarnings("rawtypes")
 	private class DefaultCallback implements AsyncCallback {
 
@@ -69,22 +96,41 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 		public void onSuccess(Object result) {
 
 			if(result instanceof OperatoerDTO){
+				if(rettighedsniveau == 4){
 				OperatoerDTO opr = (OperatoerDTO) result;
 				maingui.displayOperatoer(opr);
+				}
 			}
+			// Hvis der modtages integer (Login)
 			else if(result instanceof Integer){
-				if(loggedin == 0){
+				if(rettighedsniveau == 0){
 					Integer svar = (Integer) result;
+					rettighedsniveau = svar;
 					maingui.authenticateOperatoer(svar);
 					}
 				}
 				else if(result instanceof Boolean){
+				if (((ArrayList<?>)result).get(0) instanceof OperatoerDTO){
 					boolean svar = (Boolean) result;
 					maingui.deletedOperatoer(svar);
+					}
 				}
 			else if(result instanceof ArrayList<?>){
+				if (((ArrayList<?>)result).get(0) instanceof OperatoerDTO){
 				ArrayList oprList = (ArrayList<OperatoerDTO>) result;
 				maingui.displayOperatoerListe(oprList);
+				}
+				
+				if (((ArrayList<?>)result).get(0) instanceof RaavareDTO){
+					ArrayList raaList = (ArrayList<RaavareDTO>) result;
+					maingui.displayRaavareListe(raaList);
+			
+				}
+				
+				if (((ArrayList<?>)result).get(0) instanceof ReceptDTO){
+					ArrayList racList = (ArrayList<ReceptDTO>) result;
+				
+				}
 			}
 		}
 	

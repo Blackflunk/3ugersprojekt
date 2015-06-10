@@ -1,17 +1,13 @@
 package cdio3.gwt.client.model;
 
-public class RaavareBatchDTO
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class RaavareBatchDTO implements Serializable
 {
 	int rbId;                     // i omraadet 1-99999999
 	int raavareId;             // i omraadet 1-99999999
 	double maengde;             // kan vaere negativ 
-
-	public RaavareBatchDTO(int rbId, int raavareId, double maengde)
-	{
-		this.rbId = rbId;
-		this.raavareId = raavareId;
-		this.maengde = maengde;
-	}
 	
 	public int getRbId() { return rbId; }
 	public void setRbId(int rbId) { this.rbId = rbId; }

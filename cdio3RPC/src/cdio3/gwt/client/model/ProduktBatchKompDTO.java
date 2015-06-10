@@ -1,6 +1,9 @@
 package cdio3.gwt.client.model;
 
-public class ProduktBatchKompDTO 
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class ProduktBatchKompDTO implements Serializable
 {
 	int pbId; 	  // produktbatchets id
 	int rbId;        // i omraadet 1-99999999
@@ -8,15 +11,6 @@ public class ProduktBatchKompDTO
 	double netto;
 	int oprId;					// operatoer-nummer
 
-	
-	public ProduktBatchKompDTO(int pbId, int rbId, double tara, double netto, int oprId)
-	{
-		this.pbId = pbId;
-		this.rbId = rbId;
-		this.tara = tara;
-		this.netto = netto;
-		this.oprId = oprId;
-	}
 	
 	public int getPbId() { return pbId; }
 	public void setPbId(int pbId) { this.pbId = pbId; }

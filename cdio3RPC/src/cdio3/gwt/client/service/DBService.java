@@ -6,6 +6,8 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.RaavareDTO;
+import cdio3.gwt.client.model.ReceptDTO;
 
 @RemoteServiceRelativePath("dbservice")
 public interface DBService extends RemoteService {
@@ -16,4 +18,8 @@ public interface DBService extends RemoteService {
 	Boolean deleteUser(int oprId);
 	OperatoerDTO createUser(OperatoerDTO opr);
 	OperatoerDTO updateUser(OperatoerDTO opr);
+	ArrayList<RaavareDTO> getRaavareList();
+	RaavareDTO createRaavare(RaavareDTO raa);
+	ArrayList<ReceptDTO> getReceptList();
+	ReceptDTO createRecept(ReceptDTO rec);
 }

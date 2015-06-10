@@ -1,6 +1,8 @@
 package cdio3.gwt.client.service;
 
 import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.RaavareDTO;
+import cdio3.gwt.client.model.ReceptDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -18,4 +20,13 @@ public interface DBServiceAsync {
 	void createUser(OperatoerDTO opr, AsyncCallback callback);
 	@SuppressWarnings("rawtypes")
 	void updateUser(OperatoerDTO opr, AsyncCallback callback);
+	@SuppressWarnings("rawtypes")
+	void getRaavareList(AsyncCallback callback);
+	@SuppressWarnings("rawtypes")
+	void createRaavare(RaavareDTO raa, AsyncCallback callback);
+	@SuppressWarnings("rawtypes")
+	void getReceptList(AsyncCallback callback);
+	@SuppressWarnings("rawtypes")
+	void createRecept(ReceptDTO rec,AsyncCallback callback);
+	
 }

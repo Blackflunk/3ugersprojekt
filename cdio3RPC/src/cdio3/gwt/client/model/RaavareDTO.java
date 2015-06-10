@@ -1,5 +1,7 @@
 package cdio3.gwt.client.model;
 
+import java.io.Serializable;
+
 /**
  * Raavare Data Objekt
  * 
@@ -7,7 +9,8 @@ package cdio3.gwt.client.model;
  * @version 1.2
  */
 
-public class RaavareDTO 
+@SuppressWarnings("serial")
+public class RaavareDTO implements Serializable
 {
     /** i omraadet 1-99999999 vaelges af brugerne */
     int raavareId;                     
@@ -15,13 +18,6 @@ public class RaavareDTO
     String raavareNavn;                
     /** min. 2 max. 20 karakterer */
     String leverandoer;         
-	
-	public RaavareDTO(int raavareId, String raavareNavn, String leverandoer)
-	{
-		this.raavareId = raavareId;
-		this.raavareNavn = raavareNavn;
-		this.leverandoer = leverandoer;
-	}
 	
     public int getRaavareId() { return raavareId; }
     public void setRaavareId(int raavareId) { this.raavareId = raavareId; }

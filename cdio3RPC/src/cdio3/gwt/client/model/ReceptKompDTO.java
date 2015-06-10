@@ -1,19 +1,14 @@
 package cdio3.gwt.client.model;
 
-public class ReceptKompDTO
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class ReceptKompDTO implements Serializable
 {
 	int receptId;                  // auto genereres fra 1..n   
 	int raavareId;             // i omraadet 1-99999999
 	double nomNetto;            // skal vaere positiv og passende stor
 	double tolerance;           // skal vaere positiv og passende stor
-	
-	public ReceptKompDTO(int receptId, int raavareId, double nomNetto, double tolerance)
-	{
-		this.receptId = receptId;
-		this.raavareId = raavareId;
-		this.nomNetto = nomNetto;
-		this.tolerance = tolerance;
-	}
 
 	public int getReceptId() { return receptId; }
 	public void setReceptId(int receptId) { this.receptId = receptId; }

@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.RaavareDTO;
 import cdio3.gwt.client.service.DBServiceClientImpl;
 
 public class MainGUI extends Composite {
@@ -205,6 +206,21 @@ public class MainGUI extends Composite {
 		}
 	}
 	
+	public void displayRaavareListe(ArrayList<RaavareDTO> raaList){
+		this.externalvpanel.clear();
+		for(int i = 0;i < raaList.size();i++){
+			HTML html = new HTML();
+			
+			String code = "</br><b>ID:</b> " + raaList.get(i).getRaavareId() + "</br>";
+			code = code + "<b>Navn:</b> " + raaList.get(i).getRaavareNavn() + "</br>";
+			code = code + "<b>Leverandør:</b> " + raaList.get(i).getLeverandoer() + "</br>";
+
+			
+			html.setHTML(code);
+			this.externalvpanel.add(html);
+		}
+	}
+	
 	private class openLoginClickHandler implements ClickHandler {
 
 		@Override
@@ -255,6 +271,24 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openUpdateUser();
+			
+		}
+	}
+	
+	private class openCreateRaavareClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			openCreateRaavare();
+			
+		}
+	}
+	
+	private class openGetRaavareListClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			openGetRaavareList();
 			
 		}
 	}
@@ -362,6 +396,41 @@ public class MainGUI extends Composite {
 		this.contentpanel.add(updateUserBtn);	
 	}
 	
+	public void openGetRaavareList(){
+		this.externalvpanel.clear();
+		this.contentpanel.clear();
+		this.contentpanel.add(getuserlist);
+		serviceImpl.getRaavareList();
+	}
+	
+	public void openCreateRaavare(){
+		this.externalvpanel.clear();
+		this.contentpanel.clear();
+		this.contentpanel.add(createuserid);
+		addUserIdTxt = new TextBox();
+		this.contentpanel.add(addUserIdTxt);
+		
+		this.contentpanel.add(createusername);
+		addUserNameTxt = new TextBox();
+		this.contentpanel.add(addUserNameTxt);
+		
+		this.contentpanel.add(createuserini);
+		addUserIniTxt = new TextBox();
+		this.contentpanel.add(addUserIniTxt);
+		
+		this.contentpanel.add(createusercpr);
+		addUserCprTxt = new TextBox();
+		this.contentpanel.add(addUserCprTxt);
+		
+		this.contentpanel.add(createuserpass);
+		addUserPwdTxt = new TextBox();
+		this.contentpanel.add(addUserPwdTxt);
+		
+		Button createUserBtn = new Button("OK");
+		createUserBtn.addClickHandler(new createUserClickHandler());
+		this.contentpanel.add(createUserBtn);	
+	}
+	
 	public void startMenu(){
 		Button openlogin = new Button("Login");
 		openlogin.addClickHandler(new openLoginClickHandler());
@@ -395,13 +464,13 @@ public class MainGUI extends Composite {
 	public void farmaceutMenu(){
 		this.menupanel.clear();
 		
-		Button opengetuser = new Button("Opret Råvare");
-		opengetuser.addClickHandler(new openGetUserClickHandler());
-		this.menupanel.add(opengetuser);
+		Button openopretraavare = new Button("Opret Råvare");
+		openopretraavare.addClickHandler(new openCreateRaavareClickHandler());
+		this.menupanel.add(openopretraavare);
 		
-		Button opengetuserlist = new Button("Vis Råvarer");
-		opengetuserlist.addClickHandler(new openGetUserListClickHandler());
-		this.menupanel.add(opengetuserlist);
+		Button opengetraavarelist = new Button("Vis Råvarer");
+		opengetraavarelist.addClickHandler(new openGetRaavareListClickHandler());
+		this.menupanel.add(opengetraavarelist);
 		
 		Button opengetuserliset = new Button("Slet Råvare");
 		opengetuserlist.addClickHandler(new openGetUserListClickHandler());
