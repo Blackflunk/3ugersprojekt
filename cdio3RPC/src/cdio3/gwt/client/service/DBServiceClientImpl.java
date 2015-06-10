@@ -8,6 +8,8 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 import cdio3.gwt.client.gui.MainGUI;
 import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.ProduktBatchDTO;
+import cdio3.gwt.client.model.RaavareBatchDTO;
 import cdio3.gwt.client.model.RaavareDTO;
 import cdio3.gwt.client.model.ReceptDTO;
 
@@ -15,6 +17,8 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	private DBServiceAsync service;
 	private MainGUI maingui;
 	private int rettighedsniveau = 0;
+	
+	//TODO mangler metoder som slet på alle.
 	
 	
 	public DBServiceClientImpl(String url) {
@@ -115,6 +119,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 					maingui.deletedOperatoer(svar);
 					}
 				}
+			//Listerne
 			else if(result instanceof ArrayList<?>){
 				if (((ArrayList<?>)result).get(0) instanceof OperatoerDTO){
 				ArrayList oprList = (ArrayList<OperatoerDTO>) result;
@@ -131,8 +136,13 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 					ArrayList racList = (ArrayList<ReceptDTO>) result;
 				
 				}
+				if (((ArrayList<?>)result).get(0) instanceof RaavareBatchDTO){
+					ArrayList racList = (ArrayList<RaavareBatchDTO>) result;
+			}
+				if (((ArrayList<?>)result).get(0) instanceof ProduktBatchDTO){
+					ArrayList racList = (ArrayList<ReceptDTO>) result;
+				}
 			}
 		}
-	
 	}
 }

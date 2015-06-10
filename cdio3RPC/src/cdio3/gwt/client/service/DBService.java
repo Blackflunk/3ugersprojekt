@@ -14,6 +14,7 @@ import cdio3.gwt.client.model.ReceptDTO;
 
 @RemoteServiceRelativePath("dbservice")
 public interface DBService extends RemoteService {
+	//TODO mangler slet raavare, recept, raavarebatch, produktbatch, produktbatchkomp.
 	
 	int authenticateUser(String username, String password);
 	OperatoerDTO getUser(int oprId);

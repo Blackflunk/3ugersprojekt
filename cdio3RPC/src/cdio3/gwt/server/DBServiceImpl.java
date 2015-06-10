@@ -17,6 +17,8 @@ import cdio3.gwt.client.service.DBService;
 
 @SuppressWarnings("serial")
 public class DBServiceImpl extends RemoteServiceServlet implements DBService {
+	
+	//TODO mangler slet og create funktionalitet mange af de nye metoder.
 
 	@SuppressWarnings("static-access")
 	@Override
@@ -139,7 +141,11 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 			e.printStackTrace();
 		}
 		try {
-			conn.doUpdate("DELETE FROM operatoer WHERE opr_id = " + oprId);
+			conn.doUpdate(
+					"UPDATE operatoer"
+				  + "SET rettighedsniveau = '0'"
+				  + "WHERE opr_id = " + oprId
+				);
 			return true;
 		} catch (DALException e) {
 			e.printStackTrace();

@@ -32,6 +32,8 @@ public class MainGUI extends Composite {
 	private Button openupdateuser;
 	
 	private Label getuserlist = new Label("Nedenfor er brugerne opstillet: ");
+	
+	private Label brugerinaktiv = new Label("Brugeren du forsøger at logge på er inaktiv");
 
 	private Label loginuseracc = new Label("Skriv brugernavn:");
 	private TextBox userNameTxt;
@@ -150,19 +152,25 @@ public class MainGUI extends Composite {
 	public void authenticateOperatoer(int svar) {
 		this.externalvpanel.clear();
 		HTML html = new HTML();
-		
-		String code = "<b>Svar fra DB:</b> " + svar + "</br>";
 		rettighedsniveau = svar;
 		
+		if (svar == 1){
+		String code = "<b>Brugeren du forsøger at logge på er inaktiv.</b></br>";
 		html.setHTML(code);
 		this.externalvpanel.add(html);
+		}
 		
 		if(rettighedsniveau == 4)
 		adminMenu();
+		this.contentpanel.clear();
 		if (rettighedsniveau == 3)
 		farmaceutMenu();
+		this.contentpanel.clear();
 		if (rettighedsniveau == 2)
 		vaerkfoererMenu();
+		this.contentpanel.clear();
+		if (rettighedsniveau == 1)
+		startMenu();
 	}
 	
 	public void deletedOperatoer(boolean result) {
@@ -472,49 +480,50 @@ public class MainGUI extends Composite {
 		opengetraavarelist.addClickHandler(new openGetRaavareListClickHandler());
 		this.menupanel.add(opengetraavarelist);
 		
-		Button opengetuserliset = new Button("Slet Råvare");
-		opengetuserlist.addClickHandler(new openGetUserListClickHandler());
-		this.menupanel.add(opengetuserlist);
+		Button opendeleteraavare = new Button("Slet Råvare");
+		opendeleteraavare.addClickHandler(new openGetUserListClickHandler());
+		this.menupanel.add(opendeleteraavare);
 		
-		Button opendeleteuser = new Button("Opret Recept");
-		opendeleteuser.addClickHandler(new openDeleteUserClickHandler());
-		this.menupanel.add(opendeleteuser);
+		Button openopretrecept = new Button("Opret Recept");
+		openopretrecept.addClickHandler(new openDeleteUserClickHandler());
+		this.menupanel.add(openopretrecept);
 		
-		Button openupdateuser = new Button("Vis Recepter");
-		openupdateuser.addClickHandler(new openUpdateUserClickHandler());
-		this.menupanel.add(openupdateuser);
+		Button openreceptliste = new Button("Vis Recepter");
+		openreceptliste.addClickHandler(new openUpdateUserClickHandler());
+		this.menupanel.add(openreceptliste);
 		
-		Button opencreateuser = new Button("Slet Recept");
-		opencreateuser.addClickHandler(new openCreateUserClickHandler());
-		this.menupanel.add(opencreateuser);
+		Button opendeleterecept = new Button("Slet Recept");
+		opendeleterecept.addClickHandler(new openCreateUserClickHandler());
+		this.menupanel.add(opendeleterecept);
 	}
 	
 	public void vaerkfoererMenu(){
 		this.menupanel.clear();
 		
-		Button opengetuser = new Button("Opret Råvarebatch");
-		opengetuser.addClickHandler(new openGetUserClickHandler());
-		this.menupanel.add(opengetuser);
+		//TODO lav click handlers
+		Button openopretraavarebatch = new Button("Opret Råvarebatch");
+		openopretraavarebatch.addClickHandler(new openGetUserClickHandler());
+		this.menupanel.add(openopretraavarebatch);
 		
-		Button opengetuserlist = new Button("Vis Råvarebatches");
-		opengetuserlist.addClickHandler(new openGetUserListClickHandler());
-		this.menupanel.add(opengetuserlist);
+		Button opengetraavarebatchlist = new Button("Vis Råvarebatches");
+		opengetraavarebatchlist.addClickHandler(new openGetUserListClickHandler());
+		this.menupanel.add(opengetraavarebatchlist);
 		
-		Button opengetuserliset = new Button("Slet Råvarebatch");
-		opengetuserlist.addClickHandler(new openGetUserListClickHandler());
-		this.menupanel.add(opengetuserlist);
+		Button opendeleteraavarebatch = new Button("Slet Råvarebatch");
+		opendeleteraavarebatch.addClickHandler(new openGetUserListClickHandler());
+		this.menupanel.add(opendeleteraavarebatch);
 		
-		Button opendeleteuser = new Button("Opret Produktbatch");
-		opendeleteuser.addClickHandler(new openDeleteUserClickHandler());
-		this.menupanel.add(opendeleteuser);
+		Button opencreateproduktbatch = new Button("Opret Produktbatch");
+		opencreateproduktbatch.addClickHandler(new openDeleteUserClickHandler());
+		this.menupanel.add(opencreateproduktbatch);
 		
-		Button openupdateuser = new Button("Vis Produktbatches");
-		openupdateuser.addClickHandler(new openUpdateUserClickHandler());
-		this.menupanel.add(openupdateuser);
+		Button openproduktbatchlist = new Button("Vis Produktbatches");
+		openproduktbatchlist.addClickHandler(new openUpdateUserClickHandler());
+		this.menupanel.add(openproduktbatchlist);
 		
-		Button opencreateuser = new Button("Slet Produktbatch");
-		opencreateuser.addClickHandler(new openCreateUserClickHandler());
-		this.menupanel.add(opencreateuser);
+		Button opendeleteproduktbatch = new Button("Slet Produktbatch");
+		opendeleteproduktbatch.addClickHandler(new openCreateUserClickHandler());
+		this.menupanel.add(opendeleteproduktbatch);
 	}
 
 }

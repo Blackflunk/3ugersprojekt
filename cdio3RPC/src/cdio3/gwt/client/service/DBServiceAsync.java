@@ -10,6 +10,7 @@ import cdio3.gwt.client.model.ReceptDTO;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface DBServiceAsync {
+	//TODO mangler slet raavare, recept, raavarebatch, produktbatch, produktbatchkomp.
 
 	@SuppressWarnings("rawtypes")
 	void authenticateUser(String username, String password, AsyncCallback callback);

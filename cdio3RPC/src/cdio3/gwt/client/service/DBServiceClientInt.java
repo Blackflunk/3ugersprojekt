@@ -5,7 +5,7 @@ import cdio3.gwt.client.model.RaavareDTO;
 import cdio3.gwt.client.model.ReceptDTO;
 
 public interface DBServiceClientInt {
-
+	//TODO mangler raavare (slet), recept(slet), raavarebatch, produktbatch, produktbatchkomp.
 	void authenticateUser(String username, String password);
 	void getUser(int oprId);
 	void getUserList();
