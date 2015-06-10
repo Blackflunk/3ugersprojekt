@@ -1,7 +1,7 @@
 package wcu.functionality;
 
-import control.WeightCommunicator;
-import data.TempVare;
+import wcu.control.WeightCommunicator;
+import wcu.data.TempVare;
 
 public class UserHandler {
 	public static WeightCommunicator wc = new WeightCommunicator("127.0.0.1",

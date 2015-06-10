@@ -2,8 +2,8 @@ package wcu.functionality;
 
 import java.util.ArrayList;
 
-import data.OperatoerDAO;
-import data.OperatoerDTO;
+import wcu.data.OperatoerDAO;
+import wcu.data.OperatoerDTO;
 
 public class OprControl implements OperatoerDAO{
 

@@ -7,9 +7,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import data.LogDTO;
-import data.OperatoerDTO;
-import data.RaavareDTO;
+import wcu.data.LogDTO;
+import wcu.data.OperatoerDTO;
+import wcu.data.RaavareDTO;
 
 
 public class FileHandler implements IFileHandler {

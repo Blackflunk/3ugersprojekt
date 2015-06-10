@@ -2,8 +2,8 @@ package wcu.functionality;
 
 import java.util.ArrayList;
 
-import data.RaavareDAO;
-import data.RaavareDTO;
+import wcu.data.RaavareDAO;
+import wcu.data.RaavareDTO;
 
 public class RaavareControl implements RaavareDAO {
 	

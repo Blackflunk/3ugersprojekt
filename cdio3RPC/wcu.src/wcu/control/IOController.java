@@ -2,7 +2,7 @@ package wcu.control;
 
 import java.io.IOException;
 
-import boundary_ftp.TUI;
+import wcu.boundary.TUI;
 
 public class IOController {
 	TUI TUI = new TUI();

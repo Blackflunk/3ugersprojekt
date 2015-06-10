@@ -2,9 +2,9 @@ package wcu.functionality;
 
 import java.util.ArrayList;
 
-import data.LogDTO;
-import data.OperatoerDTO;
-import data.RaavareDTO;
+import wcu.data.LogDTO;
+import wcu.data.OperatoerDTO;
+import wcu.data.RaavareDTO;
 
 public interface IFileHandler {
 
