@@ -19,7 +19,7 @@ public interface DBServiceAsync {
 	@SuppressWarnings("rawtypes")
 	void getUserList(AsyncCallback callback);
 	@SuppressWarnings("rawtypes")
-	void deleteUser(int oprId, AsyncCallback callback);
+	void deleteElement(int eId,String valg, AsyncCallback callback);
 	@SuppressWarnings("rawtypes")
 	void createUser(OperatoerDTO opr, AsyncCallback callback);
 	@SuppressWarnings("rawtypes")

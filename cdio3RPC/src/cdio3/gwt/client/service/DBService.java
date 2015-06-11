@@ -19,7 +19,7 @@ public interface DBService extends RemoteService {
 	int authenticateUser(String username, String password);
 	OperatoerDTO getUser(int oprId);
 	ArrayList<OperatoerDTO> getUserList();
-	Boolean deleteUser(int oprId);
+	Boolean deleteElement(int eId,String valg);
 	OperatoerDTO createUser(OperatoerDTO opr);
 	OperatoerDTO updateUser(OperatoerDTO opr);
 	ArrayList<RaavareDTO> getRaavareList();

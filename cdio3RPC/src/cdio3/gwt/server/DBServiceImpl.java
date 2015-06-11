@@ -127,7 +127,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 
 	@SuppressWarnings("static-access")
 	@Override
-	public Boolean deleteUser(int oprId) {
+	public Boolean deleteElement(int eId,String valg) {
 		Connector conn = null;
 		try {
 			conn = new Connector();
@@ -142,12 +142,13 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		}
 		try {
 			conn.doUpdate(
-					"UPDATE operatoer"
-				  + "SET rettighedsniveau = '0'"
-				  + "WHERE opr_id = " + oprId
-				);
+					"UPDATE operatoer "
+				  + "SET rettighedsniveau = '0' "
+				  + "WHERE opr_id = '" + eId + "'"
+				  );
 			return true;
-		} catch (DALException e) {
+			}
+			catch (DALException e) {
 			e.printStackTrace();
 		}
 		return false;

@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import cdio3.gwt.client.model.OperatoerDTO;
 import cdio3.gwt.client.model.RaavareDTO;
+import cdio3.gwt.client.model.ReceptDTO;
 import cdio3.gwt.client.service.DBServiceClientImpl;
 
 public class MainGUI extends Composite {
@@ -33,7 +34,7 @@ public class MainGUI extends Composite {
 	
 	private Label getuserlist = new Label("Nedenfor er brugerne opstillet: ");
 	
-	private Label brugerinaktiv = new Label("Brugeren du forsøger at logge på er inaktiv");
+	private Label brugerinaktiv = new Label("Brugeren eksisterer ikke.");
 
 	private Label loginuseracc = new Label("Skriv brugernavn:");
 	private TextBox userNameTxt;
@@ -44,6 +45,17 @@ public class MainGUI extends Composite {
 	private TextBox getUserNameTxt;
 	private Label deleteusertext = new Label("Skriv brugerens ID:");
 	private TextBox deleteUserIdTxt;
+	private Label deleteraavaretext = new Label("Skriv raaverens ID:");
+	private TextBox deleteraavareIdTxt;
+	private Label deleterecepttext = new Label("Skriv receptens ID:");
+	private TextBox deletereceptIdTxt;
+	private Label deleteraavarebatchtext = new Label("Skriv raavarebatchens ID:");
+	private TextBox deleteraavarebatchIdTxt;
+	private Label deleteproduktbatchtext = new Label("Skriv produktbatchens ID:");
+	private TextBox deleteproduktbatchIdTxt;
+	private TextBox deleteproduktbatchkomppbIdTxt;
+	private TextBox deleteproduktbatchkomprbIdTxt;
+	
 
 	private Label createuserid = new Label("Skriv brugerens ID:");
 	private TextBox addUserIdTxt;
@@ -145,39 +157,40 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			int oprId = Integer.parseInt(deleteUserIdTxt.getText());
-			serviceImpl.deleteUser(oprId);
+			serviceImpl.deleteElement(oprId,"operatoer");
 		}
 	}
 
 	public void authenticateOperatoer(int svar) {
-		this.externalvpanel.clear();
+		this.contentpanel.clear();
 		HTML html = new HTML();
 		rettighedsniveau = svar;
 		
-		if (svar == 1){
-		String code = "<b>Brugeren du forsøger at logge på er inaktiv.</b></br>";
-		html.setHTML(code);
-		this.externalvpanel.add(html);
-		}
+		
 		
 		if(rettighedsniveau == 4)
-		adminMenu();
-		this.contentpanel.clear();
+			adminMenu();
+			this.contentpanel.clear();
 		if (rettighedsniveau == 3)
-		farmaceutMenu();
-		this.contentpanel.clear();
+			farmaceutMenu();
+			this.contentpanel.clear();
 		if (rettighedsniveau == 2)
-		vaerkfoererMenu();
-		this.contentpanel.clear();
-		if (rettighedsniveau == 1)
-		startMenu();
+			vaerkfoererMenu();
+			this.contentpanel.clear();
+		if (rettighedsniveau == 0){
+			String code = "<b>Brugeren eksisterer ikke</b></br>";
+			html.setHTML(code);
+			this.externalvpanel.add(html);
+			startMenu();
+			this.contentpanel.clear();
+		}
 	}
 	
-	public void deletedOperatoer(boolean result) {
+	public void deletedElement(boolean result) {
 		this.externalvpanel.clear();
 		HTML html = new HTML();
 		
-		String code = "<b>Bruger slettet:</b> " + result + "</br>";
+		String code = "<b>Brugeren er gjort inaktiv:</b> " + result + "</br>";
 		
 		html.setHTML(code);
 		this.externalvpanel.add(html);
@@ -222,6 +235,20 @@ public class MainGUI extends Composite {
 			String code = "</br><b>ID:</b> " + raaList.get(i).getRaavareId() + "</br>";
 			code = code + "<b>Navn:</b> " + raaList.get(i).getRaavareNavn() + "</br>";
 			code = code + "<b>Leverandør:</b> " + raaList.get(i).getLeverandoer() + "</br>";
+
+			
+			html.setHTML(code);
+			this.externalvpanel.add(html);
+		}
+	}
+	
+	public void displayReceptListe(ArrayList<ReceptDTO> racList){
+		this.externalvpanel.clear();
+		for(int i = 0;i < racList.size();i++){
+			HTML html = new HTML();
+			
+			String code = "</br><b>ID:</b> " + racList.get(i).getReceptId() + "</br>";
+			code = code + "<b>Navn:</b> " + racList.get(i).getReceptNavn() + "</br>";
 
 			
 			html.setHTML(code);
@@ -293,6 +320,23 @@ public class MainGUI extends Composite {
 	}
 	
 	private class openGetRaavareListClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			openGetRaavareList();
+			
+		}
+	}
+	private class openGetReceptListClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			openGetReceptList();
+			
+		}
+	}
+	
+	private class openLogUdClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -411,6 +455,14 @@ public class MainGUI extends Composite {
 		serviceImpl.getRaavareList();
 	}
 	
+	public void openGetReceptList(){
+		this.externalvpanel.clear();
+		this.contentpanel.clear();
+		this.contentpanel.add(getuserlist);
+		serviceImpl.getReceptList();
+	}
+	
+	
 	public void openCreateRaavare(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
@@ -440,6 +492,7 @@ public class MainGUI extends Composite {
 	}
 	
 	public void startMenu(){
+		this.menupanel.clear();
 		Button openlogin = new Button("Login");
 		openlogin.addClickHandler(new openLoginClickHandler());
 		this.menupanel.add(openlogin);
@@ -480,21 +533,14 @@ public class MainGUI extends Composite {
 		opengetraavarelist.addClickHandler(new openGetRaavareListClickHandler());
 		this.menupanel.add(opengetraavarelist);
 		
-		Button opendeleteraavare = new Button("Slet Råvare");
-		opendeleteraavare.addClickHandler(new openGetUserListClickHandler());
-		this.menupanel.add(opendeleteraavare);
-		
 		Button openopretrecept = new Button("Opret Recept");
 		openopretrecept.addClickHandler(new openDeleteUserClickHandler());
 		this.menupanel.add(openopretrecept);
 		
 		Button openreceptliste = new Button("Vis Recepter");
-		openreceptliste.addClickHandler(new openUpdateUserClickHandler());
+		openreceptliste.addClickHandler(new openGetReceptListClickHandler());
 		this.menupanel.add(openreceptliste);
 		
-		Button opendeleterecept = new Button("Slet Recept");
-		opendeleterecept.addClickHandler(new openCreateUserClickHandler());
-		this.menupanel.add(opendeleterecept);
 	}
 	
 	public void vaerkfoererMenu(){
@@ -506,24 +552,22 @@ public class MainGUI extends Composite {
 		this.menupanel.add(openopretraavarebatch);
 		
 		Button opengetraavarebatchlist = new Button("Vis Råvarebatches");
-		opengetraavarebatchlist.addClickHandler(new openGetUserListClickHandler());
+		//opengetraavarebatchlist.addClickHandler(new openGetRaavarebatchListClickHandler());
 		this.menupanel.add(opengetraavarebatchlist);
 		
-		Button opendeleteraavarebatch = new Button("Slet Råvarebatch");
-		opendeleteraavarebatch.addClickHandler(new openGetUserListClickHandler());
-		this.menupanel.add(opendeleteraavarebatch);
 		
 		Button opencreateproduktbatch = new Button("Opret Produktbatch");
 		opencreateproduktbatch.addClickHandler(new openDeleteUserClickHandler());
 		this.menupanel.add(opencreateproduktbatch);
 		
 		Button openproduktbatchlist = new Button("Vis Produktbatches");
-		openproduktbatchlist.addClickHandler(new openUpdateUserClickHandler());
+		//openproduktbatchlist.addClickHandler(new openGetProduktbatchClickHandler());
 		this.menupanel.add(openproduktbatchlist);
 		
-		Button opendeleteproduktbatch = new Button("Slet Produktbatch");
-		opendeleteproduktbatch.addClickHandler(new openCreateUserClickHandler());
-		this.menupanel.add(opendeleteproduktbatch);
+		Button openproduktbatchkomplist = new Button("Vis Produktbatchkomponenter");
+		//openproduktbatchkomplist.addClickHandler(new openGetProduktbatchClickHandler());
+		this.menupanel.add(openproduktbatchlist);
+		
 	}
 
 }

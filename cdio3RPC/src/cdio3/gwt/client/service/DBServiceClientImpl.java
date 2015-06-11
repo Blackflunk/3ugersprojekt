@@ -9,6 +9,7 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import cdio3.gwt.client.gui.MainGUI;
 import cdio3.gwt.client.model.OperatoerDTO;
 import cdio3.gwt.client.model.ProduktBatchDTO;
+import cdio3.gwt.client.model.ProduktBatchKompDTO;
 import cdio3.gwt.client.model.RaavareBatchDTO;
 import cdio3.gwt.client.model.RaavareDTO;
 import cdio3.gwt.client.model.ReceptDTO;
@@ -43,10 +44,10 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	public void getUserList() {
 		this.service.getUserList(new DefaultCallback());
 	}
-
+	
 	@Override
-	public void deleteUser(int oprId) {
-		this.service.deleteUser(oprId, new DefaultCallback());
+	public void deleteElement(int eId, String valg) {
+		this.service.deleteElement(eId, valg, new DefaultCallback());
 	}
 
 	@Override
@@ -114,10 +115,8 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 					}
 				}
 				else if(result instanceof Boolean){
-				if (((ArrayList<?>)result).get(0) instanceof OperatoerDTO){
 					boolean svar = (Boolean) result;
-					maingui.deletedOperatoer(svar);
-					}
+					maingui.deletedElement(svar);
 				}
 			//Listerne
 			else if(result instanceof ArrayList<?>){
@@ -129,18 +128,19 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 				if (((ArrayList<?>)result).get(0) instanceof RaavareDTO){
 					ArrayList raaList = (ArrayList<RaavareDTO>) result;
 					maingui.displayRaavareListe(raaList);
-			
 				}
-				
 				if (((ArrayList<?>)result).get(0) instanceof ReceptDTO){
 					ArrayList racList = (ArrayList<ReceptDTO>) result;
-				
+					maingui.displayReceptListe(racList);
 				}
 				if (((ArrayList<?>)result).get(0) instanceof RaavareBatchDTO){
-					ArrayList racList = (ArrayList<RaavareBatchDTO>) result;
-			}
+					ArrayList raab = (ArrayList<RaavareBatchDTO>) result;
+				}
 				if (((ArrayList<?>)result).get(0) instanceof ProduktBatchDTO){
-					ArrayList racList = (ArrayList<ReceptDTO>) result;
+					ArrayList pb = (ArrayList<ProduktBatchDTO>) result;
+				}
+				if (((ArrayList<?>)result).get(0) instanceof ProduktBatchKompDTO){
+					ArrayList pb = (ArrayList<ProduktBatchKompDTO>) result;
 				}
 			}
 		}
