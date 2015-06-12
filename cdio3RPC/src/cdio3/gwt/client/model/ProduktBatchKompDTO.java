@@ -12,6 +12,11 @@ public class ProduktBatchKompDTO implements Serializable
 	int oprId;					// operatoer-nummer
 
 	
+	
+	public ProduktBatchKompDTO(int int1, int int2, double double1,
+			double double2, int int3) {
+		// TODO Auto-generated constructor stub
+	}
 	public int getPbId() { return pbId; }
 	public void setPbId(int pbId) { this.pbId = pbId; }
 	public int getRbId() { return rbId; }

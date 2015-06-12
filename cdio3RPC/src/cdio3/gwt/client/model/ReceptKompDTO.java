@@ -10,6 +10,9 @@ public class ReceptKompDTO implements Serializable
 	double nomNetto;            // skal vaere positiv og passende stor
 	double tolerance;           // skal vaere positiv og passende stor
 
+	public ReceptKompDTO(int int1, int int2, double double1, double double2) {
+		// TODO Auto-generated constructor stub
+	}
 	public int getReceptId() { return receptId; }
 	public void setReceptId(int receptId) { this.receptId = receptId; }
 	public int getRaavareId() { return raavareId; }

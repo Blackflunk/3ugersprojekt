@@ -16,6 +16,9 @@ public class ReceptDTO implements Serializable
 	int receptId;
 	/** Receptnavn min. 2 max. 20 karakterer */
 	String receptNavn;
+	public ReceptDTO(int int1, String string) {
+		// TODO Auto-generated constructor stub
+	}
 	/** liste af kompenenter i recepten */
 
     public int getReceptId() { return receptId; }

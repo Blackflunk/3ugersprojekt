@@ -1,77 +1,62 @@
 package cdio3.gwt.client.DAOimpl;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import cdio3.gwt.server.Connector;
 import cdio3.gwt.client.DAOinterface.DALException;
 import cdio3.gwt.client.DAOinterface.IReceptDAO;
-import cdio3.gwt.client.model.*;
-import cdio3.gwt.server.Connector;
+import cdio3.gwt.client.model.RaavareDTO;
+import cdio3.gwt.client.model.ReceptDTO;
+import cdio3.gwt.server.DALException;
 
-public class ReceptDAO implements IReceptDAO {
-	private static IDataAccess db;
+public class ReceptDAO implements IReceptDAO{
 
-	public ReceptDAO(Connector db) {
-		ReceptDAO.db = db;
-	}
-
+	@Override
 	public ReceptDTO getRecept(int receptId) throws DALException {
-		try {
-			Object[][] o = db.executeQuery(String.format("select * from 12_CDIO where receptId = %d;", receptId));
-			if (0 == o.length)
-				throw new DALException(receptId);
-
-			return new ReceptDTO();
-		} catch (SQLException e) {
-			System.out.println(“Exception”);
-		}
-		return null;
+		ResultSet rs = Connector.doQuery("SELECT * FROM recept WHERE recept_id = " + receptId);
+	    try {
+	    	if (!rs.first()) throw new DALException("Recept " + receptId + " findes ikke");
+	    	return new ReceptDTO (rs.getInt("recept_id"), rs.getString("recept_navn"));
+	    }
+	    catch (SQLException e) {throw new DALException(e); }
 	}
-
+	
+	public void deleteRecept(ReceptDTO recept) throws DALException {
+		Connector.doUpdate("DELETE FROM recept WHERE recept_id = " + recept.getReceptId());
+	}
+	
+	@Override
 	public List<ReceptDTO> getReceptList() throws DALException {
-		try {
-			Object[][] o = db.executeQuery("select * from 12_CDIOrecept;");
-			if (0 == o.length)
-				throw new DALException();
-
-			List<ReceptDTO> list = new ArrayList<ReceptDTO>();
-
-			for (int i = 0; i < o.length; i++) {
-				list.add(new ReceptDTO());
+		List<ReceptDTO> list = new ArrayList<ReceptDTO>();
+		ResultSet rs = Connector.doQuery("SELECT * FROM recept");
+		try
+		{
+			while (rs.next()) 
+			{
+				list.add(new ReceptDTO(rs.getInt("recept_id"), rs.getString("recept_navn")));
 			}
-
-			return list;
-		} catch (SQLException e) {
-			System.out.println("Exception");
 		}
-		return null;
+		catch (SQLException e) { throw new DALException(e); }
+		return list;
 	}
 
-	public void createRecept(ReceptDTO re) throws PrimaryKeyException {
-		try {
-			String stem = "insert into 12_CDIOrecept (receptId, receptNavn) values(%d, '%s');";
-			String toSQL = String.format(stem, re.getReceptId(), re.getReceptNavn());
-			db.executeUpdate(toSQL);
-		} catch (SQLIntegrityConstraintViolationException e) {
-			String[] list = e.getLocalizedMessage().split("'");
-			if (4 == list.length && list[3].equals("PRIMARY")) {
-				System.out.println(“Brug en anden primærnøgle, dene allerede brugt”);
-				throw new PrimaryKeyException(re.getReceptId());
-			}
-		} catch (SQLException e) {
-			System.out.println("Exception");
-		}
+	@Override
+	public void createRecept(ReceptDTO recept) throws DALException {
+		Connector.doUpdate(
+				"INSERT INTO recept(recept_id, recept_navn) VALUES " +
+				"(" + recept.getReceptId() + ", '" + recept.getReceptNavn() + "')"
+			);
 	}
 
-	public void updateRecept(ReceptDTO re) throws DALException {
-		try {
-			db.executeUpdate(String.format("update 12_CDIOrecept set receptNavn = '%s' where raavareId = %d;", re.getReceptNavn(), re.getReceptId()));
-		} catch (SQLException e) {
-			System.out.println("Exception");
-		}
+	@Override
+	public void updateRecept(ReceptDTO recept) throws DALException {
+		Connector.doUpdate(
+				"UPDATE recept SET  recept_navn = '" + recept.getReceptNavn() + "' WHERE recept_id = " +
+				recept.getReceptId()
+		);
 	}
 
 }

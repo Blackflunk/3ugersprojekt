@@ -9,6 +9,9 @@ public class ProduktBatchDTO implements Serializable
 	int status;					// 0: ikke paabegyndt, 1: under produktion, 2: afsluttet
 	int receptId;
 	
+	public ProduktBatchDTO(int int1, int int2, int int3) {
+		// TODO Auto-generated constructor stub
+	}
 	public int getPbId() { return pbId; }
 	public void setPbId(int pbId) { this.pbId = pbId; }
 	public int getStatus() { return status; }
