@@ -1,4 +1,4 @@
-package cdio3.gwt.client;
+package cdio3.gwt.client.DAOimpl;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
