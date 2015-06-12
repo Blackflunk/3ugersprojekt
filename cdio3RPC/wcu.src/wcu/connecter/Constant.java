@@ -1,0 +1,14 @@
+package wcu.connecter;
+//erstat konstanterne nedenfor
+
+public abstract class Constant
+{
+	public static final String
+		server					= "localhost",  // database-serveren
+		database				=  "batch",  //"jdbcdatabase", // navnet paa din database = dit studienummer
+		username				= "root", // dit brugernavn = dit studienummer 
+		password				= "password"; // dit password som du har valgt til din database
+	
+	public static final int
+		port					= 3306;
+}
