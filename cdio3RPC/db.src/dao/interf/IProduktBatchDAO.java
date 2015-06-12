@@ -1,7 +1,7 @@
-package cdio3.gwt.client.DAOinterface;
+package dao.interf;
 
 import java.util.List;
-
+import cdio3.gwt.server.DALException;
 import cdio3.gwt.client.model.ProduktBatchDTO;
 
 public interface IProduktBatchDAO {

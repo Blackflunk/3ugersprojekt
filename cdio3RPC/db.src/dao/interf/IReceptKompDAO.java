@@ -1,7 +1,8 @@
-package cdio3.gwt.client.DAOinterface;
+package dao.interf;
 
 import java.util.List;
 import cdio3.gwt.client.model.ReceptKompDTO;
+import cdio3.gwt.server.DALException;
 
 public interface IReceptKompDAO {
 	ReceptKompDTO getReceptKomp(int receptId, int raavareId) throws DALException;

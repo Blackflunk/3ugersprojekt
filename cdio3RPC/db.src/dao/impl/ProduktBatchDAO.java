@@ -1,4 +1,4 @@
-package cdio3.gwt.client.DAOimpl;
+package dao.impl;
 
 
 import java.sql.ResultSet;
@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cdio3.gwt.server.Connector;
-import cdio3.gwt.client.DAOinterface.DALException;
-import cdio3.gwt.client.DAOinterface.IProduktBatchDAO;
-import cdio3.gwt.client.model.OperatoerDTO;
 import cdio3.gwt.client.model.ProduktBatchDTO;
 import cdio3.gwt.server.DALException;
+import dao.interf.IProduktBatchDAO;
 
 public class ProduktBatchDAO  implements IProduktBatchDAO{
 

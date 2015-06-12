@@ -1,4 +1,4 @@
-package cdio3.gwt.client.DAOimpl;
+package dao.impl;
 
 
 import java.sql.ResultSet;
@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cdio3.gwt.server.Connector;
-import cdio3.gwt.client.DAOinterface.DALException;
-import cdio3.gwt.client.DAOinterface.IReceptKompDAO;
 import cdio3.gwt.client.model.ReceptDTO;
 import cdio3.gwt.client.model.ReceptKompDTO;
 import cdio3.gwt.server.DALException;
+import dao.interf.IReceptKompDAO;
 
 public class ReceptKompDAO implements IReceptKompDAO {
 
@@ -22,6 +21,7 @@ public class ReceptKompDAO implements IReceptKompDAO {
 		ResultSet rs = Connector.doQuery("SELECT * FROM receptkomponent WHERE recept_id = " + receptkompId);
 		try
 		{
+
 			while (rs.next()) 
 			{
 				

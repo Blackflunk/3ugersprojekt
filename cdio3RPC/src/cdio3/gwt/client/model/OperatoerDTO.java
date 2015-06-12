@@ -15,14 +15,19 @@ public class OperatoerDTO implements Serializable
 	int oprId;                     
 	String oprNavn;                
 	String ini;                 
-	int cpr; 
+	String cpr; 
 
 	String password;
 	int rettighedsniveau;
 
 	public OperatoerDTO(int oprId, String oprNavn, String ini,
-			int cpr, String password, int rettighedsniveau) {
-		// TODO Auto-generated constructor stub
+			String cpr, String password, int rettighedsniveau) {
+		this.oprId = oprId;
+		this.oprNavn = oprNavn;
+		this.ini = ini;
+		this.cpr = cpr;
+		this.password = password;
+		this.rettighedsniveau = rettighedsniveau;
 	}
 	public synchronized int getOprId() { return oprId; }
 	public synchronized void setOprId(int oprId) { this.oprId = oprId; }

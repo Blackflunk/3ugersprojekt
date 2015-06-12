@@ -75,13 +75,13 @@ public class MainGUI extends Composite {
 	private TextBox addUserCprTxt;
 	private Label createuserpass = new Label("Skriv brugerens kodeord: ");
 	private TextBox addUserPwdTxt;
-	
+	private Label createuserret = new Label("Skriv brugerens rettighedsniveau: ");
+	private TextBox addUserRetTxt;
+		
 	private Label createraavareid = new Label("Skriv råvarens id: ");
 	private TextBox addRaavareIdTxt;
 	private Label createraavarenavn = new Label("Skriv råvarens navn: ");
 	private TextBox addRaavareNavnTxt;
-	private Label createraavareleverandoer = new Label("Skriv leverandørens navn: ");
-	private TextBox addRaavareLeverandoerTxt;
 	
 	private Label createreceptid = new Label("Skriv receptens id: ");
 	private TextBox addReceptIdTxt;
@@ -94,6 +94,8 @@ public class MainGUI extends Composite {
 	private TextBox addRaavareBatchRaavareIdTxt;
 	private Label createraavarebatchmaengde = new Label("Skriv mængden: ");
 	private TextBox addRaavareBatchMaengdeTxt;
+	private Label createraavarebatchleverandoer = new Label("Skriv leverandør: ");
+	private TextBox addRaavareBatchLeverandoerTxt;
 	
 	private Label createproduktbatchid = new Label("Skriv råvarebatchens id: ");
 	private TextBox addProduktBatchIdTxt;
@@ -112,13 +114,14 @@ public class MainGUI extends Composite {
 	private TextBox upUserCprTxt;
 	private Label upuserpass = new Label("Skriv brugerens nye password: ");
 	private TextBox upUserPwdTxt;
+	private Label upuserret = new Label("Skriv brugerens rettighedsniveau: ");
+	private TextBox upUserRetTxt;
 	
 	
 	private DBServiceClientImpl serviceImpl;
 	
 	public MainGUI(DBServiceClientImpl serviceImpl) {
-		
-		
+
 		initWidget(this.vPanel);
 		this.serviceImpl = serviceImpl;
 		
@@ -127,8 +130,6 @@ public class MainGUI extends Composite {
 		this.vPanel.add(externalvpanel);
 		
 		startMenu();
-		
-	
 	}
 	
 	private class AuthenticationClickHandler implements ClickHandler {
@@ -145,12 +146,13 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			OperatoerDTO opr = new OperatoerDTO();
-			opr.setOprId(Integer.parseInt(addUserIdTxt.getText()));
-			opr.setOprNavn(addUserNameTxt.getText());
-			opr.setIni(addUserIniTxt.getText());
-			opr.setCpr(addUserCprTxt.getText());
-			opr.setPassword(addUserPwdTxt.getText());
+			OperatoerDTO opr = new OperatoerDTO(
+										Integer.parseInt(addUserIdTxt.getText()), 
+										addUserNameTxt.getText(),
+										addUserIniTxt.getText(), 
+										addUserCprTxt.getText(), 
+										addUserPwdTxt.getText(),
+										Integer.parseInt(addUserRetTxt.getText()));
 			serviceImpl.createUser(opr);
 		}
 	}
@@ -159,10 +161,9 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			RaavareDTO raa = new RaavareDTO();
-			raa.setRaavareId(Integer.parseInt(addRaavareIdTxt.getText()));
-			raa.setRaavareNavn(addRaavareNavnTxt.getText());
-			raa.setLeverandoer(addRaavareLeverandoerTxt.getText());
+			RaavareDTO raa = new RaavareDTO(
+										Integer.parseInt(addRaavareIdTxt.getText()),
+										addRaavareNavnTxt.getText());
 			serviceImpl.createRaavare(raa);
 		}
 	}
@@ -171,9 +172,9 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			ReceptDTO rac = new ReceptDTO();
-			rac.setReceptId(Integer.parseInt(addReceptIdTxt.getText()));
-			rac.setReceptNavn(addReceptNavnTxt.getText());
+			ReceptDTO rac = new ReceptDTO(Integer.parseInt(
+										addReceptIdTxt.getText()), 
+										addReceptNavnTxt.getText());
 			serviceImpl.createRecept(rac);
 		}
 	}
@@ -182,10 +183,11 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			RaavareBatchDTO rab = new RaavareBatchDTO();
-			rab.setRbId(Integer.parseInt(addRaavareBatchIdTxt.getText()));
-			rab.setRaavareId(Integer.parseInt(addRaavareBatchRaavareIdTxt.getText()));
-			rab.setMaengde(Integer.parseInt(addRaavareBatchMaengdeTxt.getText()));
+			RaavareBatchDTO rab = new RaavareBatchDTO(
+										Integer.parseInt(addRaavareBatchIdTxt.getText()),
+										Integer.parseInt(addRaavareBatchRaavareIdTxt.getText()),
+										Integer.parseInt(addRaavareBatchMaengdeTxt.getText()),
+										addRaavareBatchLeverandoerTxt.getText());
 			serviceImpl.createRaavareBatch(rab);
 		}
 	}
@@ -194,10 +196,11 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			ProduktBatchDTO pb = new ProduktBatchDTO();
-			pb.setPbId(Integer.parseInt(addProduktBatchIdTxt.getText()));
-			pb.setStatus(Integer.parseInt(addProduktBatchStatusTxt.getText()));
-			pb.setReceptId(Integer.parseInt(addProduktBatchReceptIdTxt.getText()));
+			ProduktBatchDTO pb = new ProduktBatchDTO(
+										Integer.parseInt(addProduktBatchIdTxt.getText()),
+										Integer.parseInt(addProduktBatchStatusTxt.getText()),
+										Integer.parseInt(addProduktBatchReceptIdTxt.getText())
+										);
 			serviceImpl.createProduktBatch(pb);
 		}
 	}
@@ -206,12 +209,14 @@ public class MainGUI extends Composite {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			OperatoerDTO opr = new OperatoerDTO();
-			opr.setOprId(Integer.parseInt(upUserIdTxt.getText()));
-			opr.setOprNavn(upUserNameTxt.getText());
-			opr.setIni(upUserIniTxt.getText());
-			opr.setCpr(upUserCprTxt.getText());
-			opr.setPassword(upUserPwdTxt.getText());
+			OperatoerDTO opr = new OperatoerDTO(
+										Integer.parseInt(upUserIdTxt.getText()),
+										upUserNameTxt.getText(),
+										upUserIniTxt.getText(),
+										upUserCprTxt.getText(),
+										upUserPwdTxt.getText(),
+										Integer.parseInt(upUserRetTxt.getText()));
+
 			serviceImpl.updateUser(opr);
 		}
 	}
@@ -297,7 +302,6 @@ public class MainGUI extends Composite {
 		
 		String code = "<b>ID:</b> " + info.getRaavareId() + "</br>";
 		code = code + "<b>Navn:</b> " + info.getRaavareNavn() + "</br>";
-		code = code + "<b>Leverandør:</b> " + info.getLeverandoer() + "</br>";
 		
 		html.setHTML(code);
 		this.externalvpanel.add(html);
@@ -362,8 +366,6 @@ public class MainGUI extends Composite {
 			
 			String code = "</br><b>ID:</b> " + raaList.get(i).getRaavareId() + "</br>";
 			code = code + "<b>Navn:</b> " + raaList.get(i).getRaavareNavn() + "</br>";
-			code = code + "<b>Leverandør:</b> " + raaList.get(i).getLeverandoer() + "</br>";
-
 			
 			html.setHTML(code);
 			this.externalvpanel.add(html);
@@ -378,7 +380,6 @@ public class MainGUI extends Composite {
 			String code = "</br><b>ID:</b> " + racList.get(i).getReceptId() + "</br>";
 			code = code + "<b>Navn:</b> " + racList.get(i).getReceptNavn() + "</br>";
 
-			
 			html.setHTML(code);
 			this.externalvpanel.add(html);
 		}
@@ -393,7 +394,6 @@ public class MainGUI extends Composite {
 			code = code + "<b>Raavarens ID:</b> " + rabList.get(i).getRaavareId() + "</br>";
 			code = code + "<b>Mængden:</b> " + rabList.get(i).getMaengde() + "</br>";
 
-			
 			html.setHTML(code);
 			this.externalvpanel.add(html);
 		}
@@ -407,7 +407,6 @@ public class MainGUI extends Composite {
 			String code = "</br><b>Produktbatchens ID:</b> " + pbList.get(i).getPbId() + "</br>";
 			code = code + "<b>Status:</b> " + pbList.get(i).getStatus() + "</br>";
 			code = code + "<b>Receptens ID:</b> " + pbList.get(i).getReceptId() + "</br>";
-
 			
 			html.setHTML(code);
 			this.externalvpanel.add(html);
@@ -425,20 +424,16 @@ public class MainGUI extends Composite {
 			code = code + "<b>Netto:</b> " + pbkList.get(i).getNetto() + "</br>";
 			code = code + "<b>Operatør ID:</b> " + pbkList.get(i).getOprId() + "</br>";
 
-			
 			html.setHTML(code);
 			this.externalvpanel.add(html);
 		}
 	}
-	
-	
 	
 	private class openLoginClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			openLogin();
-			
 		}
 	}
 	
@@ -446,8 +441,7 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			openGetUser();
-			
+			openGetUser();	
 		}
 	}
 	
@@ -456,7 +450,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openGetUserList();
-			
 		}
 	}
 	
@@ -465,7 +458,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openDeleteUser();
-			
 		}
 	}
 	
@@ -474,7 +466,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openCreateUser();
-			
 		}
 	}
 	
@@ -483,7 +474,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openUpdateUser();
-			
 		}
 	}
 	
@@ -492,7 +482,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openCreateRaavare();
-			
 		}
 	}
 	
@@ -501,7 +490,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openGetRaavareList();
-			
 		}
 	}
 	
@@ -510,7 +498,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openCreateRecept();
-			
 		}
 	}
 	
@@ -519,7 +506,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openGetReceptList();
-			
 		}
 	}
 	
@@ -528,7 +514,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openCreateRaavareBatch();
-			
 		}
 	}
 	
@@ -537,7 +522,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openGetRaavareBatchList();
-			
 		}
 	}
 	
@@ -546,7 +530,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openCreateProduktBatch();
-			
 		}
 	}
 	
@@ -555,7 +538,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openGetProduktBatchList();
-			
 		}
 	}
 	
@@ -564,7 +546,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openGetProduktBatchKomponentList();
-			
 		}
 	}
 	
@@ -573,7 +554,6 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			openGetRaavareList();
-			
 		}
 	}
 	
@@ -647,6 +627,10 @@ public class MainGUI extends Composite {
 		addUserPwdTxt = new TextBox();
 		this.contentpanel.add(addUserPwdTxt);
 		
+		this.contentpanel.add(createuserret);
+		addUserRetTxt = new TextBox();
+		this.contentpanel.add(addUserRetTxt);
+		
 		Button createUserBtn = new Button("OK");
 		createUserBtn.addClickHandler(new createUserClickHandler());
 		this.contentpanel.add(createUserBtn);	
@@ -674,6 +658,10 @@ public class MainGUI extends Composite {
 		this.contentpanel.add(upuserpass);
 		upUserPwdTxt = new TextBox();
 		this.contentpanel.add(upUserPwdTxt);
+		
+		this.contentpanel.add(upuserret);
+		upUserRetTxt = new TextBox();
+		this.contentpanel.add(upUserRetTxt);
 		
 		Button updateUserBtn = new Button("OK");
 		updateUserBtn.addClickHandler(new updateUserClickHandler());
@@ -726,10 +714,6 @@ public class MainGUI extends Composite {
 		addRaavareNavnTxt = new TextBox();
 		this.contentpanel.add(addRaavareNavnTxt);
 		
-		this.contentpanel.add(createraavareleverandoer);
-		addRaavareLeverandoerTxt = new TextBox();
-		this.contentpanel.add(addRaavareLeverandoerTxt);
-		
 		Button createUserBtn = new Button("OK");
 		createUserBtn.addClickHandler(new createRaavareClickHandler());
 		this.contentpanel.add(createUserBtn);	
@@ -765,6 +749,10 @@ public class MainGUI extends Composite {
 		this.contentpanel.add(createraavarebatchmaengde);
 		addRaavareBatchMaengdeTxt = new TextBox();
 		this.contentpanel.add(addRaavareBatchMaengdeTxt);
+		
+		this.contentpanel.add(createraavarebatchleverandoer);
+		addRaavareBatchLeverandoerTxt = new TextBox();
+		this.contentpanel.add(addRaavareBatchLeverandoerTxt);
 		
 		Button createUserBtn = new Button("OK");
 		createUserBtn.addClickHandler(new createRaavareBatchClickHandler());

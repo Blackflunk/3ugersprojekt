@@ -12,7 +12,10 @@ public class RaavareBatchDTO implements Serializable
 	
 
 	public RaavareBatchDTO(int rbId, int raavareId, double maengde, String leverandoer) {
-		// TODO Auto-generated constructor stub
+		this.rbId = rbId;
+		this.raavareId = raavareId;
+		this.maengde = maengde;
+		this.leverandoer = leverandoer;
 	}
 	public int getRbId() { return rbId; }
 	public void setRbId(int rbId) { this.rbId = rbId; }

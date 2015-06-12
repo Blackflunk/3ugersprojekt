@@ -1,4 +1,4 @@
-package cdio3.gwt.client.DAOimpl;
+package dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,11 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cdio3.gwt.server.Connector;
-import cdio3.gwt.client.DAOinterface.DALException;
-import cdio3.gwt.client.DAOinterface.IRaavareBatchDAO;
-import cdio3.gwt.client.model.OperatoerDTO;
 import cdio3.gwt.client.model.RaavareBatchDTO;
 import cdio3.gwt.server.DALException;
+import dao.interf.IRaavareBatchDAO;
 
 public class RaavareBatchDAO implements IRaavareBatchDAO{
 

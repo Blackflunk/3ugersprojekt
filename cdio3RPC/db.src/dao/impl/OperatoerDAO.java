@@ -1,4 +1,4 @@
-package cdio3.gwt.client.DAOimpl;
+package dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.ArrayList;
 
 import cdio3.gwt.server.Connector;
-import cdio3.gwt.client.DAOinterface.DALException;
-import cdio3.gwt.client.DAOinterface.IOperatoerDAO;
 import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.server.DALException;
+import dao.interf.IOperatoerDAO;
 
 public class OperatoerDAO implements IOperatoerDAO {
 	
@@ -26,7 +26,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer WHERE opr_id = " + oprId);
 	    try {
 	    	if (!rs.first()) throw new DALException("Operatoeren " + oprId + " findes ikke");
-	    	return new OperatoerDTO (rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getInt("cpr"), rs.getString("password"), rs.getInt("rettighedniveau"));
+	    	return new OperatoerDTO (rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getInt("rettighedniveau"));
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
 		
@@ -42,9 +42,14 @@ public class OperatoerDAO implements IOperatoerDAO {
 	
 	public void updateOperatoer(OperatoerDTO opr) throws DALException {
 		Connector.doUpdate(
-				"UPDATE operatoer SET  opr_id = '" + opr.getOprId() + "', opr_navn = '" + opr.getOprNavn() + "', ini =  '" + opr.getIni() + 
-				"', cpr = '" + opr.getCpr() + "', password = '", rettighedsniveau ='" + opr.getRettighedsniveau() + "' opr.getRettighedsniveau() + "' WHERE opr_id = " +
-				opr.getOprId()
+				"UPDATE operatoer SET  opr_id = '" 
+						+ opr.getOprId() + "', opr_navn = '" 
+						+ opr.getOprNavn() + "', ini =  '" 
+						+ opr.getIni() + "', cpr = '" 
+						+ opr.getCpr() + "', password = '" 
+						+ opr.getPassword() + "', rettighedsniveau ='" 
+						+ opr.getRettighedsniveau() + "' WHERE opr_id = " 
+						+ opr.getOprId()
 		);
 	}
 	
@@ -59,7 +64,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 		{
 			while (rs.next()) 
 			{
-				list.add(new OperatoerDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getInt("cpr"), rs.getString("password"), rs.getInt("rettighedniveau")));
+				list.add(new OperatoerDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getInt("rettighedniveau")));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e); }

@@ -13,9 +13,13 @@ public class ProduktBatchKompDTO implements Serializable
 
 	
 	
-	public ProduktBatchKompDTO(int int1, int int2, double double1,
-			double double2, int int3) {
-		// TODO Auto-generated constructor stub
+	public ProduktBatchKompDTO(int pbId, int rbId, double tara,
+			double netto, int oprId) {
+		this.pbId = pbId;
+		this.rbId = rbId;
+		this.tara = tara;
+		this.netto = netto;
+		this.oprId = oprId;
 	}
 	public int getPbId() { return pbId; }
 	public void setPbId(int pbId) { this.pbId = pbId; }

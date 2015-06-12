@@ -57,7 +57,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 	@Override
 	public OperatoerDTO getUser(int oprId) {
 		ResultSet rs = null;
-		OperatoerDTO opr = new OperatoerDTO();
+		OperatoerDTO opr;
 		try {
 			Connector conn = new Connector();
 			rs = conn.doQuery("SELECT * FROM operatoer WHERE opr_id = \"" + oprId + "\"");
@@ -74,15 +74,19 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		}
 		try {
 			if(!rs.first()) return null;
-			opr.setOprId(rs.getInt("opr_id"));
-			opr.setOprNavn(rs.getString("opr_navn"));
-			opr.setIni(rs.getString("ini"));
-			opr.setCpr(rs.getString("cpr"));
-			opr.setPassword(rs.getString("password"));
+			opr = new OperatoerDTO(
+								rs.getInt("opr_id"),
+								rs.getString("opr_navn"),
+								rs.getString("ini"),
+								rs.getString("cpr"),
+								rs.getString("password"),
+								rs.getInt("rettighedsniveau"));
+			return opr;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return opr;
+		return null;
 	}
 
 	@SuppressWarnings("static-access")
@@ -109,13 +113,13 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			if(!rs.first()) return null;
 			while(rs.next()){
-				opr = new OperatoerDTO();
-				opr.setOprId(rs.getInt("opr_id"));
-				opr.setOprNavn(rs.getString("opr_navn"));
-				opr.setIni(rs.getString("ini"));
-				opr.setCpr(rs.getString("cpr"));
-				opr.setPassword(rs.getString("password"));
-				opr.setRettighedsniveau(rs.getInt("rettighedsniveau"));
+				opr = new OperatoerDTO(
+						rs.getInt("opr_id"),
+						rs.getString("opr_navn"),
+						rs.getString("ini"),
+						rs.getString("cpr"),
+						rs.getString("password"),
+						rs.getInt("rettighedsniveau"));
 				oprList.add(opr);
 			}
 
@@ -172,8 +176,11 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			conn.doUpdate(
 					"INSERT INTO operatoer(opr_id, opr_navn, ini, cpr, password) "
-					+ "VALUES(" + opr.getOprId() + ", '" + opr.getOprNavn() + "', '" + opr.getIni() 
-					+ "', '" + opr.getCpr() + "', '" + opr.getPassword() + "'); "
+					+ "VALUES(" + opr.getOprId() + ", '" 
+								+ opr.getOprNavn() + "', '" 
+								+ opr.getIni() + "', '" 
+								+ opr.getCpr() + "', '" 
+								+ opr.getPassword() + "'); "
 				);
 		} catch (DALException e) {
 			e.printStackTrace();
@@ -241,10 +248,9 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			if(!rs.first()) return null;
 			while(rs.next()){
-				raa = new RaavareDTO();
-				raa.setRaavareId(rs.getInt("raavare_id"));
-				raa.setRaavareNavn(rs.getString("raavare_navn"));
-				raa.setLeverandoer(rs.getString("leverandoer"));
+				raa = new RaavareDTO(
+									rs.getInt("raavare_id"),
+									rs.getString("raavare_navn"));
 				raaList.add(raa);
 			}
 
@@ -271,8 +277,9 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		}
 		try {
 			conn.doUpdate(
-					"INSERT INTO raavare(raavare_id, raavare_navn, leverandoer) "
-					+ "VALUES(" + raa.getRaavareId() + ", '" + raa.getRaavareNavn() + "', '" + raa.getLeverandoer() + "'); "
+					"INSERT INTO raavare(raavare_id, raavare_navn) "
+					+ "VALUES(" + raa.getRaavareId() + ", '" 
+								+ raa.getRaavareNavn() + "'); "
 				);
 		} catch (DALException e) {
 			e.printStackTrace();
@@ -311,9 +318,9 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			if(!rs.first()) return null;
 			while(rs.next()){
-				rec = new ReceptDTO();
-				rec.setReceptId(rs.getInt("recept_id"));
-				rec.setReceptNavn(rs.getString("recept_navn"));
+				rec = new ReceptDTO(
+									rs.getInt("recept_id"),
+									rs.getString("recept_navn"));
 				recList.add(rec);
 			}
 
@@ -341,7 +348,8 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			conn.doUpdate(
 					"INSERT INTO recept(recept_id, recept_navn) "
-					+ "VALUES(" + rec.getReceptId() + ", '" + rec.getReceptNavn() + "'); "
+					+ "VALUES(" + rec.getReceptId() + ", '" 
+								+ rec.getReceptNavn() + "'); "
 				);
 		} catch (DALException e) {
 			e.printStackTrace();
@@ -380,10 +388,11 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			if(!rs.first()) return null;
 			while(rs.next()){
-				rb = new RaavareBatchDTO();
-				rb.setRbId(rs.getInt("rb_id"));
-				rb.setRaavareId(rs.getInt("raavare_id"));
-				rb.setMaengde(rs.getInt("maengde"));
+				rb = new RaavareBatchDTO(
+										rs.getInt("rb_id"),
+										rs.getInt("raavare_id"),
+										rs.getInt("maengde"),
+										rs.getString("leverandoer"));
 				rbList.add(rb);
 			}
 
@@ -410,8 +419,11 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		}
 		try {
 			conn.doUpdate(
-					"INSERT INTO raavarebatch(rb_id, raavare_id, maengde) "
-					+ "VALUES(" + rec.getRbId() + ", " + rec.getRaavareId() + ", " + rec.getMaengde() + "); "
+					"INSERT INTO raavarebatch(rb_id, raavare_id, maengde, leverandoer) "
+					+ "VALUES(" + rec.getRbId() + ", " 
+								+ rec.getRaavareId() + ", " 
+								+ rec.getMaengde() + ", " 
+								+ rec.getLeverandoer() + "); "
 				);
 		} catch (DALException e) {
 			e.printStackTrace();
@@ -451,10 +463,10 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			if(!rs.first()) return null;
 			while(rs.next()){
-				pb = new ProduktBatchDTO();
-				pb.setPbId(rs.getInt("pb_id"));
-				pb.setReceptId(rs.getInt("recept_id"));
-				pb.setStatus(rs.getInt("status"));
+				pb = new ProduktBatchDTO(
+										rs.getInt("pb_id"),
+										rs.getInt("recept_id"),
+										rs.getInt("status"));
 				pbList.add(pb);
 			}
 
@@ -521,12 +533,12 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			if(!rs.first()) return null;
 			while(rs.next()){
-				pbk = new ProduktBatchKompDTO();
-				pbk.setPbId(rs.getInt("pb_id"));
-				pbk.setRbId(rs.getInt("recept_id"));
-				pbk.setTara(rs.getDouble("status"));
-				pbk.setNetto(rs.getDouble("netto"));
-				pbk.setOprId(rs.getInt("opr_id"));
+				pbk = new ProduktBatchKompDTO(
+											rs.getInt("pb_id"),
+											rs.getInt("rb_id"),
+											rs.getDouble("tara"),
+											rs.getDouble("netto"),
+											rs.getInt("opr_id"));
 				pbkList.add(pbk);
 			}
 
@@ -536,10 +548,34 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		return pbkList;
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public ProduktBatchKompDTO createProduktBatchKomponent(
-			ProduktBatchKompDTO rec) {
-		// TODO Auto-generated method stub
-		return null;
+			ProduktBatchKompDTO pb) {
+		Connector conn = null;
+		try {
+			conn = new Connector();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			conn.doUpdate(
+					"INSERT INTO produktbatchkomponent(pb_id, rb_id, tara, netto, opr_id) "
+					+ "VALUES('" + pb.getPbId() + "', '" 
+								 + pb.getRbId() + "', '" 
+								 + pb.getTara() + "', '" 
+								 + pb.getNetto()+ "', '"
+								 + pb.getOprId() + "'); "
+					);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return pb;
 	}
 }
