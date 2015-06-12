@@ -6,13 +6,15 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import cdio3.gwt.client.DAOinterface.DALException;
 import cdio3.gwt.client.DAOinterface.IReceptDAO;
 import cdio3.gwt.client.model.*;
+import cdio3.gwt.server.Connector;
 
 public class ReceptDAO implements IReceptDAO {
 	private static IDataAccess db;
 
-	public ReceptDAO(IDataAccess db) {
+	public ReceptDAO(Connector db) {
 		ReceptDAO.db = db;
 	}
 
@@ -22,7 +24,7 @@ public class ReceptDAO implements IReceptDAO {
 			if (0 == o.length)
 				throw new DALException(receptId);
 
-			return new ReceptDTO(receptId (String), o[0][1]);
+			return new ReceptDTO();
 		} catch (SQLException e) {
 			System.out.println(“Exception”);
 		}
@@ -38,7 +40,7 @@ public class ReceptDAO implements IReceptDAO {
 			List<ReceptDTO> list = new ArrayList<ReceptDTO>();
 
 			for (int i = 0; i < o.length; i++) {
-				list.add(new ReceptDTO((Integer) o[i][0], (String) o[i][1]);
+				list.add(new ReceptDTO());
 			}
 
 			return list;
@@ -64,7 +66,7 @@ public class ReceptDAO implements IReceptDAO {
 		}
 	}
 
-	public void updateRecept(ReceptDTO re) throws KeyDoesNotExistException {
+	public void updateRecept(ReceptDTO re) throws DALException {
 		try {
 			db.executeUpdate(String.format("update 12_CDIOrecept set receptNavn = '%s' where raavareId = %d;", re.getReceptNavn(), re.getReceptId()));
 		} catch (SQLException e) {
