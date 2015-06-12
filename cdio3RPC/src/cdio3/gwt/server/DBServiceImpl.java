@@ -271,7 +271,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		}
 		try {
 			conn.doUpdate(
-					"INSERT INTO raavare(raavare_id, raavare_navn, leverandoer, cpr) "
+					"INSERT INTO raavare(raavare_id, raavare_navn, leverandoer) "
 					+ "VALUES(" + raa.getRaavareId() + ", '" + raa.getRaavareNavn() + "', '" + raa.getLeverandoer() + "'); "
 				);
 		} catch (DALException e) {
@@ -341,7 +341,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			conn.doUpdate(
 					"INSERT INTO recept(recept_id, recept_navn) "
-					+ "VALUES(" + rec.getReceptId() + ", '" + rec.getReceptId() + "'); "
+					+ "VALUES(" + rec.getReceptId() + ", '" + rec.getReceptNavn() + "'); "
 				);
 		} catch (DALException e) {
 			e.printStackTrace();
@@ -393,11 +393,32 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		return rbList;
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public RaavareBatchDTO createRaavareBatch(RaavareBatchDTO rec) {
-		// TODO Auto-generated method stub
-		return null;
+		Connector conn = null;
+		try {
+			conn = new Connector();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			conn.doUpdate(
+					"INSERT INTO raavarebatch(rb_id, raavare_id, maengde) "
+					+ "VALUES(" + rec.getRbId() + ", " + rec.getRaavareId() + ", " + rec.getMaengde() + "); "
+				);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return rec;
 	}
+	
 
 	@SuppressWarnings("static-access")
 	@Override
@@ -443,10 +464,30 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		return pbList;
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
-	public ProduktBatchDTO createProduktBatch(ProduktBatchDTO rec) {
-		// TODO Auto-generated method stub
-		return null;
+	public ProduktBatchDTO createProduktBatch(ProduktBatchDTO pb) {
+		Connector conn = null;
+		try {
+			conn = new Connector();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			conn.doUpdate(
+					"INSERT INTO produktbatch(pb_id, status, recept_id) "
+					+ "VALUES(" + pb.getPbId() + ", " + pb.getStatus() + ", " + pb.getReceptId() + "); "
+				);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return pb;
 	}
 
 	@SuppressWarnings("static-access")

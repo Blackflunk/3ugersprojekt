@@ -1,6 +1,8 @@
 package cdio3.gwt.client.service;
 
 import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.ProduktBatchDTO;
+import cdio3.gwt.client.model.RaavareBatchDTO;
 import cdio3.gwt.client.model.RaavareDTO;
 import cdio3.gwt.client.model.ReceptDTO;
 
@@ -16,4 +18,9 @@ public interface DBServiceClientInt {
 	void createRaavare(RaavareDTO raa);
 	void getReceptList();
 	void createRecept(ReceptDTO rec);
+	void getRaavareBatchList();
+	void createRaavareBatch(RaavareBatchDTO rab);
+	void getProduktBatchList();
+	void createProduktBatch(ProduktBatchDTO prb);
+	void getProduktBatchKompList();
 }

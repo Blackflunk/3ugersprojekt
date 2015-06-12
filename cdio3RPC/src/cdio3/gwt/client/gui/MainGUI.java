@@ -13,6 +13,9 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.ProduktBatchDTO;
+import cdio3.gwt.client.model.ProduktBatchKompDTO;
+import cdio3.gwt.client.model.RaavareBatchDTO;
 import cdio3.gwt.client.model.RaavareDTO;
 import cdio3.gwt.client.model.ReceptDTO;
 import cdio3.gwt.client.service.DBServiceClientImpl;
@@ -33,6 +36,11 @@ public class MainGUI extends Composite {
 	private Button openupdateuser;
 	
 	private Label getuserlist = new Label("Nedenfor er brugerne opstillet: ");
+	private Label getraavarelist = new Label("Nedenfor er råvarerne opstillet: ");
+	private Label getreceptlist = new Label("Nedenfor er recepterne opstillet: ");
+	private Label getraavarebatchlist = new Label("Nedenfor er råvarebatchesne opstillet:");
+	private Label getproduktbatchlist = new Label("Nedenfor er produktbatchesne opstillet:");
+	private Label getproduktbatchkomplist = new Label("Nedenfor er produktbatchkomponenterne opstillet: ");
 	
 	private Label brugerinaktiv = new Label("Brugeren eksisterer ikke.");
 
@@ -67,6 +75,32 @@ public class MainGUI extends Composite {
 	private TextBox addUserCprTxt;
 	private Label createuserpass = new Label("Skriv brugerens kodeord: ");
 	private TextBox addUserPwdTxt;
+	
+	private Label createraavareid = new Label("Skriv råvarens id: ");
+	private TextBox addRaavareIdTxt;
+	private Label createraavarenavn = new Label("Skriv råvarens navn: ");
+	private TextBox addRaavareNavnTxt;
+	private Label createraavareleverandoer = new Label("Skriv leverandørens navn: ");
+	private TextBox addRaavareLeverandoerTxt;
+	
+	private Label createreceptid = new Label("Skriv receptens id: ");
+	private TextBox addReceptIdTxt;
+	private Label createreceptnavn = new Label("Skriv receptens navn: ");
+	private TextBox addReceptNavnTxt;
+	
+	private Label createraavarebatchid = new Label("Skriv råvarebatchens id: ");
+	private TextBox addRaavareBatchIdTxt;
+	private Label createraavarebatchraavareid = new Label("Skriv råvarens ID: ");
+	private TextBox addRaavareBatchRaavareIdTxt;
+	private Label createraavarebatchmaengde = new Label("Skriv mængden: ");
+	private TextBox addRaavareBatchMaengdeTxt;
+	
+	private Label createproduktbatchid = new Label("Skriv råvarebatchens id: ");
+	private TextBox addProduktBatchIdTxt;
+	private Label createproduktbatchstatus = new Label("Skriv råvarens ID: ");
+	private TextBox addProduktBatchStatusTxt;
+	private Label createproduktbatchreceptid = new Label("Skriv mængden: ");
+	private TextBox addProduktBatchReceptIdTxt;
 	
 	private Label upuserid = new Label("Skriv brugerens ID: ");
 	private TextBox upUserIdTxt;
@@ -118,6 +152,53 @@ public class MainGUI extends Composite {
 			opr.setCpr(addUserCprTxt.getText());
 			opr.setPassword(addUserPwdTxt.getText());
 			serviceImpl.createUser(opr);
+		}
+	}
+	
+	private class createRaavareClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			RaavareDTO raa = new RaavareDTO();
+			raa.setRaavareId(Integer.parseInt(addRaavareIdTxt.getText()));
+			raa.setRaavareNavn(addRaavareNavnTxt.getText());
+			raa.setLeverandoer(addRaavareLeverandoerTxt.getText());
+			serviceImpl.createRaavare(raa);
+		}
+	}
+	
+	private class createReceptClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			ReceptDTO rac = new ReceptDTO();
+			rac.setReceptId(Integer.parseInt(addReceptIdTxt.getText()));
+			rac.setReceptNavn(addReceptNavnTxt.getText());
+			serviceImpl.createRecept(rac);
+		}
+	}
+	
+	private class createRaavareBatchClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			RaavareBatchDTO rab = new RaavareBatchDTO();
+			rab.setRbId(Integer.parseInt(addRaavareBatchIdTxt.getText()));
+			rab.setRaavareId(Integer.parseInt(addRaavareBatchRaavareIdTxt.getText()));
+			rab.setMaengde(Integer.parseInt(addRaavareBatchMaengdeTxt.getText()));
+			serviceImpl.createRaavareBatch(rab);
+		}
+	}
+	
+	private class createProduktBatchClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			ProduktBatchDTO pb = new ProduktBatchDTO();
+			pb.setPbId(Integer.parseInt(addProduktBatchIdTxt.getText()));
+			pb.setStatus(Integer.parseInt(addProduktBatchStatusTxt.getText()));
+			pb.setReceptId(Integer.parseInt(addProduktBatchReceptIdTxt.getText()));
+			serviceImpl.createProduktBatch(pb);
 		}
 	}
 	
@@ -234,7 +315,7 @@ public class MainGUI extends Composite {
 			
 			String code = "</br><b>ID:</b> " + raaList.get(i).getRaavareId() + "</br>";
 			code = code + "<b>Navn:</b> " + raaList.get(i).getRaavareNavn() + "</br>";
-			code = code + "<b>LeverandÃ¸r:</b> " + raaList.get(i).getLeverandoer() + "</br>";
+			code = code + "<b>Leverandør:</b> " + raaList.get(i).getLeverandoer() + "</br>";
 
 			
 			html.setHTML(code);
@@ -255,6 +336,55 @@ public class MainGUI extends Composite {
 			this.externalvpanel.add(html);
 		}
 	}
+	
+	public void displayRaavareBatchListe(ArrayList<RaavareBatchDTO> rabList){
+		this.externalvpanel.clear();
+		for(int i = 0;i < rabList.size();i++){
+			HTML html = new HTML();
+			
+			String code = "</br><b>Råvarebatchens ID:</b> " + rabList.get(i).getRbId() + "</br>";
+			code = code + "<b>Raavarens ID:</b> " + rabList.get(i).getRaavareId() + "</br>";
+			code = code + "<b>Mængden:</b> " + rabList.get(i).getMaengde() + "</br>";
+
+			
+			html.setHTML(code);
+			this.externalvpanel.add(html);
+		}
+	}
+	
+	public void displayProduktBatchListe(ArrayList<ProduktBatchDTO> pbList){
+		this.externalvpanel.clear();
+		for(int i = 0;i < pbList.size();i++){
+			HTML html = new HTML();
+			
+			String code = "</br><b>Produktbatchens ID:</b> " + pbList.get(i).getPbId() + "</br>";
+			code = code + "<b>Status:</b> " + pbList.get(i).getStatus() + "</br>";
+			code = code + "<b>Receptens ID:</b> " + pbList.get(i).getReceptId() + "</br>";
+
+			
+			html.setHTML(code);
+			this.externalvpanel.add(html);
+		}
+	}
+	
+	public void displayProduktBatchKompListe(ArrayList<ProduktBatchKompDTO> pbkList){
+		this.externalvpanel.clear();
+		for(int i = 0;i < pbkList.size();i++){
+			HTML html = new HTML();
+			
+			String code = "</br><b>Produktbatchens ID:</b>" + pbkList.get(i).getPbId() + "</br>";
+			code = code + "<b>Råvarebatchens ID:</b> " + pbkList.get(i).getRbId() + "</br>";
+			code = code + "<b>Tara:</b> " + pbkList.get(i).getTara() + "</br>";
+			code = code + "<b>Netto:</b> " + pbkList.get(i).getNetto() + "</br>";
+			code = code + "<b>Operatør ID:</b> " + pbkList.get(i).getOprId() + "</br>";
+
+			
+			html.setHTML(code);
+			this.externalvpanel.add(html);
+		}
+	}
+	
+	
 	
 	private class openLoginClickHandler implements ClickHandler {
 
@@ -327,11 +457,66 @@ public class MainGUI extends Composite {
 			
 		}
 	}
+	
+	private class openCreateReceptClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			openCreateRecept();
+			
+		}
+	}
+	
 	private class openGetReceptListClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			openGetReceptList();
+			
+		}
+	}
+	
+	private class openCreateRaavareBatchClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			openCreateRaavareBatch();
+			
+		}
+	}
+	
+	private class openGetRaavarebatchListClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			openGetRaavareBatchList();
+			
+		}
+	}
+	
+	private class openCreateProduktBatchClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			openCreateProduktBatch();
+			
+		}
+	}
+	
+	private class openGetProduktBatchClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			openGetProduktBatchList();
+			
+		}
+	}
+	
+	private class openGetProduktBatchKomponentClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			openGetProduktBatchKomponentList();
 			
 		}
 	}
@@ -451,43 +636,111 @@ public class MainGUI extends Composite {
 	public void openGetRaavareList(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
-		this.contentpanel.add(getuserlist);
+		this.contentpanel.add(getraavarelist);
 		serviceImpl.getRaavareList();
 	}
 	
 	public void openGetReceptList(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
-		this.contentpanel.add(getuserlist);
+		this.contentpanel.add(getreceptlist);
 		serviceImpl.getReceptList();
 	}
 	
+	public void openGetRaavareBatchList(){
+		this.externalvpanel.clear();
+		this.contentpanel.clear();
+		this.contentpanel.add(getraavarebatchlist);
+		serviceImpl.getRaavareBatchList();
+	}
+	
+	public void openGetProduktBatchList(){
+		this.externalvpanel.clear();
+		this.contentpanel.clear();
+		this.contentpanel.add(getproduktbatchlist);
+		serviceImpl.getProduktBatchList();
+	}
+	
+	public void openGetProduktBatchKomponentList(){
+		this.externalvpanel.clear();
+		this.contentpanel.clear();
+		this.contentpanel.add(getproduktbatchkomplist);
+		serviceImpl.getProduktBatchKompList();
+	}
 	
 	public void openCreateRaavare(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
-		this.contentpanel.add(createuserid);
-		addUserIdTxt = new TextBox();
-		this.contentpanel.add(addUserIdTxt);
+		this.contentpanel.add(createraavareid);
+		addRaavareIdTxt = new TextBox();
+		this.contentpanel.add(addRaavareIdTxt);
 		
-		this.contentpanel.add(createusername);
-		addUserNameTxt = new TextBox();
-		this.contentpanel.add(addUserNameTxt);
+		this.contentpanel.add(createraavarenavn);
+		addRaavareNavnTxt = new TextBox();
+		this.contentpanel.add(addRaavareNavnTxt);
 		
-		this.contentpanel.add(createuserini);
-		addUserIniTxt = new TextBox();
-		this.contentpanel.add(addUserIniTxt);
-		
-		this.contentpanel.add(createusercpr);
-		addUserCprTxt = new TextBox();
-		this.contentpanel.add(addUserCprTxt);
-		
-		this.contentpanel.add(createuserpass);
-		addUserPwdTxt = new TextBox();
-		this.contentpanel.add(addUserPwdTxt);
+		this.contentpanel.add(createraavareleverandoer);
+		addRaavareLeverandoerTxt = new TextBox();
+		this.contentpanel.add(addRaavareLeverandoerTxt);
 		
 		Button createUserBtn = new Button("OK");
-		createUserBtn.addClickHandler(new createUserClickHandler());
+		createUserBtn.addClickHandler(new createRaavareClickHandler());
+		this.contentpanel.add(createUserBtn);	
+	}
+	
+	public void openCreateRecept(){
+		this.externalvpanel.clear();
+		this.contentpanel.clear();
+		this.contentpanel.add(createreceptid);
+		addReceptIdTxt = new TextBox();
+		this.contentpanel.add(addReceptIdTxt);
+		
+		this.contentpanel.add(createreceptnavn);
+		addReceptNavnTxt = new TextBox();
+		this.contentpanel.add(addReceptNavnTxt);
+		
+		Button createUserBtn = new Button("OK");
+		createUserBtn.addClickHandler(new createReceptClickHandler());
+		this.contentpanel.add(createUserBtn);	
+	}
+	
+	public void openCreateRaavareBatch(){
+		this.externalvpanel.clear();
+		this.contentpanel.clear();
+		this.contentpanel.add(createraavarebatchid);
+		addRaavareBatchIdTxt = new TextBox();
+		this.contentpanel.add(addRaavareBatchIdTxt);
+		
+		this.contentpanel.add(createraavarebatchraavareid);
+		addRaavareBatchRaavareIdTxt = new TextBox();
+		this.contentpanel.add(addRaavareBatchRaavareIdTxt);
+		
+		this.contentpanel.add(createraavarebatchmaengde);
+		addRaavareBatchMaengdeTxt = new TextBox();
+		this.contentpanel.add(addRaavareBatchMaengdeTxt);
+		
+		Button createUserBtn = new Button("OK");
+		createUserBtn.addClickHandler(new createRaavareBatchClickHandler());
+		this.contentpanel.add(createUserBtn);	
+	}
+	
+	public void openCreateProduktBatch(){
+		this.externalvpanel.clear();
+		this.contentpanel.clear();
+		this.contentpanel.add(createproduktbatchid);
+		addProduktBatchIdTxt = new TextBox();
+		this.contentpanel.add(addProduktBatchIdTxt);
+		
+		this.contentpanel.add(createproduktbatchstatus);
+		addProduktBatchStatusTxt = new TextBox();
+		this.contentpanel.add(addProduktBatchStatusTxt);
+		
+		this.contentpanel.add(createproduktbatchreceptid);
+		addProduktBatchReceptIdTxt = new TextBox();
+		this.contentpanel.add(addProduktBatchReceptIdTxt);
+		
+		Button createUserBtn = new Button("OK");
+		createUserBtn.addClickHandler(new createProduktBatchClickHandler());
 		this.contentpanel.add(createUserBtn);	
 	}
 	
@@ -525,16 +778,16 @@ public class MainGUI extends Composite {
 	public void farmaceutMenu(){
 		this.menupanel.clear();
 		
-		Button openopretraavare = new Button("Opret RÃ¥vare");
+		Button openopretraavare = new Button("Opret Råvare");
 		openopretraavare.addClickHandler(new openCreateRaavareClickHandler());
 		this.menupanel.add(openopretraavare);
 		
-		Button opengetraavarelist = new Button("Vis RÃ¥varer");
+		Button opengetraavarelist = new Button("Vis Råvarer");
 		opengetraavarelist.addClickHandler(new openGetRaavareListClickHandler());
 		this.menupanel.add(opengetraavarelist);
 		
 		Button openopretrecept = new Button("Opret Recept");
-		openopretrecept.addClickHandler(new openDeleteUserClickHandler());
+		openopretrecept.addClickHandler(new openCreateReceptClickHandler());
 		this.menupanel.add(openopretrecept);
 		
 		Button openreceptliste = new Button("Vis Recepter");
@@ -548,24 +801,24 @@ public class MainGUI extends Composite {
 		
 		//TODO lav click handlers
 		Button openopretraavarebatch = new Button("Opret RÃ¥varebatch");
-		openopretraavarebatch.addClickHandler(new openGetUserClickHandler());
+		openopretraavarebatch.addClickHandler(new openCreateRaavareBatchClickHandler());
 		this.menupanel.add(openopretraavarebatch);
 		
 		Button opengetraavarebatchlist = new Button("Vis RÃ¥varebatches");
-		//opengetraavarebatchlist.addClickHandler(new openGetRaavarebatchListClickHandler());
+		opengetraavarebatchlist.addClickHandler(new openGetRaavarebatchListClickHandler());
 		this.menupanel.add(opengetraavarebatchlist);
 		
 		
 		Button opencreateproduktbatch = new Button("Opret Produktbatch");
-		opencreateproduktbatch.addClickHandler(new openDeleteUserClickHandler());
+		opencreateproduktbatch.addClickHandler(new openCreateProduktBatchClickHandler());
 		this.menupanel.add(opencreateproduktbatch);
 		
 		Button openproduktbatchlist = new Button("Vis Produktbatches");
-		//openproduktbatchlist.addClickHandler(new openGetProduktbatchClickHandler());
+		openproduktbatchlist.addClickHandler(new openGetProduktBatchClickHandler());
 		this.menupanel.add(openproduktbatchlist);
 		
 		Button openproduktbatchkomplist = new Button("Vis Produktbatchkomponenter");
-		//openproduktbatchkomplist.addClickHandler(new openGetProduktbatchClickHandler());
+		openproduktbatchkomplist.addClickHandler(new openGetProduktBatchKomponentClickHandler());
 		this.menupanel.add(openproduktbatchlist);
 		
 	}

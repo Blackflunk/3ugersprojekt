@@ -85,6 +85,35 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	@Override
 	public void createRecept(ReceptDTO rec) {
 		this.service.createRecept(rec,new DefaultCallback());
+	}
+	
+	@Override
+	public void getRaavareBatchList() {
+		this.service.getRaavareBatchList(new DefaultCallback());
+		
+	}
+
+	@Override
+	public void createRaavareBatch(RaavareBatchDTO rab) {
+		this.service.createRaavareBatch(rab, new DefaultCallback());
+		
+	}
+
+	@Override
+	public void getProduktBatchList() {
+		this.service.getProduktBatchList(new DefaultCallback());
+		
+	}
+
+	@Override
+	public void createProduktBatch(ProduktBatchDTO prb) {
+		this.service.createProduktBatch(prb, new DefaultCallback());
+		
+	}
+
+	@Override
+	public void getProduktBatchKompList() {
+		this.service.getProduktBatchKomponentList(new DefaultCallback());
 		
 	}
 	
@@ -118,6 +147,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 					boolean svar = (Boolean) result;
 					maingui.deletedElement(svar);
 				}
+			
 			//Listerne
 			else if(result instanceof ArrayList<?>){
 				if (((ArrayList<?>)result).get(0) instanceof OperatoerDTO){
@@ -135,12 +165,15 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 				}
 				if (((ArrayList<?>)result).get(0) instanceof RaavareBatchDTO){
 					ArrayList raab = (ArrayList<RaavareBatchDTO>) result;
+					maingui.displayRaavareBatchListe(raab);
 				}
 				if (((ArrayList<?>)result).get(0) instanceof ProduktBatchDTO){
 					ArrayList pb = (ArrayList<ProduktBatchDTO>) result;
+					maingui.displayProduktBatchListe(pb);
 				}
 				if (((ArrayList<?>)result).get(0) instanceof ProduktBatchKompDTO){
-					ArrayList pb = (ArrayList<ProduktBatchKompDTO>) result;
+					ArrayList pbk = (ArrayList<ProduktBatchKompDTO>) result;
+					maingui.displayProduktBatchKompListe(pbk);
 				}
 			}
 		}
