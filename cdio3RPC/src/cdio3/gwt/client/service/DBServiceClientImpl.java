@@ -130,10 +130,26 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 		public void onSuccess(Object result) {
 
 			if(result instanceof OperatoerDTO){
-				if(rettighedsniveau == 4){
 				OperatoerDTO opr = (OperatoerDTO) result;
 				maingui.displayOperatoer(opr);
+			}
+			else if(result instanceof RaavareDTO){
+				RaavareDTO raa = (RaavareDTO) result;
+				maingui.displayRaavare(raa);
+			}
+			else if(result instanceof ReceptDTO){
+				if(rettighedsniveau == 4){
+				ReceptDTO rec = (ReceptDTO) result;
+				maingui.displayRecept(rec);
 				}
+			}
+			else if(result instanceof RaavareBatchDTO){
+				RaavareBatchDTO rab = (RaavareBatchDTO) result;
+				maingui.displayRaavareBatch(rab);
+			}
+			else if(result instanceof ProduktBatchDTO){
+				ProduktBatchDTO pb = (ProduktBatchDTO) result;
+				maingui.displayProduktBatch(pb);
 			}
 			// Hvis der modtages integer (Login)
 			else if(result instanceof Integer){

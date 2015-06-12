@@ -291,6 +291,53 @@ public class MainGUI extends Composite {
 		this.externalvpanel.add(html);
 	}
 	
+	public void displayRaavare(RaavareDTO info) {
+		this.externalvpanel.clear();
+		HTML html = new HTML();
+		
+		String code = "<b>ID:</b> " + info.getRaavareId() + "</br>";
+		code = code + "<b>Navn:</b> " + info.getRaavareNavn() + "</br>";
+		code = code + "<b>Leverandør:</b> " + info.getLeverandoer() + "</br>";
+		
+		html.setHTML(code);
+		this.externalvpanel.add(html);
+	}
+	
+	public void displayRecept(ReceptDTO info) {
+		this.externalvpanel.clear();
+		HTML html = new HTML();
+		
+		String code = "<b>ID:</b> " + info.getReceptId() + "</br>";
+		code = code + "<b>Navn:</b> " + info.getReceptNavn() + "</br>";
+		
+		html.setHTML(code);
+		this.externalvpanel.add(html);
+	}
+	
+	public void displayRaavareBatch(RaavareBatchDTO info) {
+		this.externalvpanel.clear();
+		HTML html = new HTML();
+		
+		String code = "<b>Råvarebatchens ID:</b> " + info.getRbId() + "</br>";
+		code = code + "<b>Råvarens ID:</b> " + info.getRaavareId() + "</br>";
+		code = code + "<b>Mængde:</b> " + info.getMaengde() + "</br>";
+		
+		html.setHTML(code);
+		this.externalvpanel.add(html);
+	}
+	
+	public void displayProduktBatch(ProduktBatchDTO info) {
+		this.externalvpanel.clear();
+		HTML html = new HTML();
+		
+		String code = "<b>Produktbatchens ID:</b> " + info.getPbId() + "</br>";
+		code = code + "<b>Produktbatchens status:</b> " + info.getStatus() + "</br>";
+		code = code + "<b>Receptens ID:</b> " + info.getReceptId() + "</br>";
+		
+		html.setHTML(code);
+		this.externalvpanel.add(html);
+	}
+	
 	public void displayOperatoerListe(ArrayList<OperatoerDTO> oprList){
 		this.externalvpanel.clear();
 		for(int i = 0;i < oprList.size();i++){
