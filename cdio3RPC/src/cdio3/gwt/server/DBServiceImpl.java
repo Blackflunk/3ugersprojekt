@@ -114,12 +114,12 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 			if(!rs.first()) return null;
 			while(rs.next()){
 				opr = new OperatoerDTO(
-						rs.getInt("opr_id"),
-						rs.getString("opr_navn"),
-						rs.getString("ini"),
-						rs.getString("cpr"),
-						rs.getString("password"),
-						rs.getInt("rettighedsniveau"));
+									rs.getInt("opr_id"),
+									rs.getString("opr_navn"),
+									rs.getString("ini"),
+									rs.getString("cpr"),
+									rs.getString("password"),
+									rs.getInt("rettighedsniveau"));
 				oprList.add(opr);
 			}
 
