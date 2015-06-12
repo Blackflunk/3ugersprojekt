@@ -1,4 +1,4 @@
-package cdio3.gwt.client.DAOinterface;
+package cdio3.gwt.client;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -6,9 +6,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import cdio3.gwt.client.DAOinterface.IReceptDAO;
 import cdio3.gwt.client.model.*;
-import DALException.*;
-import db.*;
 
 public class ReceptDAO implements IReceptDAO {
 	private static IDataAccess db;
