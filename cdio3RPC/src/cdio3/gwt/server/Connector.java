@@ -61,7 +61,7 @@ public class Connector
 		catch (SQLException e) { throw new DALException(e); }
 	}
 	
-	public static int doUpdate(String cmd) throws DALException
+	public int doUpdate(String cmd) throws DALException
 	{
 		try { return stm.executeUpdate(cmd); }
 		catch (SQLException e) { throw new DALException(e); }

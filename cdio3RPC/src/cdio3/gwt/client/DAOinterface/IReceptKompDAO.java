@@ -3,7 +3,7 @@ package cdio3.gwt.client.DAOinterface;
 import java.util.List;
 import cdio3.gwt.client.model.ReceptKompDTO;
 
-public interface ReceptKompDAO {
+public interface IReceptKompDAO {
 	ReceptKompDTO getReceptKomp(int receptId, int raavareId) throws DALException;
 	List<ReceptKompDTO> getReceptKompList(int receptId) throws DALException;
 	List<ReceptKompDTO> getReceptKompList() throws DALException;
