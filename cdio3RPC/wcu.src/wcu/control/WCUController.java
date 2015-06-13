@@ -36,6 +36,7 @@ public class WCUController {
 		weightChoice = CC.getUserInput();
 		if(weightChoice == "WS"){
 			mode = "Silmulator";
+			launch.main(start);
 		}
 		else if(weightChoice == "W"){
 			mode = "Weight";
