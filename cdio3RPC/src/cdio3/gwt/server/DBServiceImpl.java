@@ -4,9 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
-import cdio3.gwt.server.Connector;
 import cdio3.gwt.client.model.OperatoerDTO;
 import cdio3.gwt.client.model.ProduktBatchDTO;
 import cdio3.gwt.client.model.ProduktBatchKompDTO;
@@ -14,6 +11,8 @@ import cdio3.gwt.client.model.RaavareBatchDTO;
 import cdio3.gwt.client.model.RaavareDTO;
 import cdio3.gwt.client.model.ReceptDTO;
 import cdio3.gwt.client.service.DBService;
+
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
 public class DBServiceImpl extends RemoteServiceServlet implements DBService {
@@ -41,13 +40,8 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		}
 		try {
 			if(!rs.first()) rettighedsniveau = 0;
+			else if (rs.first()) rettighedsniveau = rs.getInt("rettighedsniveau");
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		try {
-			if (rs.first()) rettighedsniveau = rs.getInt("rettighedsniveau");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return rettighedsniveau;
@@ -57,7 +51,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 	@Override
 	public OperatoerDTO getUser(int oprId) {
 		ResultSet rs = null;
-		OperatoerDTO opr;
+		OperatoerDTO opr = new OperatoerDTO();
 		try {
 			Connector conn = new Connector();
 			rs = conn.doQuery("SELECT * FROM operatoer WHERE opr_id = \"" + oprId + "\"");
@@ -74,13 +68,12 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		}
 		try {
 			if(!rs.first()) return null;
-			opr = new OperatoerDTO(
-								rs.getInt("opr_id"),
-								rs.getString("opr_navn"),
-								rs.getString("ini"),
-								rs.getString("cpr"),
-								rs.getString("password"),
-								rs.getInt("rettighedsniveau"));
+			opr.setOprId(rs.getInt("opr_id")); 
+			opr.setOprNavn(rs.getString("opr_navn"));
+			opr.setIni(rs.getString("ini"));
+			opr.setCpr(rs.getString("cpr"));
+			opr.setPassword(rs.getString("password"));
+			opr.setRettighedsniveau(rs.getInt("rettighedsniveau"));
 			return opr;
 
 		} catch (SQLException e) {
@@ -93,7 +86,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 	@Override
 	public ArrayList<OperatoerDTO> getUserList() {
 		ResultSet rs = null;
-		OperatoerDTO opr = null;
+		OperatoerDTO opr = new OperatoerDTO();
 		ArrayList<OperatoerDTO> oprList = new ArrayList<OperatoerDTO>();
 		
 		try {
@@ -113,13 +106,12 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			if(!rs.first()) return null;
 			while(rs.next()){
-				opr = new OperatoerDTO(
-									rs.getInt("opr_id"),
-									rs.getString("opr_navn"),
-									rs.getString("ini"),
-									rs.getString("cpr"),
-									rs.getString("password"),
-									rs.getInt("rettighedsniveau"));
+				opr.setOprId(rs.getInt("opr_id")); 
+				opr.setOprNavn(rs.getString("opr_navn"));
+				opr.setIni(rs.getString("ini"));
+				opr.setCpr(rs.getString("cpr"));
+				opr.setPassword(rs.getString("password"));
+				opr.setRettighedsniveau(rs.getInt("rettighedsniveau"));
 				oprList.add(opr);
 			}
 
@@ -221,7 +213,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 	@Override
 	public ArrayList<RaavareDTO> getRaavareList() {
 		ResultSet rs = null;
-		RaavareDTO raa = null;
+		RaavareDTO raa = new RaavareDTO();
 		ArrayList<RaavareDTO> raaList = new ArrayList<RaavareDTO>();
 		Connector conn = null;
 		
@@ -248,9 +240,8 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			if(!rs.first()) return null;
 			while(rs.next()){
-				raa = new RaavareDTO(
-									rs.getInt("raavare_id"),
-									rs.getString("raavare_navn"));
+				raa.setRaavareId(rs.getInt("raavare_id"));
+				raa.setRaavareNavn(rs.getString("raavare_navn"));
 				raaList.add(raa);
 			}
 
@@ -291,7 +282,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 	@Override
 	public ArrayList<ReceptDTO> getReceptList() {
 		ResultSet rs = null;
-		ReceptDTO rec = null;
+		ReceptDTO rec = new ReceptDTO();
 		ArrayList<ReceptDTO> recList = new ArrayList<ReceptDTO>();
 		Connector conn = null;
 		
@@ -318,9 +309,8 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			if(!rs.first()) return null;
 			while(rs.next()){
-				rec = new ReceptDTO(
-									rs.getInt("recept_id"),
-									rs.getString("recept_navn"));
+				rec.setReceptId(rs.getInt("recept_id"));
+				rec.setReceptNavn(rs.getString("recept_navn"));
 				recList.add(rec);
 			}
 
@@ -361,7 +351,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 	@Override
 	public ArrayList<RaavareBatchDTO> getRaavareBatchList() {
 		ResultSet rs = null;
-		RaavareBatchDTO rb = null;
+		RaavareBatchDTO rb = new RaavareBatchDTO();
 		ArrayList<RaavareBatchDTO> rbList = new ArrayList<RaavareBatchDTO>();
 		Connector conn = null;
 		
@@ -388,11 +378,10 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			if(!rs.first()) return null;
 			while(rs.next()){
-				rb = new RaavareBatchDTO(
-										rs.getInt("rb_id"),
-										rs.getInt("raavare_id"),
-										rs.getInt("maengde"),
-										rs.getString("leverandoer"));
+				rb.setRbId(rs.getInt("rb_id"));
+				rb.setRaavareId(rs.getInt("raavare_id"));
+				rb.setMaengde(rs.getInt("maengde"));
+				rb.setLeverandoer(rs.getString("leverandoer"));
 				rbList.add(rb);
 			}
 
@@ -436,7 +425,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 	@Override
 	public ArrayList<ProduktBatchDTO> getProduktBatchList() {
 		ResultSet rs = null;
-		ProduktBatchDTO pb = null;
+		ProduktBatchDTO pb = new ProduktBatchDTO();
 		ArrayList<ProduktBatchDTO> pbList = new ArrayList<ProduktBatchDTO>();
 		Connector conn = null;
 		
@@ -463,10 +452,9 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			if(!rs.first()) return null;
 			while(rs.next()){
-				pb = new ProduktBatchDTO(
-										rs.getInt("pb_id"),
-										rs.getInt("recept_id"),
-										rs.getInt("status"));
+				pb.setPbId(rs.getInt("pb_id"));
+				pb.setReceptId(rs.getInt("recept_id"));
+				pb.setStatus(rs.getInt("status"));
 				pbList.add(pb);
 			}
 
@@ -506,7 +494,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 	@Override
 	public ArrayList<ProduktBatchKompDTO> getProduktBatchKomponentList() {
 		ResultSet rs = null;
-		ProduktBatchKompDTO pbk = null;
+		ProduktBatchKompDTO pbk = new ProduktBatchKompDTO();
 		ArrayList<ProduktBatchKompDTO> pbkList = new ArrayList<ProduktBatchKompDTO>();
 		Connector conn = null;
 		
@@ -533,12 +521,11 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		try {
 			if(!rs.first()) return null;
 			while(rs.next()){
-				pbk = new ProduktBatchKompDTO(
-											rs.getInt("pb_id"),
-											rs.getInt("rb_id"),
-											rs.getDouble("tara"),
-											rs.getDouble("netto"),
-											rs.getInt("opr_id"));
+				pbk.setPbId(rs.getInt("pb_id"));
+				pbk.setRbId(rs.getInt("rb_id"));
+				pbk.setTara(rs.getDouble("tara"));
+				pbk.setNetto(rs.getDouble("netto"));
+				pbk.setOprId(rs.getInt("opr_id"));
 				pbkList.add(pbk);
 			}
 

@@ -3,7 +3,7 @@ package cdio3.gwt.client.model;
 import java.io.Serializable;
 
 /**
- * Operatoer Data Access Objekt
+ * Operatoer Data Objekt
  * 
  * @author Gruppe12
  * @version 1.0
@@ -15,13 +15,14 @@ public class OperatoerDTO implements Serializable
 	int oprId;                     
 	String oprNavn;                
 	String ini;                 
-	String cpr; 
-
+	String cpr;
 	String password;
 	int rettighedsniveau;
 
-	public OperatoerDTO(int oprId, String oprNavn, String ini,
-			String cpr, String password, int rettighedsniveau) {
+	public OperatoerDTO(){
+		
+	}
+	public OperatoerDTO(int oprId, String oprNavn, String ini, String cpr, String password, int rettighedsniveau){
 		this.oprId = oprId;
 		this.oprNavn = oprNavn;
 		this.ini = ini;
@@ -29,6 +30,7 @@ public class OperatoerDTO implements Serializable
 		this.password = password;
 		this.rettighedsniveau = rettighedsniveau;
 	}
+	
 	public synchronized int getOprId() { return oprId; }
 	public synchronized void setOprId(int oprId) { this.oprId = oprId; }
 	public synchronized String getOprNavn() { return oprNavn; }

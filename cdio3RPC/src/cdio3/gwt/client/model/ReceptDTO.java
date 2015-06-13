@@ -5,8 +5,8 @@ import java.io.Serializable;
 /**
  * Recept Data Objekt
  * 
- * @author mn/tb
- * @version 1.2
+ * @author Gruppe12
+ * @version 1.0
  */
 
 @SuppressWarnings("serial")
@@ -17,17 +17,20 @@ public class ReceptDTO implements Serializable
 	/** Receptnavn min. 2 max. 20 karakterer */
 	String receptNavn;
 	
-	public ReceptDTO(int int1, String string) {
-		this.receptId = int1;
-		this.receptNavn = string;
-	}
-	/** liste af kompenenter i recepten */
+	public ReceptDTO() {
 
-    public int getReceptId() { return receptId; }
-	public void setReceptId(int receptId) { this.receptId = receptId; }
-	public String getReceptNavn() { return receptNavn; }
-	public void setReceptNavn(String receptNavn) { this.receptNavn = receptNavn; }
-	public String toString() { 
+	}
+	
+	public ReceptDTO(int receptId, String receptNavn) {
+		this.receptId = receptId;
+		this.receptNavn = receptNavn;
+	}
+
+    public synchronized int getReceptId() { return receptId; }
+	public synchronized void setReceptId(int receptId) { this.receptId = receptId; }
+	public synchronized String getReceptNavn() { return receptNavn; }
+	public synchronized void setReceptNavn(String receptNavn) { this.receptNavn = receptNavn; }
+	public synchronized String toString() { 
 		return receptId + "\t" + receptNavn; 
 	}
 }

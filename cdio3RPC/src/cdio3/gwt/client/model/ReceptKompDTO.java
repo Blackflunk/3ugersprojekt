@@ -2,13 +2,24 @@ package cdio3.gwt.client.model;
 
 import java.io.Serializable;
 
+/**
+ * ReceptKomponent Data Objekt
+ * 
+ * @author Gruppe12
+ * @version 1.0
+ */
+
 @SuppressWarnings("serial")
 public class ReceptKompDTO implements Serializable
 {
-	int receptId;                  // auto genereres fra 1..n   
-	int raavareId;             // i omraadet 1-99999999
+	int receptId;               // auto genereres fra 1..n   
+	int raavareId;             	// i omraadet 1-99999999
 	double nomNetto;            // skal vaere positiv og passende stor
 	double tolerance;           // skal vaere positiv og passende stor
+
+	public ReceptKompDTO() {
+
+	}
 
 	public ReceptKompDTO(int receptId, int raavareId, double nomNetto, double tolerance) {
 		this.receptId = receptId;
@@ -16,15 +27,16 @@ public class ReceptKompDTO implements Serializable
 		this.nomNetto = nomNetto;
 		this.tolerance = tolerance;
 	}
-	public int getReceptId() { return receptId; }
-	public void setReceptId(int receptId) { this.receptId = receptId; }
-	public int getRaavareId() { return raavareId; }
-	public void setRaavareId(int raavareId) { this.raavareId = raavareId; }
-	public double getNomNetto() { return nomNetto; }
-	public void setNomNetto(double nomNetto) { this.nomNetto = nomNetto; }
-	public double getTolerance() { return tolerance; }
-	public void setTolerance(double tolerance) { this.tolerance = tolerance; }
-	public String toString() { 
+	
+	public synchronized int getReceptId() { return receptId; }
+	public synchronized void setReceptId(int receptId) { this.receptId = receptId; }
+	public synchronized int getRaavareId() { return raavareId; }
+	public synchronized void setRaavareId(int raavareId) { this.raavareId = raavareId; }
+	public synchronized double getNomNetto() { return nomNetto; }
+	public synchronized void setNomNetto(double nomNetto) { this.nomNetto = nomNetto; }
+	public synchronized double getTolerance() { return tolerance; }
+	public synchronized void setTolerance(double tolerance) { this.tolerance = tolerance; }
+	public synchronized String toString() { 
 		return receptId + "\t" + raavareId + "\t" + nomNetto + "\t" + tolerance; 
 	}
 }

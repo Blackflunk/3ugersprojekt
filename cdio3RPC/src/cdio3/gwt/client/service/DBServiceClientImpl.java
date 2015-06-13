@@ -153,11 +153,11 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 			}
 			// Hvis der modtages integer (Login)
 			else if(result instanceof Integer){
-				if(rettighedsniveau == 0){
-					Integer svar = (Integer) result;
+				//if(rettighedsniveau == 0){
+					int svar = (Integer) result;
 					rettighedsniveau = svar;
-					maingui.authenticateOperatoer(svar);
-					}
+					maingui.authenticateOperatoer(rettighedsniveau);
+				//	}
 				}
 				else if(result instanceof Boolean){
 					boolean svar = (Boolean) result;

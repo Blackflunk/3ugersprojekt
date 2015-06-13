@@ -146,13 +146,13 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			OperatoerDTO opr = new OperatoerDTO(
-										Integer.parseInt(addUserIdTxt.getText()), 
-										addUserNameTxt.getText(),
-										addUserIniTxt.getText(), 
-										addUserCprTxt.getText(), 
-										addUserPwdTxt.getText(),
-										Integer.parseInt(addUserRetTxt.getText()));
+			OperatoerDTO opr = new OperatoerDTO();
+			opr.setOprId(Integer.parseInt(addUserIdTxt.getText()));
+			opr.setOprNavn(addUserNameTxt.getText());
+			opr.setIni(addUserIniTxt.getText());
+			opr.setCpr(addUserCprTxt.getText());
+			opr.setPassword(addUserPwdTxt.getText());
+			opr.setRettighedsniveau(Integer.parseInt(addUserRetTxt.getText()));
 			serviceImpl.createUser(opr);
 		}
 	}
@@ -161,9 +161,9 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			RaavareDTO raa = new RaavareDTO(
-										Integer.parseInt(addRaavareIdTxt.getText()),
-										addRaavareNavnTxt.getText());
+			RaavareDTO raa = new RaavareDTO();
+			raa.setRaavareId(Integer.parseInt(addRaavareIdTxt.getText()));
+			raa.setRaavareNavn(addRaavareNavnTxt.getText());
 			serviceImpl.createRaavare(raa);
 		}
 	}
@@ -172,9 +172,9 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			ReceptDTO rac = new ReceptDTO(Integer.parseInt(
-										addReceptIdTxt.getText()), 
-										addReceptNavnTxt.getText());
+			ReceptDTO rac = new ReceptDTO();
+			rac.setReceptId(Integer.parseInt(addReceptIdTxt.getText()));
+			rac.setReceptNavn(addReceptNavnTxt.getText());
 			serviceImpl.createRecept(rac);
 		}
 	}
@@ -183,11 +183,11 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			RaavareBatchDTO rab = new RaavareBatchDTO(
-										Integer.parseInt(addRaavareBatchIdTxt.getText()),
-										Integer.parseInt(addRaavareBatchRaavareIdTxt.getText()),
-										Integer.parseInt(addRaavareBatchMaengdeTxt.getText()),
-										addRaavareBatchLeverandoerTxt.getText());
+			RaavareBatchDTO rab = new RaavareBatchDTO();
+			rab.setRbId(Integer.parseInt(addRaavareBatchIdTxt.getText()));
+			rab.setRaavareId(Integer.parseInt(addRaavareBatchRaavareIdTxt.getText()));
+			rab.setMaengde(Integer.parseInt(addRaavareBatchMaengdeTxt.getText()));
+			rab.setLeverandoer(addRaavareBatchLeverandoerTxt.getText());
 			serviceImpl.createRaavareBatch(rab);
 		}
 	}
@@ -196,11 +196,10 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			ProduktBatchDTO pb = new ProduktBatchDTO(
-										Integer.parseInt(addProduktBatchIdTxt.getText()),
-										Integer.parseInt(addProduktBatchStatusTxt.getText()),
-										Integer.parseInt(addProduktBatchReceptIdTxt.getText())
-										);
+			ProduktBatchDTO pb = new ProduktBatchDTO();
+			pb.setPbId(Integer.parseInt(addProduktBatchIdTxt.getText()));
+			pb.setReceptId(Integer.parseInt(addProduktBatchStatusTxt.getText()));
+			pb.setStatus(Integer.parseInt(addProduktBatchReceptIdTxt.getText()));
 			serviceImpl.createProduktBatch(pb);
 		}
 	}
@@ -209,14 +208,13 @@ public class MainGUI extends Composite {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			OperatoerDTO opr = new OperatoerDTO(
-										Integer.parseInt(upUserIdTxt.getText()),
-										upUserNameTxt.getText(),
-										upUserIniTxt.getText(),
-										upUserCprTxt.getText(),
-										upUserPwdTxt.getText(),
-										Integer.parseInt(upUserRetTxt.getText()));
-
+			OperatoerDTO opr = new OperatoerDTO();
+			opr.setOprId(Integer.parseInt(upUserIdTxt.getText()));
+			opr.setOprNavn(upUserNameTxt.getText());
+			opr.setIni(upUserIniTxt.getText());
+			opr.setCpr(upUserCprTxt.getText());
+			opr.setPassword(upUserPwdTxt.getText());
+			opr.setRettighedsniveau(Integer.parseInt(upUserRetTxt.getText()));
 			serviceImpl.updateUser(opr);
 		}
 	}
@@ -251,8 +249,6 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		HTML html = new HTML();
 		rettighedsniveau = svar;
-		
-		
 		
 		if(rettighedsniveau == 4)
 			adminMenu();

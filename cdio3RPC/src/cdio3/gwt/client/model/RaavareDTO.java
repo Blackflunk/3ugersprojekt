@@ -5,8 +5,8 @@ import java.io.Serializable;
 /**
  * Raavare Data Objekt
  * 
- * @author mn/sh/tb
- * @version 1.2
+ * @author gruppe 12
+ * @version 1.0
  */
 
 @SuppressWarnings("serial")
@@ -17,16 +17,20 @@ public class RaavareDTO implements Serializable
     /** min. 2 max. 20 karakterer */
     String raavareNavn;                
 	
-    public RaavareDTO(int raavareId, String raavareNavn) {
-		this.raavareId = raavareId;
-		this.raavareNavn = raavareNavn;
-	}
+    public RaavareDTO() {
+
+    }
     
-	public int getRaavareId() { return raavareId; }
-    public void setRaavareId(int raavareId) { this.raavareId = raavareId; }
-    public String getRaavareNavn() { return raavareNavn; }
-    public void setRaavareNavn(String raavareNavn) { this.raavareNavn = raavareNavn; }
-    public String toString() { 
+    public RaavareDTO(int raavareId, String raavareNavn) {
+    	this.raavareId = raavareId;
+    	this.raavareNavn = raavareNavn;
+    }
+    
+	public synchronized int getRaavareId() { return raavareId; }
+    public synchronized void setRaavareId(int raavareId) { this.raavareId = raavareId; }
+    public synchronized String getRaavareNavn() { return raavareNavn; }
+    public synchronized void setRaavareNavn(String raavareNavn) { this.raavareNavn = raavareNavn; }
+    public synchronized String toString() { 
 		return raavareId + "\t" + raavareNavn +"\t"; 
 	}
 }
