@@ -18,6 +18,7 @@ public class OperatoerDTO implements Serializable
 	String cpr;
 	String password;
 	int rettighedsniveau;
+	String stilling;
 
 	public OperatoerDTO(){
 		
@@ -43,5 +44,7 @@ public class OperatoerDTO implements Serializable
 	public synchronized void setPassword(String password) { this.password = password; }
 	public synchronized int getRettighedsniveau() {return rettighedsniveau; }
 	public synchronized void setRettighedsniveau(int rettighedsniveau) { this.rettighedsniveau = rettighedsniveau; }
+	public synchronized String getStilling() {return stilling; }
+	public synchronized void setStilling(String stilling) { this.stilling = stilling; }
 	public synchronized String toString() { return oprId + "\t" + oprNavn + "\t" + ini + "\t" + cpr + "\t" + password; }
 }

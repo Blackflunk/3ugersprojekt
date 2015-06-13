@@ -287,6 +287,7 @@ public class MainGUI extends Composite {
 		code = code + "<b>Ini:</b> " + info.getIni() + "</br>";
 		code = code + "<b>Cpr:</b> " + info.getCpr() + "</br>";
 		code = code + "<b>Password:</b> " + info.getPassword() + "</br>";
+		code = code + "<b>Stilling:</b> " + info.getStilling() + "</br>";
 		
 		html.setHTML(code);
 		this.externalvpanel.add(html);
