@@ -425,14 +425,6 @@ public class MainGUI extends Composite {
 		}
 	}
 	
-	private class openLoginClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			openLogin();
-		}
-	}
-	
 	private class openGetUserClickHandler implements ClickHandler {
 
 		@Override
@@ -777,9 +769,7 @@ public class MainGUI extends Composite {
 	
 	public void startMenu(){
 		this.menupanel.clear();
-		Button openlogin = new Button("Login");
-		openlogin.addClickHandler(new openLoginClickHandler());
-		this.menupanel.add(openlogin);
+		openLogin();
 	}
 	
 	public void adminMenu(){
