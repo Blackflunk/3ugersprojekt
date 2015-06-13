@@ -82,6 +82,8 @@ public class MainGUI extends Composite {
 	private TextBox addRaavareIdTxt;
 	private Label createraavarenavn = new Label("Skriv råvarens navn: ");
 	private TextBox addRaavareNavnTxt;
+	private Label createraavareleverandoer = new Label("Skriv leverandør: ");
+	private TextBox addRaavareLeverandoerTxt;
 	
 	private Label createreceptid = new Label("Skriv receptens id: ");
 	private TextBox addReceptIdTxt;
@@ -94,8 +96,6 @@ public class MainGUI extends Composite {
 	private TextBox addRaavareBatchRaavareIdTxt;
 	private Label createraavarebatchmaengde = new Label("Skriv mængden: ");
 	private TextBox addRaavareBatchMaengdeTxt;
-	private Label createraavarebatchleverandoer = new Label("Skriv leverandør: ");
-	private TextBox addRaavareBatchLeverandoerTxt;
 	
 	private Label createproduktbatchid = new Label("Skriv råvarebatchens id: ");
 	private TextBox addProduktBatchIdTxt;
@@ -164,6 +164,7 @@ public class MainGUI extends Composite {
 			RaavareDTO raa = new RaavareDTO();
 			raa.setRaavareId(Integer.parseInt(addRaavareIdTxt.getText()));
 			raa.setRaavareNavn(addRaavareNavnTxt.getText());
+			raa.setLeverandoer(addRaavareLeverandoerTxt.getText());
 			serviceImpl.createRaavare(raa);
 		}
 	}
@@ -187,7 +188,6 @@ public class MainGUI extends Composite {
 			rab.setRbId(Integer.parseInt(addRaavareBatchIdTxt.getText()));
 			rab.setRaavareId(Integer.parseInt(addRaavareBatchRaavareIdTxt.getText()));
 			rab.setMaengde(Integer.parseInt(addRaavareBatchMaengdeTxt.getText()));
-			rab.setLeverandoer(addRaavareBatchLeverandoerTxt.getText());
 			serviceImpl.createRaavareBatch(rab);
 		}
 	}
@@ -703,6 +703,10 @@ public class MainGUI extends Composite {
 		addRaavareNavnTxt = new TextBox();
 		this.contentpanel.add(addRaavareNavnTxt);
 		
+		this.contentpanel.add(createraavareleverandoer);
+		addRaavareLeverandoerTxt = new TextBox();
+		this.contentpanel.add(addRaavareLeverandoerTxt);	
+		
 		Button createUserBtn = new Button("OK");
 		createUserBtn.addClickHandler(new createRaavareClickHandler());
 		this.contentpanel.add(createUserBtn);	
@@ -738,10 +742,6 @@ public class MainGUI extends Composite {
 		this.contentpanel.add(createraavarebatchmaengde);
 		addRaavareBatchMaengdeTxt = new TextBox();
 		this.contentpanel.add(addRaavareBatchMaengdeTxt);
-		
-		this.contentpanel.add(createraavarebatchleverandoer);
-		addRaavareBatchLeverandoerTxt = new TextBox();
-		this.contentpanel.add(addRaavareBatchLeverandoerTxt);
 		
 		Button createUserBtn = new Button("OK");
 		createUserBtn.addClickHandler(new createRaavareBatchClickHandler());

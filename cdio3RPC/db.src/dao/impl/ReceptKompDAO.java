@@ -18,7 +18,7 @@ public class ReceptKompDAO implements IReceptKompDAO {
 	public ReceptKompDTO getReceptKomp(int receptkompId, int raavareId)
 			throws DALException {
 		ReceptKompDTO resReceptKomp = null;
-		ResultSet rs = Connector.doQuery("SELECT * FROM receptkomponent WHERE recept_id = " + receptkompId);
+		ResultSet rs = Connector.doQuery("SELECT * FROM receptkomponent WHERE recept_id = " + receptkompId + "AND raavare_id = " + raavareId);
 		try
 		{
 
@@ -33,7 +33,7 @@ public class ReceptKompDAO implements IReceptKompDAO {
 	}
 	
 	public void deleteReceptKomp(ReceptKompDTO receptkomponent) throws DALException {
-		Connector.doUpdate("DELETE FROM receptkomponent WHERE recept_id = " + receptkomponent.getReceptId());
+		Connector.doUpdate("DELETE FROM receptkomponent WHERE recept_id = " + receptkomponent.getReceptId() + " AND raavare_id = " + receptkomponent.getRaavareId());
 	}
 	
 	@Override
@@ -71,7 +71,7 @@ public class ReceptKompDAO implements IReceptKompDAO {
 	public void createReceptKomp(ReceptKompDTO receptkomponent)
 			throws DALException {
 		Connector.doUpdate(
-				"INSERT INTO receptkomponent(receptkomp_id, receptkomp_navn, nom_netto, tolerance) VALUES " +
+				"INSERT INTO receptkomponent(recept_id, raavare_id, nom_netto, tolerance) VALUES " +
 				"(" + receptkomponent.getReceptId() + ", '" + receptkomponent.getRaavareId() + ", '" + receptkomponent.getNomNetto() 
 				+ ", '" + receptkomponent.getTolerance() + "')"
 			);
@@ -81,8 +81,8 @@ public class ReceptKompDAO implements IReceptKompDAO {
 	public void updateReceptKomp(ReceptKompDTO receptkomponent)
 			throws DALException {
 		Connector.doUpdate(
-				"UPDATE receptkomponent SET  raavare_id = '" + receptkomponent.getRaavareId() + "', nom_netto = '" + receptkomponent.getNomNetto() + "', tolerance = '" 
-				+ receptkomponent.getTolerance() + "' WHERE recept_id = " + receptkomponent.getReceptId()
+				"UPDATE receptkomponent SET recept_id = '" + receptkomponent.getReceptId() + "', raavare_id = '" + receptkomponent.getRaavareId() + "', nom_netto = '" + receptkomponent.getNomNetto() + "', tolerance = '" 
+				+ receptkomponent.getTolerance() + "' WHERE recept_id = " + receptkomponent.getReceptId() + "AND raavare_id = '" + receptkomponent.getRaavareId() + "'"
 		);
 	}
 

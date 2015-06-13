@@ -242,6 +242,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 			while(rs.next()){
 				raa.setRaavareId(rs.getInt("raavare_id"));
 				raa.setRaavareNavn(rs.getString("raavare_navn"));
+				raa.setLeverandoer(rs.getString("leverandoer"));
 				raaList.add(raa);
 			}
 
@@ -270,7 +271,8 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 			conn.doUpdate(
 					"INSERT INTO raavare(raavare_id, raavare_navn) "
 					+ "VALUES(" + raa.getRaavareId() + ", '" 
-								+ raa.getRaavareNavn() + "'); "
+								+ raa.getRaavareNavn() + ", '"
+								+ raa.getLeverandoer() + "'); "
 				);
 		} catch (DALException e) {
 			e.printStackTrace();
@@ -381,7 +383,6 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 				rb.setRbId(rs.getInt("rb_id"));
 				rb.setRaavareId(rs.getInt("raavare_id"));
 				rb.setMaengde(rs.getInt("maengde"));
-				rb.setLeverandoer(rs.getString("leverandoer"));
 				rbList.add(rb);
 			}
 
@@ -408,11 +409,10 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		}
 		try {
 			conn.doUpdate(
-					"INSERT INTO raavarebatch(rb_id, raavare_id, maengde, leverandoer) "
+					"INSERT INTO raavarebatch(rb_id, raavare_id, maengde) "
 					+ "VALUES(" + rec.getRbId() + ", " 
 								+ rec.getRaavareId() + ", " 
-								+ rec.getMaengde() + ", " 
-								+ rec.getLeverandoer() + "); "
+								+ rec.getMaengde() + "); "
 				);
 		} catch (DALException e) {
 			e.printStackTrace();

@@ -171,23 +171,23 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 				maingui.displayOperatoerListe(oprList);
 				}
 				
-				if (((ArrayList<?>)result).get(0) instanceof RaavareDTO){
+				else if (((ArrayList<?>)result).get(0) instanceof RaavareDTO){
 					ArrayList raaList = (ArrayList<RaavareDTO>) result;
 					maingui.displayRaavareListe(raaList);
 				}
-				if (((ArrayList<?>)result).get(0) instanceof ReceptDTO){
+				else if (((ArrayList<?>)result).get(0) instanceof ReceptDTO){
 					ArrayList racList = (ArrayList<ReceptDTO>) result;
 					maingui.displayReceptListe(racList);
 				}
-				if (((ArrayList<?>)result).get(0) instanceof RaavareBatchDTO){
+				else if (((ArrayList<?>)result).get(0) instanceof RaavareBatchDTO){
 					ArrayList raab = (ArrayList<RaavareBatchDTO>) result;
 					maingui.displayRaavareBatchListe(raab);
 				}
-				if (((ArrayList<?>)result).get(0) instanceof ProduktBatchDTO){
+				else if (((ArrayList<?>)result).get(0) instanceof ProduktBatchDTO){
 					ArrayList pb = (ArrayList<ProduktBatchDTO>) result;
 					maingui.displayProduktBatchListe(pb);
 				}
-				if (((ArrayList<?>)result).get(0) instanceof ProduktBatchKompDTO){
+				else if (((ArrayList<?>)result).get(0) instanceof ProduktBatchKompDTO){
 					ArrayList pbk = (ArrayList<ProduktBatchKompDTO>) result;
 					maingui.displayProduktBatchKompListe(pbk);
 				}

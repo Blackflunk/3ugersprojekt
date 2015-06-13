@@ -15,17 +15,15 @@ public class RaavareBatchDTO implements Serializable
 	int rbId;                  	// i omraadet 1-99999999
 	int raavareId;             	// i omraadet 1-99999999
 	double maengde;            	// kan vaere negativ 
-	String leverandoer;			// leverandoer info
 	
 	public RaavareBatchDTO() {
 
 	}
 	
-	public RaavareBatchDTO(int rbId, int raavareId, double maengde, String leverandoer) {
+	public RaavareBatchDTO(int rbId, int raavareId, double maengde) {
 		this.rbId = rbId;
 		this.raavareId = raavareId;
 		this.maengde = maengde;
-		this.leverandoer = leverandoer;
 	}
 	
 	public synchronized int getRbId() { return rbId; }
@@ -34,9 +32,7 @@ public class RaavareBatchDTO implements Serializable
 	public synchronized void setRaavareId(int raavareId) { this.raavareId = raavareId; }
 	public synchronized double getMaengde() { return maengde; }
 	public synchronized void setMaengde(double maengde) { this.maengde = maengde; }
-	public synchronized String getLeverandoer() { return leverandoer; }
-	public synchronized void setLeverandoer(String leverandoer) { this.leverandoer = leverandoer; }
 	public synchronized String toString() { 
-		return rbId + "\t" + raavareId +"\t" + maengde +"\t" + leverandoer; 
+		return rbId + "\t" + raavareId +"\t" + maengde; 
 	}
 }
