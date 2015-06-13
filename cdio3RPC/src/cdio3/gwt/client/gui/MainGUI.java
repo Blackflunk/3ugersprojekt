@@ -21,7 +21,7 @@ import cdio3.gwt.client.model.ReceptDTO;
 import cdio3.gwt.client.service.DBServiceClientImpl;
 
 public class MainGUI extends Composite {
-	int rettighedsniveau = 0;
+	String rettighedsniveau = "0";
 	
 	private VerticalPanel vPanel = new VerticalPanel();
 	private HorizontalPanel menupanel = new HorizontalPanel();
@@ -152,7 +152,7 @@ public class MainGUI extends Composite {
 			opr.setIni(addUserIniTxt.getText());
 			opr.setCpr(addUserCprTxt.getText());
 			opr.setPassword(addUserPwdTxt.getText());
-			opr.setRettighedsniveau(Integer.parseInt(addUserRetTxt.getText()));
+			opr.setRettighedsniveau(addUserRetTxt.getText());
 			serviceImpl.createUser(opr);
 		}
 	}
@@ -214,7 +214,7 @@ public class MainGUI extends Composite {
 			opr.setIni(upUserIniTxt.getText());
 			opr.setCpr(upUserCprTxt.getText());
 			opr.setPassword(upUserPwdTxt.getText());
-			opr.setRettighedsniveau(Integer.parseInt(upUserRetTxt.getText()));
+			opr.setRettighedsniveau(upUserRetTxt.getText());
 			serviceImpl.updateUser(opr);
 		}
 	}
@@ -245,21 +245,21 @@ public class MainGUI extends Composite {
 		}
 	}
 
-	public void authenticateOperatoer(int svar) {
+	public void authenticateOperatoer(String rettighedsniveau2) {
 		this.contentpanel.clear();
 		HTML html = new HTML();
-		rettighedsniveau = svar;
+		rettighedsniveau = rettighedsniveau2;
 		
-		if(rettighedsniveau == 4)
+		if(rettighedsniveau.equals("1")){
 			adminMenu();
-			this.contentpanel.clear();
-		if (rettighedsniveau == 3)
+			this.contentpanel.clear();}
+		else if (rettighedsniveau.equals("2")){
 			farmaceutMenu();
-			this.contentpanel.clear();
-		if (rettighedsniveau == 2)
+			this.contentpanel.clear();}
+		else if (rettighedsniveau.equals("3")){
 			vaerkfoererMenu();
-			this.contentpanel.clear();
-		if (rettighedsniveau == 0){
+			this.contentpanel.clear();}
+		else if (rettighedsniveau.equals("0")){
 			String code = "<b>Brugeren eksisterer ikke</b></br>";
 			html.setHTML(code);
 			this.externalvpanel.add(html);
@@ -287,7 +287,7 @@ public class MainGUI extends Composite {
 		code = code + "<b>Ini:</b> " + info.getIni() + "</br>";
 		code = code + "<b>Cpr:</b> " + info.getCpr() + "</br>";
 		code = code + "<b>Password:</b> " + info.getPassword() + "</br>";
-		code = code + "<b>Stilling:</b> " + info.getStilling() + "</br>";
+		code = code + "<b>Rettighedsniveau:</b> " + info.getRettighedsniveau() + "</br>";
 		
 		html.setHTML(code);
 		this.externalvpanel.add(html);
@@ -341,6 +341,7 @@ public class MainGUI extends Composite {
 	
 	public void displayOperatoerListe(ArrayList<OperatoerDTO> oprList){
 		this.externalvpanel.clear();
+		
 		for(int i = 0;i < oprList.size();i++){
 			HTML html = new HTML();
 			

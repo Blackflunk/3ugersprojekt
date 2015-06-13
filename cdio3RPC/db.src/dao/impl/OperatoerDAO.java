@@ -12,21 +12,21 @@ import dao.interf.IOperatoerDAO;
 
 public class OperatoerDAO implements IOperatoerDAO {
 	
-	public OperatoerDAO() throws DALException, cdio3.gwt.server.DALException{
-		Connector.doUpdate("DROP TABLE IF EXISTS Operatoer;");
-		String pro = "CREATE TABLE Operatoer(opr_id_ind INT(11), opr_navn_ind VARCHAR(30), "
-				+ "ini_ind VARCHAR(4), cpr_ind VARCHAR(11), password_ind VARCHAR(20)) "
-				+ "BEGIN "
-				+ "INSERT INTO operatoer(opr_id, opr_navn, ini, cpr, password) "
-				+ "VALUES(opr_id_ind, opr_navn_ind, ini_ind, cpr_ind, password_ind); "
-				+ "END";
-		Connector.doUpdate(pro);
+	public OperatoerDAO() throws cdio3.gwt.server.DALException{
+//		Connector.doUpdate("DROP TABLE IF EXISTS Operatoer;");
+//		String pro = "CREATE TABLE Operatoer(opr_id_ind INT(11), opr_navn_ind VARCHAR(30), "
+//				+ "ini_ind VARCHAR(4), cpr_ind VARCHAR(11), password_ind VARCHAR(20)) "
+//				+ "BEGIN "
+//				+ "INSERT INTO operatoer(opr_id, opr_navn, ini, cpr, password) "
+//				+ "VALUES(opr_id_ind, opr_navn_ind, ini_ind, cpr_ind, password_ind); "
+//				+ "END";
+//		Connector.doUpdate(pro);
 	}
 	public OperatoerDTO getOperatoer(int oprId) throws DALException {
 		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer WHERE opr_id = " + oprId);
 	    try {
 	    	if (!rs.first()) throw new DALException("Operatoeren " + oprId + " findes ikke");
-	    	return new OperatoerDTO (rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getInt("rettighedniveau"));
+	    	return new OperatoerDTO (rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getString("rettighedniveau"));
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
 		
@@ -64,7 +64,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 		{
 			while (rs.next()) 
 			{
-				list.add(new OperatoerDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getInt("rettighedniveau")));
+				list.add(new OperatoerDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getString("rettighedniveau")));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e); }

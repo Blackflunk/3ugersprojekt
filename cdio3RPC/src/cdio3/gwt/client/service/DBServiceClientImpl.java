@@ -152,14 +152,13 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 				maingui.displayProduktBatch(pb);
 			}
 			// Hvis der modtages integer (Login)
-			else if(result instanceof Integer){
+			else if(result instanceof String){
 				//if(rettighedsniveau == 0){
-					int svar = (Integer) result;
-					rettighedsniveau = svar;
+					String rettighedsniveau = (String) result;
 					maingui.authenticateOperatoer(rettighedsniveau);
 				//	}
 				}
-				else if(result instanceof Boolean){
+			else if(result instanceof Boolean){
 					boolean svar = (Boolean) result;
 					maingui.deletedElement(svar);
 				}
@@ -167,27 +166,27 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 			//Listerne
 			else if(result instanceof ArrayList<?>){
 				if (((ArrayList<?>)result).get(0) instanceof OperatoerDTO){
-				ArrayList oprList = (ArrayList<OperatoerDTO>) result;
+				ArrayList<OperatoerDTO> oprList = (ArrayList<OperatoerDTO>) result;
 				maingui.displayOperatoerListe(oprList);
 				}
 				
-				else if (((ArrayList<?>)result).get(0) instanceof RaavareDTO){
+				if (((ArrayList<?>)result).get(0) instanceof RaavareDTO){
 					ArrayList raaList = (ArrayList<RaavareDTO>) result;
 					maingui.displayRaavareListe(raaList);
 				}
-				else if (((ArrayList<?>)result).get(0) instanceof ReceptDTO){
+				if (((ArrayList<?>)result).get(0) instanceof ReceptDTO){
 					ArrayList racList = (ArrayList<ReceptDTO>) result;
 					maingui.displayReceptListe(racList);
 				}
-				else if (((ArrayList<?>)result).get(0) instanceof RaavareBatchDTO){
+				if (((ArrayList<?>)result).get(0) instanceof RaavareBatchDTO){
 					ArrayList raab = (ArrayList<RaavareBatchDTO>) result;
 					maingui.displayRaavareBatchListe(raab);
 				}
-				else if (((ArrayList<?>)result).get(0) instanceof ProduktBatchDTO){
+				if (((ArrayList<?>)result).get(0) instanceof ProduktBatchDTO){
 					ArrayList pb = (ArrayList<ProduktBatchDTO>) result;
 					maingui.displayProduktBatchListe(pb);
 				}
-				else if (((ArrayList<?>)result).get(0) instanceof ProduktBatchKompDTO){
+				if (((ArrayList<?>)result).get(0) instanceof ProduktBatchKompDTO){
 					ArrayList pbk = (ArrayList<ProduktBatchKompDTO>) result;
 					maingui.displayProduktBatchKompListe(pbk);
 				}
