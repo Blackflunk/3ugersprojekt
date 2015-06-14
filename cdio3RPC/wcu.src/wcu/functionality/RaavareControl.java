@@ -2,10 +2,11 @@ package wcu.functionality;
 
 import java.util.ArrayList;
 
-import wcu.data.RaavareDAO;
-import wcu.data.RaavareDTO;
+import dao.impl.RaavareDAO;
+import dao.interf.IRaavareDAO;
+import cdio3.gwt.client.model.RaavareDTO;;
 
-public class RaavareControl implements RaavareDAO {
+public class RaavareControl implements IRaavareDAO {
 	
 	FileHandler raavareFil;
 	ArrayList<RaavareDTO> rDB = new ArrayList<RaavareDTO>();
@@ -19,11 +20,11 @@ public class RaavareControl implements RaavareDAO {
 	public RaavareDTO getRaavare(int raavareID) {
 		RaavareDTO hentRaavare = new RaavareDTO();
 		for(int i = 0;i < rDB.size();i++){
-			if(raavareID == rDB.get(i).getRaavareID()){
+			if(raavareID == rDB.get(i).getRaavareId()){
 				return rDB.get(i);
 			}
 		}
-		hentRaavare.setRaavareID(999999);
+		hentRaavare.setRaavareId(999999);
 		return hentRaavare;
 	}
 
@@ -37,7 +38,7 @@ public class RaavareControl implements RaavareDAO {
 	@Override
 	public void updateRaavare(RaavareDTO raavare) {
 		for(int i = 0;i < rDB.size();i++){
-			if(raavare.getRaavareID() == rDB.get(i).getRaavareID()){
+			if(raavare.getRaavareId() == rDB.get(i).getRaavareId()){
 				rDB.set(i, raavare);
 			}
 		}

@@ -65,7 +65,7 @@ public class UserHandler {
 				
 				switch (svar) {
 				case "ja":
-					vaegtSvar = wc.writeSocket("RM20 8 \"" + rc.getRaavare(Integer.parseInt(vaegtSvar)).getRaavareName() + "?\"\"ja \" \" nej\" \r\n");
+					vaegtSvar = wc.writeSocket("RM20 8 \"" + rc.getRaavare(Integer.parseInt(vaegtSvar)).getRaavareNavn() + "?\"\"ja \" \" nej\" \r\n");
 					vaegtSvar = wc.readSocket();
 					vaegtSvar = vaegtSvar.substring(7, vaegtSvar.length());
 					return STATE3;
@@ -230,12 +230,12 @@ public class UserHandler {
 		UserHandler u = new UserHandler();
 		try {
 			u.runScheme("ja");
-			if(oc.getOperatoer(Integer.parseInt(vaegtSvar)).getOprID() != 999999){
-				currentOperatoer =  oc.getOperatoer(Integer.parseInt(vaegtSvar)).getOprID();
+			if(oc.getOperatoer(Integer.parseInt(vaegtSvar)).getOprId() != 999999){
+				currentOperatoer =  oc.getOperatoer(Integer.parseInt(vaegtSvar)).getOprId();
 				u.runScheme("ja");
 			}
-			if(rc.getRaavare(Integer.parseInt(vaegtSvar)).getRaavareID() != 999999) {
-				currentRaavare = rc.getRaavare(Integer.parseInt(vaegtSvar)).getRaavareID();
+			if(rc.getRaavare(Integer.parseInt(vaegtSvar)).getRaavareId() != 999999) {
+				currentRaavare = rc.getRaavare(Integer.parseInt(vaegtSvar)).getRaavareId();
 				u.runScheme("ja");
 			}
 			if(vaegtSvar.equals("ja")){

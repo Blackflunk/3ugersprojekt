@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import wcu.data.LogDTO;
-import wcu.data.OperatoerDTO;
-import wcu.data.RaavareDTO;
+import cdio3.gwt.client.model.*;
+
 
 
 public class FileHandler implements IFileHandler {
@@ -17,6 +17,7 @@ public class FileHandler implements IFileHandler {
 	String current_operatoer_File = "data.text/operatoer.txt";
 	String current_Raavare_File = "data.text/store.txt";
 	String current_Log_File = "data.text/log.txt";
+	String current_productBatch_File = "data.text/produktBatch.txt";
 	BufferedReader br = null;
 	BufferedWriter bw = null;
 	String linje = "";
@@ -30,8 +31,8 @@ public class FileHandler implements IFileHandler {
 			while((linje = br.readLine()) != null){
 				String[] tempDB = linje.split(csv_Character);
 				nyOBasePost = new OperatoerDTO();
-				nyOBasePost.setOprID(Integer.parseInt(tempDB[0]));
-				nyOBasePost.setOprName(tempDB[1]);
+				nyOBasePost.setOprId(Integer.parseInt(tempDB[0]));
+				nyOBasePost.setOprNavn(tempDB[1]);
 				nyOBase.add(nyOBasePost);
 			}
 		}catch(Exception e){
@@ -49,8 +50,8 @@ public class FileHandler implements IFileHandler {
 			while((linje = br.readLine()) != null){
 				String[] tempDB = linje.split(csv_Character);
 				nyRBasePost = new RaavareDTO();
-				nyRBasePost.setRaavareID(Integer.parseInt(tempDB[0]));
-				nyRBasePost.setRaavareName(tempDB[1]);
+				nyRBasePost.setRaavareId(Integer.parseInt(tempDB[0]));
+				nyRBasePost.setRaavareNavn(tempDB[1]);
 				nyRBasePost.setRaavareWeight(tempDB[2]);
 				nyRBase.add(nyRBasePost);
 			}	
@@ -66,7 +67,7 @@ public class FileHandler implements IFileHandler {
 			BufferedWriter writer = 
 					new BufferedWriter (new FileWriter(current_operatoer_File));
 			for(int i = 0;i <oprDB.size();i++){
-				writer.write(oprDB.get(i).getOprID() +", "+ oprDB.get(i).getOprName() +", "+ "\n");
+				writer.write(oprDB.get(i).getOprId() +", "+ oprDB.get(i).getOprNavn() +", "+ "\n");
 			}
 			writer.close();
 		} catch (IOException e) {
@@ -81,14 +82,14 @@ public class FileHandler implements IFileHandler {
 			BufferedWriter writer = 
 					new BufferedWriter (new FileWriter(current_Raavare_File));
 			for(int i = 0;i < rDB.size();i++){
-				writer.write(rDB.get(i).getRaavareID() +", "+ rDB.get(i).getRaavareName() +", "+ rDB.get(i).getRaavareWeight() +"\n");
+				writer.write(rDB.get(i).getRaavareId() +", "+ rDB.get(i).getRaavareNavn() +", "+ rDB.get(i).getRaavareWeight() +"\n");
 			}
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public ArrayList<LogDTO> readLogDB() {
 		LogDTO nyLBasePost;
@@ -125,6 +126,46 @@ public class FileHandler implements IFileHandler {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public ArrayList<ProduktBatchDTO> readProduktBatchDB() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void writeProduktBatchDB(ArrayList<ProduktBatchDTO> pbDB) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void writeReceptDB(ArrayList<ReceptDTO> recDB) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<ReceptDTO> readReceptDB() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void writeReceptKompDB(ArrayList<ReceptKompDTO> recKDB) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<ReceptKompDTO> readReceptKompDB() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }
 
 

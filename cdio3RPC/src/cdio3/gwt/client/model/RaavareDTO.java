@@ -37,4 +37,14 @@ public class RaavareDTO implements Serializable
     public synchronized String toString() { 
 		return raavareId + "\t" + raavareNavn +"\t" + leverandoer + "\t"; 
 	}
+
+	public void setRaavareWeight(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getRaavareWeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

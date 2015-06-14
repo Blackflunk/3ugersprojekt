@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import wcu.data.LogDAO;
 import wcu.data.LogDTO;
-import wcu.data.OperatoerDTO;
-import wcu.data.RaavareDTO;
+import cdio3.gwt.client.model.RaavareDTO;
+import cdio3.gwt.client.model.OperatoerDTO;
+
 
 public class LogControl implements LogDAO{
 	FileHandler fh = new FileHandler();
@@ -16,9 +17,9 @@ public class LogControl implements LogDAO{
 	public void registerLogEntry(OperatoerDTO oprID,RaavareDTO raavare, String afvejning) {
 		logEntry  = new LogDTO();
 		logEntry.setAfvejning(afvejning);
-		logEntry.setOprID(oprID.getOprID());
+		logEntry.setOprID(oprID.getOprId());
 		logEntry.setPaa_lager(raavare.getRaavareWeight());
-		logEntry.setRaavareID(raavare.getRaavareID());
+		logEntry.setRaavareID(raavare.getRaavareId());
 		fh.writeLogDB(logEntry);
 		
 	}
@@ -27,4 +28,5 @@ public class LogControl implements LogDAO{
 		logList = fh.readLogDB();
 		return logList;
 	}
+
 }

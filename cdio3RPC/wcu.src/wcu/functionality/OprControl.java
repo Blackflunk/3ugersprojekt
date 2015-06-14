@@ -2,10 +2,10 @@ package wcu.functionality;
 
 import java.util.ArrayList;
 
-import wcu.data.OperatoerDAO;
-import wcu.data.OperatoerDTO;
+import dao.interf.IOperatoerDAO;
+import cdio3.gwt.client.model.OperatoerDTO;
 
-public class OprControl implements OperatoerDAO{
+public class OprControl implements IOperatoerDAO{
 
 	FileHandler operatoerFil;
 	ArrayList<OperatoerDTO> oDB = new ArrayList<OperatoerDTO>();
@@ -21,11 +21,11 @@ public class OprControl implements OperatoerDAO{
 	public OperatoerDTO getOperatoer(int oprID) {
 		OperatoerDTO hentOperatoer = new OperatoerDTO();
 		for (int i = 0; i < oDB.size(); i ++){
-			if (oprID == oDB.get(i).getOprID()){
+			if (oprID == oDB.get(i).getOprId()){
 				return oDB.get(i);
 			}
 		}
-		hentOperatoer.setOprID(999999);
+		hentOperatoer.setOprId(999999);
 		return hentOperatoer;
 	}
 
@@ -33,7 +33,7 @@ public class OprControl implements OperatoerDAO{
 	//	Skal Kigges på
 	public void updateOperatoer(OperatoerDTO oprID) {
 		for(int i = 0; i < oDB.size(); i++){
-			if(oprID.getOprID() == oDB.get(i).getOprID()){
+			if(oprID.getOprId() == oDB.get(i).getOprId()){
 				oDB.set(i, oprID);
 			}
 		}
@@ -56,7 +56,7 @@ public class OprControl implements OperatoerDAO{
 
 	public void deleteOperatoer(int oprID) {
 		for(int i = 0; i < oDB.size(); i++){
-			if(oprID == oDB.get(i).getOprID()){
+			if(oprID == oDB.get(i).getOprId()){
 				oDB.remove(i);
 				operatoerFil.writeOperatoerDB(oDB);
 			}
