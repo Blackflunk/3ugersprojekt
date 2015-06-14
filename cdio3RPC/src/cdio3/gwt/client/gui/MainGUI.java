@@ -36,9 +36,9 @@ public class MainGUI extends Composite {
 	private Button openupdateuser;
 	
 	private Label getuserlist = new Label("Nedenfor er brugerne opstillet: ");
-	private Label getraavarelist = new Label("Nedenfor er råvarerne opstillet: ");
+	private Label getraavarelist = new Label("Nedenfor er rÃ¥varerne opstillet: ");
 	private Label getreceptlist = new Label("Nedenfor er recepterne opstillet: ");
-	private Label getraavarebatchlist = new Label("Nedenfor er råvarebatchesne opstillet:");
+	private Label getraavarebatchlist = new Label("Nedenfor er rÃ¥varebatchesne opstillet:");
 	private Label getproduktbatchlist = new Label("Nedenfor er produktbatchesne opstillet:");
 	private Label getproduktbatchkomplist = new Label("Nedenfor er produktbatchkomponenterne opstillet: ");
 	
@@ -78,11 +78,11 @@ public class MainGUI extends Composite {
 	private Label createuserret = new Label("Skriv brugerens rettighedsniveau: ");
 	private TextBox addUserRetTxt;
 		
-	private Label createraavareid = new Label("Skriv råvarens id: ");
+	private Label createraavareid = new Label("Skriv rÃ¥varens id: ");
 	private TextBox addRaavareIdTxt;
-	private Label createraavarenavn = new Label("Skriv råvarens navn: ");
+	private Label createraavarenavn = new Label("Skriv rÃ¥varens navn: ");
 	private TextBox addRaavareNavnTxt;
-	private Label createraavareleverandoer = new Label("Skriv leverandør: ");
+	private Label createraavareleverandoer = new Label("Skriv leverandÃ¸r: ");
 	private TextBox addRaavareLeverandoerTxt;
 	
 	private Label createreceptid = new Label("Skriv receptens id: ");
@@ -90,18 +90,18 @@ public class MainGUI extends Composite {
 	private Label createreceptnavn = new Label("Skriv receptens navn: ");
 	private TextBox addReceptNavnTxt;
 	
-	private Label createraavarebatchid = new Label("Skriv råvarebatchens id: ");
+	private Label createraavarebatchid = new Label("Skriv rÃ¥varebatchens id: ");
 	private TextBox addRaavareBatchIdTxt;
-	private Label createraavarebatchraavareid = new Label("Skriv råvarens ID: ");
+	private Label createraavarebatchraavareid = new Label("Skriv rÃ¥varens ID: ");
 	private TextBox addRaavareBatchRaavareIdTxt;
-	private Label createraavarebatchmaengde = new Label("Skriv mængden: ");
+	private Label createraavarebatchmaengde = new Label("Skriv mÃ¦ngden: ");
 	private TextBox addRaavareBatchMaengdeTxt;
 	
-	private Label createproduktbatchid = new Label("Skriv råvarebatchens id: ");
+	private Label createproduktbatchid = new Label("Skriv rÃ¥varebatchens id: ");
 	private TextBox addProduktBatchIdTxt;
-	private Label createproduktbatchstatus = new Label("Skriv råvarens ID: ");
+	private Label createproduktbatchstatus = new Label("Skriv rÃ¥varens ID: ");
 	private TextBox addProduktBatchStatusTxt;
-	private Label createproduktbatchreceptid = new Label("Skriv mængden: ");
+	private Label createproduktbatchreceptid = new Label("Skriv mÃ¦ngden: ");
 	private TextBox addProduktBatchReceptIdTxt;
 	
 	private Label upuserid = new Label("Skriv brugerens ID: ");
@@ -319,9 +319,9 @@ public class MainGUI extends Composite {
 		this.externalvpanel.clear();
 		HTML html = new HTML();
 		
-		String code = "<b>Råvarebatchens ID:</b> " + info.getRbId() + "</br>";
-		code = code + "<b>Råvarens ID:</b> " + info.getRaavareId() + "</br>";
-		code = code + "<b>Mængde:</b> " + info.getMaengde() + "</br>";
+		String code = "<b>Rï¿½varebatchens ID:</b> " + info.getRbId() + "</br>";
+		code = code + "<b>Rï¿½varens ID:</b> " + info.getRaavareId() + "</br>";
+		code = code + "<b>Mï¿½ngde:</b> " + info.getMaengde() + "</br>";
 		
 		html.setHTML(code);
 		this.externalvpanel.add(html);
@@ -388,9 +388,9 @@ public class MainGUI extends Composite {
 		for(int i = 0;i < rabList.size();i++){
 			HTML html = new HTML();
 			
-			String code = "</br><b>Råvarebatchens ID:</b> " + rabList.get(i).getRbId() + "</br>";
+			String code = "</br><b>Rï¿½varebatchens ID:</b> " + rabList.get(i).getRbId() + "</br>";
 			code = code + "<b>Raavarens ID:</b> " + rabList.get(i).getRaavareId() + "</br>";
-			code = code + "<b>Mængden:</b> " + rabList.get(i).getMaengde() + "</br>";
+			code = code + "<b>Mï¿½ngden:</b> " + rabList.get(i).getMaengde() + "</br>";
 
 			html.setHTML(code);
 			this.externalvpanel.add(html);
@@ -417,10 +417,10 @@ public class MainGUI extends Composite {
 			HTML html = new HTML();
 			
 			String code = "</br><b>Produktbatchens ID:</b>" + pbkList.get(i).getPbId() + "</br>";
-			code = code + "<b>Råvarebatchens ID:</b> " + pbkList.get(i).getRbId() + "</br>";
+			code = code + "<b>Rï¿½varebatchens ID:</b> " + pbkList.get(i).getRbId() + "</br>";
 			code = code + "<b>Tara:</b> " + pbkList.get(i).getTara() + "</br>";
 			code = code + "<b>Netto:</b> " + pbkList.get(i).getNetto() + "</br>";
-			code = code + "<b>Operatør ID:</b> " + pbkList.get(i).getOprId() + "</br>";
+			code = code + "<b>Operatï¿½r ID:</b> " + pbkList.get(i).getOprId() + "</br>";
 
 			html.setHTML(code);
 			this.externalvpanel.add(html);
@@ -801,11 +801,11 @@ public class MainGUI extends Composite {
 	public void farmaceutMenu(){
 		this.menupanel.clear();
 		
-		Button openopretraavare = new Button("Opret Råvare");
+		Button openopretraavare = new Button("Opret RÃ¥vare");
 		openopretraavare.addClickHandler(new openCreateRaavareClickHandler());
 		this.menupanel.add(openopretraavare);
 		
-		Button opengetraavarelist = new Button("Vis Råvarer");
+		Button opengetraavarelist = new Button("Vis RÃ¥varer");
 		opengetraavarelist.addClickHandler(new openGetRaavareListClickHandler());
 		this.menupanel.add(opengetraavarelist);
 		
