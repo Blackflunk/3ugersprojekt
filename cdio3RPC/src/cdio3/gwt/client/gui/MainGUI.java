@@ -319,9 +319,9 @@ public class MainGUI extends Composite {
 		this.externalvpanel.clear();
 		HTML html = new HTML();
 		
-		String code = "<b>R�varebatchens ID:</b> " + info.getRbId() + "</br>";
-		code = code + "<b>R�varens ID:</b> " + info.getRaavareId() + "</br>";
-		code = code + "<b>M�ngde:</b> " + info.getMaengde() + "</br>";
+		String code = "<b>Råvarebatchens ID:</b> " + info.getRbId() + "</br>";
+		code = code + "<b>Råvarens ID:</b> " + info.getRaavareId() + "</br>";
+		code = code + "<b>Mængde:</b> " + info.getMaengde() + "</br>";
 		
 		html.setHTML(code);
 		this.externalvpanel.add(html);
@@ -388,9 +388,9 @@ public class MainGUI extends Composite {
 		for(int i = 0;i < rabList.size();i++){
 			HTML html = new HTML();
 			
-			String code = "</br><b>R�varebatchens ID:</b> " + rabList.get(i).getRbId() + "</br>";
-			code = code + "<b>Raavarens ID:</b> " + rabList.get(i).getRaavareId() + "</br>";
-			code = code + "<b>M�ngden:</b> " + rabList.get(i).getMaengde() + "</br>";
+			String code = "</br><b>Råvarebatchens ID:</b> " + rabList.get(i).getRbId() + "</br>";
+			code = code + "<b>Råvarens ID:</b> " + rabList.get(i).getRaavareId() + "</br>";
+			code = code + "<b>Mængden:</b> " + rabList.get(i).getMaengde() + "</br>";
 
 			html.setHTML(code);
 			this.externalvpanel.add(html);
@@ -417,7 +417,7 @@ public class MainGUI extends Composite {
 			HTML html = new HTML();
 			
 			String code = "</br><b>Produktbatchens ID:</b>" + pbkList.get(i).getPbId() + "</br>";
-			code = code + "<b>R�varebatchens ID:</b> " + pbkList.get(i).getRbId() + "</br>";
+			code = code + "<b>Råvarebatchens ID:</b> " + pbkList.get(i).getRbId() + "</br>";
 			code = code + "<b>Tara:</b> " + pbkList.get(i).getTara() + "</br>";
 			code = code + "<b>Netto:</b> " + pbkList.get(i).getNetto() + "</br>";
 			code = code + "<b>Operat�r ID:</b> " + pbkList.get(i).getOprId() + "</br>";
