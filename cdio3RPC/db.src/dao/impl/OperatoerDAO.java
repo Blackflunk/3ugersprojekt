@@ -19,7 +19,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer WHERE opr_id = " + oprId);
 	    try {
 	    	if (!rs.first()) throw new DALException("Operatoeren " + oprId + " findes ikke");
-	    	return new OperatoerDTO (rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getString("rettighedniveau"));
+	    	return new OperatoerDTO (rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getString("rettighedsniveau"));
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
 		
