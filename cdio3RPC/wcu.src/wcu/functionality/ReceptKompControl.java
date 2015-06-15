@@ -20,7 +20,7 @@ public class ReceptKompControl implements IReceptKompDAO{
 	}
 
 	@Override
-	public ReceptKompDTO getReceptKomp(int receptId, int raavareId) throws DALException {
+	public ReceptKompDTO getReceptKomp(int receptId, int raavareId){
 		ReceptKompDTO hentReceptKomp = new ReceptKompDTO();
 		for (int i = 0; i < recKDB.size(); i ++){
 			if (receptId == recKDB.get(i).getReceptId()){
@@ -31,26 +31,24 @@ public class ReceptKompControl implements IReceptKompDAO{
 	}
 
 	@Override
-	public List<ReceptKompDTO> getReceptKompList(int receptId) throws DALException {
+	public List<ReceptKompDTO> getReceptKompList(int receptId) {
 		return recKDB;
 	}
 
 	@Override
-	public List<ReceptKompDTO> getReceptKompList() throws DALException {
+	public List<ReceptKompDTO> getReceptKompList(){
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void createReceptKomp(ReceptKompDTO receptkomponent)
-			throws DALException {
+	public void createReceptKomp(ReceptKompDTO receptkomponent){
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateReceptKomp(ReceptKompDTO receptkomponent)
-			throws DALException {
+	public void updateReceptKomp(ReceptKompDTO receptkomponent){
 		// TODO Auto-generated method stub
 		
 	}
