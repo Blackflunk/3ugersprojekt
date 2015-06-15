@@ -34,17 +34,18 @@ public class RaavareDTO implements Serializable
     public synchronized void setRaavareNavn(String raavareNavn) { this.raavareNavn = raavareNavn; }
     public synchronized String getLeverandoer() { return leverandoer; }
     public synchronized void setLeverandoer(String leverandoer) { this.leverandoer = leverandoer; }
+    
     public synchronized String toString() { 
 		return raavareId + "\t" + raavareNavn +"\t" + leverandoer + "\t"; 
 	}
 
-	public void setRaavareWeight(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public String getRaavareWeight() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	public void setRaavareWeight(String string) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public String getRaavareWeight() {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
 }

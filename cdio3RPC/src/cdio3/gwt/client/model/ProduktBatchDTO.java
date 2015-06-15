@@ -19,7 +19,7 @@ public class ProduktBatchDTO implements Serializable
 	
 	}
 	
-	public ProduktBatchDTO(int pbId, int status, int receptId) {
+	public ProduktBatchDTO(int pbId, int receptId , int status) {
 		this.pbId = pbId;
 		this.status = status;
 		this.receptId = receptId;

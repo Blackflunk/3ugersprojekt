@@ -8,6 +8,7 @@ import dao.impl.ProduktBatchDAO;
 import dao.impl.RaavareDAO;
 import dao.impl.ReceptDAO;
 import dao.impl.ReceptKompDAO;
+import wcu.data.TempVare;
 import wcu.exceptions.InvalidInputException;
 import wcu.exceptions.WeightException;
 import wcu.functionality.OprControl;
@@ -18,16 +19,14 @@ import weightsimulator.launch.*;
 
 public class WCUController {
 	ConsoleController CC = new ConsoleController();
-//	public static OprControl oc = new OprControl();
-//	public static ProduktBatchControl pbc = new ProduktBatchControl();
-//	public static ReceptControl recc = new ReceptControl();
-//	public static ReceptKompControl recK = new ReceptKompControl();
 	public OperatoerDAO oprDAO;
 	public ProduktBatchDAO produktbatchDAO;
 	public ReceptDAO receptDAO;
 	public ReceptKompDAO receptkompDAO;
 	public RaavareDAO raavareDAO;
+	public TempVare tempvare;
 	Connector connect;
+	WeightCommunicator WC;
 	String user;
 	String[] start;
 	String weightChoice;
@@ -43,9 +42,11 @@ public class WCUController {
 		connectToDatabase();
 		createDAO();
 		try { chooseWeight();} catch (WeightException e) { e.printStackTrace();}
+		connectToWeight();
 		try { verifyOperatoer();} catch (WeightException | DALException e) { e.printStackTrace();}
-		try { verifyBatch();} catch (WeightException e) { e.printStackTrace();}
-		for (loopNumber=0; loopNumber == forLength; loopNumber++){
+		try { verifyBatch();} catch (WeightException | DALException e) { e.printStackTrace();}
+		System.out.println(forLength);
+		for (loopNumber=0; loopNumber < forLength; loopNumber++){
 		try { checkPreconditions();} catch (WeightException e) { e.printStackTrace();}
 		try { taraPreconditions();} catch (WeightException e) { e.printStackTrace();}
 		try { doWeighing();} catch (WeightException e) { e.printStackTrace();}
@@ -63,6 +64,17 @@ public class WCUController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	}
+	public void connectToWeight() {
+		if (mode.equals("Simulator")) {
+			WC = new WeightCommunicator("localhost", 8000);
+		}
+		else if (mode.equals("Weight")) {
+			WC = new WeightCommunicator("169.254.2.3", 8000);
+		}
+		WC.connectToServer();
+		
+		
 	}
 	
 	public void createDAO() {
@@ -82,7 +94,6 @@ public class WCUController {
 		weightChoice = CC.getUserInput();
 		if(weightChoice.equals("WS")){
 			mode = "Simulator";
-			launch.main(start);
 		}
 		else if(weightChoice.equals("W")){
 			mode = "Weight";
@@ -108,23 +119,26 @@ public class WCUController {
 	}
 	
 
-	public void verifyBatch() throws WeightException {
+	public void verifyBatch() throws WeightException, DALException {
 		CC.printMessage("Indtast produktbatch nummer: ");
 		String input = CC.getUserInput();
 		BatchId = Integer.parseInt(input);
-//			if(BatchId == pbc.getProduktBatch(BatchId).getPbId()){
-//				CC.printMessage(recc.getRecept(pbc.getProduktBatch(BatchId).getReceptId()).getReceptNavn());
-//				forLength = recK.getReceptKompList(BatchId).size();
-//			}
-//			else {
-//				throw new WeightException();
-//			}
+			if(BatchId == produktbatchDAO.getProduktBatch(BatchId).getPbId()){
+				int recept_id = produktbatchDAO.getProduktBatch(BatchId).getReceptId();
+				String recept_name = receptDAO.getRecept(recept_id).getReceptNavn();
+				CC.printMessage(recept_name);
+				System.out.println(BatchId +" "+ recept_id);
+				
+				forLength = receptkompDAO.getReceptKompList(recept_id).size();
+			}
+			else {
+				throw new WeightException();
+			}
 		// godkend batch
 		// else: throw WeightExceptions
 	}
 	
 	public void checkPreconditions() throws WeightException {
-		if(mode == "Weight"){
 		CC.printMessage("Sikre dig at vægten er ubelastet, INDTAST 'OK' når dette er gjort");
 		String input = CC.getUserInput();
 		try {
@@ -133,17 +147,15 @@ public class WCUController {
 			CC.printMessage("Ukendt input");
 			checkPreconditions();
 		}
+		try {
+			produktbatchDAO.getProduktBatch(BatchId).setStatus(1);
+		} catch (DALException e) {
+			e.printStackTrace();
 		}
-		else{
-			
-		}
-//		pbc.getProduktBatch(BatchId).setStatus(1);
-		// sæt produktbatch til under produktion
 	}
 	
 	public void taraPreconditions() throws WeightException{
-		if(mode == "Weight"){
-		// tarer vægt
+		WC.writeSocket("T\r\n");
 		CC.printMessage("Læg tarabeholderen på vægten, INDTAST 'OK' når dette er gjort");
 		String input = CC.getUserInput();
 		try {
@@ -152,26 +164,20 @@ public class WCUController {
 			CC.printMessage("Ukendt input");
 			taraPreconditions();
 		}
-		}
-		else {
-			
-		}
+		tempvare= new TempVare();
+		String weight = WC.readSocket();
+		tempvare.setTare(weight);
+		System.out.print(tempvare.tare);
 		// registrer tara værdi
 		// tarer vægt
 	}
 	
 	public void doWeighing() throws WeightException{
-		if(mode == "Weight"){
 		CC.printMessage("indtast produktbatch nummer på produkt "+ produkt);
 		String produktbatch = CC.getUserInput();
 		doWeighingControl();
-		}
-		else{
-			
-		}
 	}
 	public void doWeighingControl() {
-		if(mode == "Weight"){
 		
 		CC.printMessage("Fuldfør afvejningen med den ønskede mængde, og indtast OK");
 		String input = CC.getUserInput();
@@ -181,13 +187,13 @@ public class WCUController {
 			CC.printMessage("Ukendt input");
 			doWeighingControl();
 		}
-		}
-		else{
-			
-		}
 	}
 	public void endProduction() {
-//		pbc.getProduktBatch(BatchId).setStatus(2);
+		try {
+			produktbatchDAO.getProduktBatch(BatchId).setStatus(2);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
 		// sæt produktbatchnummerets status til 'afsluttet'
 	}
 	

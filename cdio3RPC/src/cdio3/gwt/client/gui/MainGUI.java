@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -26,8 +24,7 @@ public class MainGUI extends Composite {
 	String rettighedsniveau = "0";
 	
 	private VerticalPanel vPanel = new VerticalPanel();
-	private VerticalPanel menupanel = new VerticalPanel();
-	private HorizontalPanel submenupanel = new HorizontalPanel();
+	private HorizontalPanel menupanel = new HorizontalPanel();
 	private VerticalPanel contentpanel = new VerticalPanel();
 	private VerticalPanel externalvpanel = new VerticalPanel();
 	
@@ -56,6 +53,17 @@ public class MainGUI extends Composite {
 	private TextBox getUserNameTxt;
 	private Label deleteusertext = new Label("Skriv brugerens ID:");
 	private TextBox deleteUserIdTxt;
+	private Label deleteraavaretext = new Label("Skriv raaverens ID:");
+	private TextBox deleteraavareIdTxt;
+	private Label deleterecepttext = new Label("Skriv receptens ID:");
+	private TextBox deletereceptIdTxt;
+	private Label deleteraavarebatchtext = new Label("Skriv raavarebatchens ID:");
+	private TextBox deleteraavarebatchIdTxt;
+	private Label deleteproduktbatchtext = new Label("Skriv produktbatchens ID:");
+	private TextBox deleteproduktbatchIdTxt;
+	private TextBox deleteproduktbatchkomppbIdTxt;
+	private TextBox deleteproduktbatchkomprbIdTxt;
+	
 
 	private Label createuserid = new Label("Skriv brugerens ID:");
 	private TextBox addUserIdTxt;
@@ -117,14 +125,13 @@ public class MainGUI extends Composite {
 		initWidget(this.vPanel);
 		this.serviceImpl = serviceImpl;
 		
-		this.vPanel.add(submenupanel);
 		this.vPanel.add(menupanel);
 		this.vPanel.add(contentpanel);
 		this.vPanel.add(externalvpanel);
 		
 		startMenu();
 	}
-
+	
 	private class AuthenticationClickHandler implements ClickHandler {
 
 		@Override
@@ -238,20 +245,27 @@ public class MainGUI extends Composite {
 		}
 	}
 
-	public void authenticateOperatoer(String rettighedsniveau) {
+	public void authenticateOperatoer(String rettighedsniveau2) {
 		this.contentpanel.clear();
 		HTML html = new HTML();
-		this.rettighedsniveau = rettighedsniveau;
-	
-		if (rettighedsniveau.equals("0")){
+		rettighedsniveau = rettighedsniveau2;
+		
+		if(rettighedsniveau.equals("1")){
+			adminMenu();
+			this.contentpanel.clear();}
+		else if (rettighedsniveau.equals("2")){
+			farmaceutMenu();
+			this.contentpanel.clear();}
+		else if (rettighedsniveau.equals("3")){
+			vaerkfoererMenu();
+			this.contentpanel.clear();}
+		else if (rettighedsniveau.equals("0")){
 			String code = "<b>Brugeren eksisterer ikke</b></br>";
 			html.setHTML(code);
 			this.externalvpanel.add(html);
 			startMenu();
 			this.contentpanel.clear();
 		}
-		
-		mainMenu();
 	}
 	
 	public void deletedElement(boolean result) {
@@ -526,42 +540,12 @@ public class MainGUI extends Composite {
 	}
 	
 	private class openLogUdClickHandler implements ClickHandler {
-		//TODO
-		@Override
-		public void onClick(ClickEvent event) {
-			contentpanel.clear();
-			submenupanel.clear();
-			menupanel.clear();
-			startMenu();
-		}
-	}
-	
-	private class openAdminSubMenuClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			adminSubMenu();
+			openGetRaavareList();
 		}
 	}
-	
-	private class openFarmaceutSubMenuClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			farmaceutSubMenu();
-		}
-	}
-	
-	private class openVaerkfoererSubMenuClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			vaerkfoererSubMenu();
-		}
-	}
-	
-	
-	
 	
 	public void openLogin(){
 		this.externalvpanel.clear();
@@ -584,13 +568,6 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(getusername);
 		getUserNameTxt = new TextBox();
-		getUserNameTxt.addKeyPressHandler(new KeyPressHandler() {
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
 		this.contentpanel.add(getUserNameTxt);
 		
 		Button getUserBtn = new Button("OK");
@@ -610,14 +587,6 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(deleteusertext);
 		deleteUserIdTxt = new TextBox();
-		deleteUserIdTxt.addKeyPressHandler(new KeyPressHandler() {
-
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
 		this.contentpanel.add(deleteUserIdTxt);
 		
 		Button deleteUserBtn = new Button("OK");
@@ -630,14 +599,6 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(createuserid);
 		addUserIdTxt = new TextBox();
-		addUserIdTxt.addKeyPressHandler(new KeyPressHandler() {
-
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
 		this.contentpanel.add(addUserIdTxt);
 		
 		this.contentpanel.add(createusername);
@@ -677,13 +638,6 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(upuserid);
 		upUserIdTxt = new TextBox();
-		upUserIdTxt.addKeyPressHandler(new KeyPressHandler() {
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
 		this.contentpanel.add(upUserIdTxt);
 		
 		this.contentpanel.add(upusername);
@@ -871,112 +825,80 @@ public class MainGUI extends Composite {
 		this.contentpanel.add(createUserBtn);	
 	}
 	
-	public void mainMenu(){
-		this.menupanel.clear();
-		Button logout = new Button ("Log ud");
-		logout.addClickHandler(new openLogUdClickHandler());
-		Button openadminpanel = new Button ("Admin panel");
-		openadminpanel.addClickHandler(new openAdminSubMenuClickHandler());
-		Button openfarmaceutpanel = new Button ("Farmaceut panel");
-		openfarmaceutpanel.addClickHandler(new openFarmaceutSubMenuClickHandler());
-		Button openvaerkfoererpanel = new Button ("Værkfører panel");
-		openvaerkfoererpanel.addClickHandler(new openVaerkfoererSubMenuClickHandler());
-		
-		if (rettighedsniveau == "1"){
-			this.menupanel.add(logout);
-			this.menupanel.add(openadminpanel);
-			this.menupanel.add(openfarmaceutpanel);
-			this.menupanel.add(openvaerkfoererpanel);
-		}
-		else if (rettighedsniveau == "2"){
-			this.menupanel.add(logout);
-			this.menupanel.add(openfarmaceutpanel);
-			this.menupanel.add(openvaerkfoererpanel);
-		}
-		else if (rettighedsniveau ==  "3"){
-			this.menupanel.add(logout);
-			this.menupanel.add(openvaerkfoererpanel);
-		}
-		else if (rettighedsniveau == "4"){
-			this.menupanel.add(logout);
-		}
-	}
-	
 	public void startMenu(){
 		this.menupanel.clear();
 		openLogin();
 	}
 	
-	public void adminSubMenu(){
-		this.submenupanel.clear();
+	public void adminMenu(){
+		this.menupanel.clear();
 		
 		Button opengetuser = new Button("Find user");
-		
 		opengetuser.addClickHandler(new openGetUserClickHandler());
-		this.submenupanel.add(opengetuser);
+		this.menupanel.add(opengetuser);
 		
 		Button opengetuserlist = new Button("Get userlist");
 		opengetuserlist.addClickHandler(new openGetUserListClickHandler());
-		this.submenupanel.add(opengetuserlist);
+		this.menupanel.add(opengetuserlist);
 		
 		Button opendeleteuser = new Button("Delete user");
 		opendeleteuser.addClickHandler(new openDeleteUserClickHandler());
-		this.submenupanel.add(opendeleteuser);
+		this.menupanel.add(opendeleteuser);
 		
 		Button openupdateuser = new Button("Update user");
 		openupdateuser.addClickHandler(new openUpdateUserClickHandler());
-		this.submenupanel.add(openupdateuser);
+		this.menupanel.add(openupdateuser);
 		
 		Button opencreateuser = new Button("Create user");
 		opencreateuser.addClickHandler(new openCreateUserClickHandler());
-		this.submenupanel.add(opencreateuser);
+		this.menupanel.add(opencreateuser);
 	}
 	
-	public void farmaceutSubMenu(){
-		this.submenupanel.clear();
+	public void farmaceutMenu(){
+		this.menupanel.clear();
 		
 		Button openopretraavare = new Button("Opret Råvare");
 		openopretraavare.addClickHandler(new openCreateRaavareClickHandler());
-		this.submenupanel.add(openopretraavare);
+		this.menupanel.add(openopretraavare);
 		
 		Button opengetraavarelist = new Button("Vis Råvarer");
 		opengetraavarelist.addClickHandler(new openGetRaavareListClickHandler());
-		this.submenupanel.add(opengetraavarelist);
+		this.menupanel.add(opengetraavarelist);
 		
 		Button openopretrecept = new Button("Opret Recept");
 		openopretrecept.addClickHandler(new openCreateReceptClickHandler());
-		this.submenupanel.add(openopretrecept);
+		this.menupanel.add(openopretrecept);
 		
 		Button openreceptliste = new Button("Vis Recepter");
 		openreceptliste.addClickHandler(new openGetReceptListClickHandler());
-		this.submenupanel.add(openreceptliste);
+		this.menupanel.add(openreceptliste);
 		
 	}
 	
-	public void vaerkfoererSubMenu(){
-		this.submenupanel.clear();
+	public void vaerkfoererMenu(){
+		this.menupanel.clear();
 		
 		//TODO lav click handlers
 		Button openopretraavarebatch = new Button("Opret Råvarebatch");
 		openopretraavarebatch.addClickHandler(new openCreateRaavareBatchClickHandler());
-		this.submenupanel.add(openopretraavarebatch);
+		this.menupanel.add(openopretraavarebatch);
 		
 		Button opengetraavarebatchlist = new Button("Vis Råvarebatches");
 		opengetraavarebatchlist.addClickHandler(new openGetRaavarebatchListClickHandler());
-		this.submenupanel.add(opengetraavarebatchlist);
+		this.menupanel.add(opengetraavarebatchlist);
 		
 		
 		Button opencreateproduktbatch = new Button("Opret Produktbatch");
 		opencreateproduktbatch.addClickHandler(new openCreateProduktBatchClickHandler());
-		this.submenupanel.add(opencreateproduktbatch);
+		this.menupanel.add(opencreateproduktbatch);
 		
 		Button openproduktbatchlist = new Button("Vis Produktbatches");
 		openproduktbatchlist.addClickHandler(new openGetProduktBatchClickHandler());
-		this.submenupanel.add(openproduktbatchlist);
+		this.menupanel.add(openproduktbatchlist);
 		
 		Button openproduktbatchkomplist = new Button("Vis Produktbatchkomponenter");
 		openproduktbatchkomplist.addClickHandler(new openGetProduktBatchKomponentClickHandler());
-		this.submenupanel.add(openproduktbatchlist);
+		this.menupanel.add(openproduktbatchlist);
 		
 	}
 
