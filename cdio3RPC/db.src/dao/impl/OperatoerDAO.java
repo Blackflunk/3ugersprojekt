@@ -13,14 +13,7 @@ import dao.interf.IOperatoerDAO;
 public class OperatoerDAO implements IOperatoerDAO {
 	
 	public OperatoerDAO() throws cdio3.gwt.server.DALException{
-//		Connector.doUpdate("DROP TABLE IF EXISTS Operatoer;");
-//		String pro = "CREATE TABLE Operatoer(opr_id_ind INT(11), opr_navn_ind VARCHAR(30), "
-//				+ "ini_ind VARCHAR(4), cpr_ind VARCHAR(11), password_ind VARCHAR(20)) "
-//				+ "BEGIN "
-//				+ "INSERT INTO operatoer(opr_id, opr_navn, ini, cpr, password) "
-//				+ "VALUES(opr_id_ind, opr_navn_ind, ini_ind, cpr_ind, password_ind); "
-//				+ "END";
-//		Connector.doUpdate(pro);
+
 	}
 	public OperatoerDTO getOperatoer(int oprId) throws DALException {
 		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer WHERE opr_id = " + oprId);
@@ -53,10 +46,6 @@ public class OperatoerDAO implements IOperatoerDAO {
 		);
 	}
 	
-	public void deleteOperatoer(OperatoerDTO opr) throws DALException, cdio3.gwt.server.DALException {
-		Connector.doUpdate("DELETE FROM operatoer WHERE opr_id = " + opr.getOprId());
-	}
-	
 	public List<OperatoerDTO> getOperatoerList() throws DALException {
 		List<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer");
@@ -69,6 +58,10 @@ public class OperatoerDAO implements IOperatoerDAO {
 		}
 		catch (SQLException e) { throw new DALException(e); }
 		return list;
+	}
+	@Override
+	public void deleteOperatoer(int oprID) throws DALException {
+		Connector.doUpdate("UPDATE operatoer SET rettighedsniveau = 0 WHERE opr_id = " + oprID);	
 	}
 		
 		

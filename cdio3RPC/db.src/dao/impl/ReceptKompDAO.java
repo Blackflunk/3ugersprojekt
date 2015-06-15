@@ -31,11 +31,7 @@ public class ReceptKompDAO implements IReceptKompDAO {
 		catch (SQLException e) { throw new DALException(e); }
 		return resReceptKomp;
 	}
-	
-	public void deleteReceptKomp(ReceptKompDTO receptkomponent) throws DALException {
-		Connector.doUpdate("DELETE FROM receptkomponent WHERE recept_id = " + receptkomponent.getReceptId() + " AND raavare_id = " + receptkomponent.getRaavareId());
-	}
-	
+
 	@Override
 	public List<ReceptKompDTO> getReceptKompList(int receptkompId)
 			throws DALException {

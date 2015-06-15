@@ -31,10 +31,6 @@ public class RaavareDAO implements IRaavareDAO{
 	    catch (SQLException e) {throw new DALException(e); }
 	}
 	
-	public void deleteRaavare(RaavareDTO raavare) throws DALException {
-		Connector.doUpdate("DELETE FROM raavare WHERE raavare_id = " + raavare.getRaavareId());
-	}
-	
 	@Override
 	public List<RaavareDTO> getRaavareList() throws DALException {
 		List<RaavareDTO> list = new ArrayList<RaavareDTO>();

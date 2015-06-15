@@ -21,10 +21,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO{
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
 	}
-	public void deleteRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
-		Connector.doUpdate("DELETE FROM raavarebatch WHERE raavare_id = " + raavarebatch.getRaavareId());
-	}
-	
+
 	@Override
 	public List<RaavareBatchDTO> getRaavareBatchList() throws DALException {
 		List<RaavareBatchDTO> list = new ArrayList<RaavareBatchDTO>();

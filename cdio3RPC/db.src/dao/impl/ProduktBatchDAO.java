@@ -22,9 +22,6 @@ public class ProduktBatchDAO  implements IProduktBatchDAO{
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
 	}
-	public void deleteProduktBatch(ProduktBatchDTO produktbatch) throws DALException {
-		Connector.doUpdate("DELETE FROM produktbatch WHERE pb_id = " + produktbatch.getPbId());
-	}
 
 	@Override
 	public List<ProduktBatchDTO> getProduktBatchList() throws DALException {

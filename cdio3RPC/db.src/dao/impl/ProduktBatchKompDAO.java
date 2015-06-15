@@ -22,11 +22,7 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
 	}
-	
-	public void deleteProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws DALException {
-		Connector.doUpdate("DELETE FROM produktbatchkomponent WHERE pb_id = " + produktbatchkomponent.getPbId() + " AND rb_id = " + produktbatchkomponent.getRbId());
-	}
-	
+
 	@Override
 	public List<ProduktBatchKompDTO> getProduktBatchKompList(int pbId)
 			throws DALException {

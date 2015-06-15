@@ -52,7 +52,7 @@ public class FileHandler implements IFileHandler {
 				nyRBasePost = new RaavareDTO();
 				nyRBasePost.setRaavareId(Integer.parseInt(tempDB[0]));
 				nyRBasePost.setRaavareNavn(tempDB[1]);
-				nyRBasePost.setRaavareWeight(tempDB[2]);
+				//nyRBasePost.setRaavareWeight(tempDB[2]);
 				nyRBase.add(nyRBasePost);
 			}	
 		}catch(Exception e){
@@ -82,7 +82,7 @@ public class FileHandler implements IFileHandler {
 			BufferedWriter writer = 
 					new BufferedWriter (new FileWriter(current_Raavare_File));
 			for(int i = 0;i < rDB.size();i++){
-				writer.write(rDB.get(i).getRaavareId() +", "+ rDB.get(i).getRaavareNavn() +", "+ rDB.get(i).getRaavareWeight() +"\n");
+				writer.write(rDB.get(i).getRaavareId() +", "+ rDB.get(i).getRaavareNavn() /*+", "+ rDB.get(i).getRaavareWeight()*/ +"\n");
 			}
 			writer.close();
 		} catch (IOException e) {

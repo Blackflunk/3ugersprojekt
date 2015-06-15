@@ -10,5 +10,5 @@ public interface IOperatoerDAO {
 	List<OperatoerDTO> getOperatoerList() throws DALException;
 	void createOperatoer(OperatoerDTO opr) throws DALException, cdio3.gwt.server.DALException;
 	void updateOperatoer(OperatoerDTO opr) throws DALException;
-	void deleteOperatoer(int oprID);
+	void deleteOperatoer(int oprID) throws DALException;
 }

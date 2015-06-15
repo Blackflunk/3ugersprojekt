@@ -18,7 +18,7 @@ public class LogControl implements LogDAO{
 		logEntry  = new LogDTO();
 		logEntry.setAfvejning(afvejning);
 		logEntry.setOprID(oprID.getOprId());
-		logEntry.setPaa_lager(raavare.getRaavareWeight());
+		//logEntry.setPaa_lager(raavare.getRaavareWeight());
 		logEntry.setRaavareID(raavare.getRaavareId());
 		fh.writeLogDB(logEntry);
 		

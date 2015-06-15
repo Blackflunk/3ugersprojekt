@@ -22,10 +22,6 @@ public class ReceptDAO implements IReceptDAO{
 	    catch (SQLException e) {throw new DALException(e); }
 	}
 	
-	public void deleteRecept(ReceptDTO recept) throws DALException {
-		Connector.doUpdate("DELETE FROM recept WHERE recept_id = " + recept.getReceptId());
-	}
-	
 	@Override
 	public List<ReceptDTO> getReceptList() throws DALException {
 		List<ReceptDTO> list = new ArrayList<ReceptDTO>();
