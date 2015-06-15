@@ -658,6 +658,13 @@ public class MainGUI extends Composite {
 		
 		this.contentpanel.add(createuserret);
 		addUserRetTxt = new TextBox();
+		addUserRetTxt.addKeyPressHandler(new KeyPressHandler() {
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addUserRetTxt);
 		
 		Button createUserBtn = new Button("OK");
@@ -697,6 +704,13 @@ public class MainGUI extends Composite {
 		
 		this.contentpanel.add(upuserret);
 		upUserRetTxt = new TextBox();
+		upUserRetTxt.addKeyPressHandler(new KeyPressHandler() {
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(upUserRetTxt);
 		
 		Button updateUserBtn = new Button("OK");
@@ -744,6 +758,13 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(createraavareid);
 		addRaavareIdTxt = new TextBox();
+		addRaavareIdTxt.addKeyPressHandler(new KeyPressHandler() {
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addRaavareIdTxt);
 		
 		this.contentpanel.add(createraavarenavn);
@@ -764,6 +785,13 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(createreceptid);
 		addReceptIdTxt = new TextBox();
+		addReceptIdTxt.addKeyPressHandler(new KeyPressHandler() {
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addReceptIdTxt);
 		
 		this.contentpanel.add(createreceptnavn);
@@ -780,10 +808,24 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(createraavarebatchid);
 		addRaavareBatchIdTxt = new TextBox();
+		addRaavareBatchIdTxt.addKeyPressHandler(new KeyPressHandler() {
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addRaavareBatchIdTxt);
 		
 		this.contentpanel.add(createraavarebatchraavareid);
 		addRaavareBatchRaavareIdTxt = new TextBox();
+		addRaavareBatchRaavareIdTxt.addKeyPressHandler(new KeyPressHandler() {
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addRaavareBatchRaavareIdTxt);
 		
 		this.contentpanel.add(createraavarebatchmaengde);
@@ -800,6 +842,13 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(createproduktbatchid);
 		addProduktBatchIdTxt = new TextBox();
+		addProduktBatchIdTxt.addKeyPressHandler(new KeyPressHandler() {
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addProduktBatchIdTxt);
 		
 		this.contentpanel.add(createproduktbatchstatus);
@@ -808,6 +857,13 @@ public class MainGUI extends Composite {
 		
 		this.contentpanel.add(createproduktbatchreceptid);
 		addProduktBatchReceptIdTxt = new TextBox();
+		addProduktBatchReceptIdTxt.addKeyPressHandler(new KeyPressHandler() {
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addProduktBatchReceptIdTxt);
 		
 		Button createUserBtn = new Button("OK");
