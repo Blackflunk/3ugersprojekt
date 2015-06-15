@@ -89,11 +89,11 @@ public class MainGUI extends Composite {
 	private Label createraavarebatchmaengde = new Label("Skriv mængden: ");
 	private TextBox addRaavareBatchMaengdeTxt;
 	
-	private Label createproduktbatchid = new Label("Skriv råvarebatchens id: ");
+	private Label createproduktbatchid = new Label("Skriv produktbatchens ID: ");
 	private TextBox addProduktBatchIdTxt;
-	private Label createproduktbatchstatus = new Label("Skriv råvarens ID: ");
+	private Label createproduktbatchstatus = new Label("Skriv status på produktbatchen: ");
 	private TextBox addProduktBatchStatusTxt;
-	private Label createproduktbatchreceptid = new Label("Skriv mængden: ");
+	private Label createproduktbatchreceptid = new Label("Skriv produktbatchens recept ID: ");
 	private TextBox addProduktBatchReceptIdTxt;
 	
 	private Label upuserid = new Label("Skriv brugerens ID: ");
