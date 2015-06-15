@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cdio3.gwt.client.model.ProduktBatchDTO;
-import cdio3.gwt.server.DALException;
 import dao.interf.IProduktBatchDAO;
 
 public class ProduktBatchControl implements IProduktBatchDAO{
@@ -21,7 +20,7 @@ public class ProduktBatchControl implements IProduktBatchDAO{
 	}
 	
 	@Override
-	public ProduktBatchDTO getProduktBatch(int pbId) throws DALException {
+	public ProduktBatchDTO getProduktBatch(int pbId){
 		ProduktBatchDTO hentProduktBatch = new ProduktBatchDTO();
 		for (int i = 0; i < pbDB.size(); i ++){
 			if (pbId == pbDB.get(i).getPbId()){
@@ -34,18 +33,18 @@ public class ProduktBatchControl implements IProduktBatchDAO{
 	
 
 	@Override
-	public List<ProduktBatchDTO> getProduktBatchList() throws DALException {
+	public List<ProduktBatchDTO> getProduktBatchList(){
 		return pbDB;
 	}
 
 	@Override
-	public void createProduktBatch(ProduktBatchDTO produktbatch) throws DALException {
+	public void createProduktBatch(ProduktBatchDTO produktbatch) {
 		pbDB.add(produktbatch);
 		produktBatchFil.writeProduktBatchDB(pbDB);
 	}
 
 	@Override
-	public void updateProduktBatch(ProduktBatchDTO produktbatch) throws DALException {
+	public void updateProduktBatch(ProduktBatchDTO produktbatch) {
 		for(int i = 0; i < pbDB.size(); i++){
 			if(produktbatch.getPbId() == pbDB.get(i).getPbId()){
 				pbDB.set(i, produktbatch);

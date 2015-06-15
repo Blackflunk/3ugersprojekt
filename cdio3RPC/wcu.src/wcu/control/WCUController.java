@@ -1,6 +1,13 @@
 package wcu.control;
 
-import cdio3.gwt.server.DALException;
+import java.sql.SQLException;
+
+import cdio3.gwt.server.*;
+import dao.impl.OperatoerDAO;
+import dao.impl.ProduktBatchDAO;
+import dao.impl.RaavareDAO;
+import dao.impl.ReceptDAO;
+import dao.impl.ReceptKompDAO;
 import wcu.exceptions.InvalidInputException;
 import wcu.exceptions.WeightException;
 import wcu.functionality.OprControl;
@@ -11,10 +18,16 @@ import weightsimulator.launch.*;
 
 public class WCUController {
 	ConsoleController CC = new ConsoleController();
-	public static OprControl oc = new OprControl();
-	public static ProduktBatchControl pbc = new ProduktBatchControl();
-	public static ReceptControl recc = new ReceptControl();
-	public static ReceptKompControl recK = new ReceptKompControl();
+//	public static OprControl oc = new OprControl();
+//	public static ProduktBatchControl pbc = new ProduktBatchControl();
+//	public static ReceptControl recc = new ReceptControl();
+//	public static ReceptKompControl recK = new ReceptKompControl();
+	public OperatoerDAO oprDAO;
+	public ProduktBatchDAO produktbatchDAO;
+	public ReceptDAO receptDAO;
+	public ReceptKompDAO receptkompDAO;
+	public RaavareDAO raavareDAO;
+	Connector connect;
 	String user;
 	String[] start;
 	String weightChoice;
@@ -22,13 +35,15 @@ public class WCUController {
 	String mode;
 	int forLength, loopNumber, BatchId;
 	
-	public void init() throws DALException {
+	public void init() {
 		runProcedure();
 	}
 	
-	public void runProcedure() throws DALException {
+	public void runProcedure() {
+		connectToDatabase();
+		createDAO();
 		try { chooseWeight();} catch (WeightException e) { e.printStackTrace();}
-		try { verifyOperatoer();} catch (WeightException e) { e.printStackTrace();}
+		try { verifyOperatoer();} catch (WeightException | DALException e) { e.printStackTrace();}
 		try { verifyBatch();} catch (WeightException e) { e.printStackTrace();}
 		for (loopNumber=0; loopNumber == forLength; loopNumber++){
 		try { checkPreconditions();} catch (WeightException e) { e.printStackTrace();}
@@ -40,14 +55,36 @@ public class WCUController {
 		
 	}
 	
+	public void connectToDatabase() {
+		try {
+			connect = new Connector();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	public void createDAO() {
+		try {
+			oprDAO = new OperatoerDAO();
+			produktbatchDAO = new ProduktBatchDAO();
+			receptDAO = new ReceptDAO();
+			receptkompDAO = new ReceptKompDAO();
+			raavareDAO = new RaavareDAO();
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void chooseWeight() throws WeightException {
 		CC.printMessage("Please enter W for normal weight or WS for simulator");
 		weightChoice = CC.getUserInput();
-		if(weightChoice == "WS"){
-			mode = "Silmulator";
+		if(weightChoice.equals("WS")){
+			mode = "Simulator";
 			launch.main(start);
 		}
-		else if(weightChoice == "W"){
+		else if(weightChoice.equals("W")){
 			mode = "Weight";
 		}
 		else {
@@ -56,12 +93,12 @@ public class WCUController {
 		}
 	}
 	
-	public void verifyOperatoer() throws WeightException {
+	public void verifyOperatoer() throws WeightException, DALException {
 		CC.printMessage("Indtast dit operatoer nummer: ");
 		String input = CC.getUserInput();
 		int OpId = Integer.parseInt(input);
-		if(OpId == oc.getOperatoer(OpId).getOprId()){
-			user = oc.getOperatoer(OpId).getOprNavn();
+		if(OpId == oprDAO.getOperatoer(OpId).getOprId()){
+			user = oprDAO.getOperatoer(OpId).getOprNavn();
 			CC.printMessage(user);
 		}
 		else{ 
@@ -75,22 +112,18 @@ public class WCUController {
 		CC.printMessage("Indtast produktbatch nummer: ");
 		String input = CC.getUserInput();
 		BatchId = Integer.parseInt(input);
-		try {
-			if(BatchId == pbc.getProduktBatch(BatchId).getPbId()){
-				CC.printMessage(recc.getRecept(pbc.getProduktBatch(BatchId).getReceptId()).getReceptNavn());
-				forLength = recK.getReceptKompList(BatchId).size();
-			}
-			else {
-				throw new WeightException();
-			}
-		} catch (DALException e) {
-			e.printStackTrace();
-		}
+//			if(BatchId == pbc.getProduktBatch(BatchId).getPbId()){
+//				CC.printMessage(recc.getRecept(pbc.getProduktBatch(BatchId).getReceptId()).getReceptNavn());
+//				forLength = recK.getReceptKompList(BatchId).size();
+//			}
+//			else {
+//				throw new WeightException();
+//			}
 		// godkend batch
 		// else: throw WeightExceptions
 	}
 	
-	public void checkPreconditions() throws WeightException, DALException {
+	public void checkPreconditions() throws WeightException {
 		if(mode == "Weight"){
 		CC.printMessage("Sikre dig at vægten er ubelastet, INDTAST 'OK' når dette er gjort");
 		String input = CC.getUserInput();
@@ -104,7 +137,7 @@ public class WCUController {
 		else{
 			
 		}
-		pbc.getProduktBatch(BatchId).setStatus(1);
+//		pbc.getProduktBatch(BatchId).setStatus(1);
 		// sæt produktbatch til under produktion
 	}
 	
@@ -153,8 +186,8 @@ public class WCUController {
 			
 		}
 	}
-	public void endProduction() throws DALException {
-		pbc.getProduktBatch(BatchId).setStatus(2);
+	public void endProduction() {
+//		pbc.getProduktBatch(BatchId).setStatus(2);
 		// sæt produktbatchnummerets status til 'afsluttet'
 	}
 	
