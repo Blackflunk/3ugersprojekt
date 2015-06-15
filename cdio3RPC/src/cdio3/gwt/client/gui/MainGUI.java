@@ -218,7 +218,7 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			int oprId = Integer.parseInt(getUserNameTxt.getText());
-			serviceImpl.getUser(oprId, token);
+			serviceImpl.getUser(oprId);
 		}
 	}
 	
@@ -239,7 +239,7 @@ public class MainGUI extends Composite {
 		}
 	}
 
-	public void authenticateOperatoer(String token) {
+	public void authenticateOperatoer(String rettighedsniveau) {
 		this.contentpanel.clear();
 		HTML html = new HTML();
 		this.token = token;
@@ -851,12 +851,14 @@ public class MainGUI extends Composite {
 	public void startMenu(){
 		this.menupanel.clear();
 		this.contentpanel.clear();
+		this.externalvpanel.clear();
 		openLogin();
 	}
 	
 	public void adminSubMenu(){
 		this.submenupanel.clear();
 		this.contentpanel.clear();
+		this.externalvpanel.clear();
 		
 		Button opengetuser = new Button("Find user");
 		
@@ -883,6 +885,7 @@ public class MainGUI extends Composite {
 	public void farmaceutSubMenu(){
 		this.submenupanel.clear();
 		this.contentpanel.clear();
+		this.externalvpanel.clear();
 		
 		Button openopretraavare = new Button("Opret Råvare");
 		openopretraavare.addClickHandler(new openCreateRaavareClickHandler());
@@ -905,6 +908,7 @@ public class MainGUI extends Composite {
 	public void vaerkfoererSubMenu(){
 		this.submenupanel.clear();
 		this.contentpanel.clear();
+		this.externalvpanel.clear();
 		
 		//TODO lav click handlers
 		Button openopretraavarebatch = new Button("Opret Råvarebatch");
