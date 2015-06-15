@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -53,17 +55,6 @@ public class MainGUI extends Composite {
 	private TextBox getUserNameTxt;
 	private Label deleteusertext = new Label("Skriv brugerens ID:");
 	private TextBox deleteUserIdTxt;
-	private Label deleteraavaretext = new Label("Skriv raaverens ID:");
-	private TextBox deleteraavareIdTxt;
-	private Label deleterecepttext = new Label("Skriv receptens ID:");
-	private TextBox deletereceptIdTxt;
-	private Label deleteraavarebatchtext = new Label("Skriv raavarebatchens ID:");
-	private TextBox deleteraavarebatchIdTxt;
-	private Label deleteproduktbatchtext = new Label("Skriv produktbatchens ID:");
-	private TextBox deleteproduktbatchIdTxt;
-	private TextBox deleteproduktbatchkomppbIdTxt;
-	private TextBox deleteproduktbatchkomprbIdTxt;
-	
 
 	private Label createuserid = new Label("Skriv brugerens ID:");
 	private TextBox addUserIdTxt;
@@ -131,7 +122,7 @@ public class MainGUI extends Composite {
 		
 		startMenu();
 	}
-	
+
 	private class AuthenticationClickHandler implements ClickHandler {
 
 		@Override
@@ -568,6 +559,13 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(getusername);
 		getUserNameTxt = new TextBox();
+		getUserNameTxt.addKeyPressHandler(new KeyPressHandler() {
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(getUserNameTxt);
 		
 		Button getUserBtn = new Button("OK");
@@ -587,6 +585,14 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(deleteusertext);
 		deleteUserIdTxt = new TextBox();
+		deleteUserIdTxt.addKeyPressHandler(new KeyPressHandler() {
+
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(deleteUserIdTxt);
 		
 		Button deleteUserBtn = new Button("OK");
@@ -599,6 +605,14 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(createuserid);
 		addUserIdTxt = new TextBox();
+		addUserIdTxt.addKeyPressHandler(new KeyPressHandler() {
+
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addUserIdTxt);
 		
 		this.contentpanel.add(createusername);
@@ -631,6 +645,13 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(upuserid);
 		upUserIdTxt = new TextBox();
+		upUserIdTxt.addKeyPressHandler(new KeyPressHandler() {
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(upUserIdTxt);
 		
 		this.contentpanel.add(upusername);
@@ -778,6 +799,7 @@ public class MainGUI extends Composite {
 		this.menupanel.clear();
 		
 		Button opengetuser = new Button("Find user");
+		
 		opengetuser.addClickHandler(new openGetUserClickHandler());
 		this.menupanel.add(opengetuser);
 		
