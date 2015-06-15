@@ -10,8 +10,8 @@ import java.net.UnknownHostException;
 public class WeightCommunicator {
 
 	// opret forbindelse til vægt
-	private String IP = "";
-	private int portdst = 0;
+	private String IP;
+	private int portdst;
 	private Socket sock ;
 	private BufferedReader instream;
 	private DataOutputStream outstream;

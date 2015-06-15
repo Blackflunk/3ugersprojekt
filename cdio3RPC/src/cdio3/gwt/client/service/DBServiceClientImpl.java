@@ -19,7 +19,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	private MainGUI maingui;
 	private int rettighedsniveau = 0;
 	
-	//TODO mangler metoder som slet på alle. 
+	//TODO mangler metoder som slet på alle.
 	
 	
 	public DBServiceClientImpl(String url) {
