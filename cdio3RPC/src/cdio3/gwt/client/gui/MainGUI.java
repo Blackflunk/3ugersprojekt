@@ -218,7 +218,7 @@ public class MainGUI extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			int oprId = Integer.parseInt(getUserNameTxt.getText());
-			serviceImpl.getUser(oprId);
+			serviceImpl.getUser(oprId, token);
 		}
 	}
 	
@@ -242,18 +242,27 @@ public class MainGUI extends Composite {
 	public void authenticateOperatoer(String rettighedsniveau) {
 		this.contentpanel.clear();
 		HTML html = new HTML();
-		this.token = token;
-		this.rettighedsniveau = rettighedsniveau;
-	
-		if (rettighedsniveau.equals("0")){
-			String code = "<b>Brugeren eksisterer ikke</b></br>";
+		String code = "";
+		if(rettighedsniveau.length() > 2){
+			this.token = rettighedsniveau;
+			serviceImpl.getUserRights(token);
+			code = "<b>Henter bruger rettighedsniveau</b></br>";
 			html.setHTML(code);
 			this.externalvpanel.add(html);
-			startMenu();
-			this.contentpanel.clear();
+		}else {
+			this.rettighedsniveau = rettighedsniveau;
+			code = "<b>Har hentet rettighedsniveau: " + rettighedsniveau + "</b></br>";
+			html.setHTML(code);
+			this.externalvpanel.add(html);
+			if (rettighedsniveau.equals("0")){
+				code = "<b>Brugeren eksisterer ikke</b></br>";
+				html.setHTML(code);
+				this.externalvpanel.add(html);
+				startMenu();
+				this.contentpanel.clear();
+			}
+			mainMenu();
 		}
-		
-		mainMenu();
 	}
 	
 	public void deletedElement(boolean result) {

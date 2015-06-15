@@ -8,8 +8,9 @@ import cdio3.gwt.client.model.ReceptDTO;
 
 public interface DBServiceClientInt {
 	//TODO mangler raavare (slet), recept(slet), raavarebatch, produktbatch, produktbatchkomp.
+	void getUserRights(String token);
 	void authenticateUser(String username, String password);
-	void getUser(int oprId);
+	void getUser(int oprId, String token);
 	void getUserList();
 	void deleteElement(int eId,String valg);
 	void createUser(OperatoerDTO opr);

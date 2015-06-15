@@ -18,6 +18,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	private DBServiceAsync service;
 	private MainGUI maingui;
 	private int rettighedsniveau = 0;
+	String token = "";
 	
 	//TODO mangler metoder som slet på alle.
 	
@@ -36,8 +37,8 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 		this.service.authenticateUser(username, password, new DefaultCallback());
 	}
 	@Override
-	public void getUser(int oprId) {
-		this.service.getUser(oprId, new DefaultCallback());
+	public void getUser(int oprId, String token) {
+		this.service.getUser(oprId, token, new DefaultCallback());
 	}
 
 	@Override
@@ -117,6 +118,12 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 		
 	}
 	
+	@Override
+	public void getUserRights(String token) {
+		this.service.getUserRights(token, new DefaultCallback());
+		
+	}
+	
 	@SuppressWarnings("rawtypes")
 	private class DefaultCallback implements AsyncCallback {
 
@@ -153,10 +160,9 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 			}
 			// Hvis der modtages integer (Login)
 			else if(result instanceof String){
-				//if(rettighedsniveau == 0){
-					String rettighedsniveau = (String) result;
-					maingui.authenticateOperatoer(rettighedsniveau);
-				//	}
+				String rettighedsniveau = (String) result;
+				token = rettighedsniveau;
+				maingui.authenticateOperatoer(rettighedsniveau);
 				}
 			else if(result instanceof Boolean){
 					boolean svar = (Boolean) result;

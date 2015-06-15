@@ -19,11 +19,18 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 	
 	//TODO mangler slet og create funktionalitet mange af de nye metoder.
 
+	@Override
+	public String getUserRights(String token){
+		TokenHandler th = new TokenHandler();
+		return th.getUserRights(token);
+	}
+	
 	@SuppressWarnings("static-access")
 	@Override
 	public String authenticateUser(String username, String password) {
 		ResultSet rs = null;
-		String rettighedsniveau = "0";
+		String token = "";
+		TokenHandler th = new TokenHandler();
 		try {
 			Connector conn = new Connector();
 			rs = conn.doQuery("SELECT * FROM operatoer WHERE opr_navn = \"" + username + "\" AND password = \"" + password + "\"");
@@ -39,19 +46,28 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 			e.printStackTrace();
 		}
 		try {
-			if(!rs.first()) rettighedsniveau = "0";
-			else if (rs.first()) rettighedsniveau = rs.getString("rettighedsniveau");
+			if(!rs.first()) token = null;
+			else if (rs.first()) token = th.createToken(rs.getInt("opr_id") + "", rs.getString("rettighedsniveau"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return rettighedsniveau;
+		return token;
 	}
 
 	@SuppressWarnings("static-access")
 	@Override
-	public OperatoerDTO getUser(int oprId) {
+	public OperatoerDTO getUser(int oprId, String token) {
 		ResultSet rs = null;
 		OperatoerDTO opr = new OperatoerDTO();
+		TokenHandler th = new TokenHandler();
+		String validationtoken = th.validateToken(token);
+		if(validationtoken.equals("Token timed out")){
+			return null;
+		}else if(validationtoken.equals("Token mismatch")){
+			return null;
+		}else if(validationtoken.equals(null)){
+			return null;
+		}else{
 		try {
 			Connector conn = new Connector();
 			rs = conn.doQuery("SELECT * FROM operatoer WHERE opr_id = \"" + oprId + "\"");
@@ -80,7 +96,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 			e.printStackTrace();
 		}
 		return null;
-	}
+	}}
 
 	@SuppressWarnings("static-access")
 	@Override
