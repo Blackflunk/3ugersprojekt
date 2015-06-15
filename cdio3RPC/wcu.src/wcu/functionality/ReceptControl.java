@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cdio3.gwt.client.model.ReceptDTO;
-import cdio3.gwt.server.DALException;
 import dao.interf.IReceptDAO;
 
 public class ReceptControl implements IReceptDAO {
@@ -20,7 +19,7 @@ public class ReceptControl implements IReceptDAO {
 	}
 
 	@Override
-	public ReceptDTO getRecept(int receptId) throws DALException {
+	public ReceptDTO getRecept(int receptId) {
 		ReceptDTO hentRecept = new ReceptDTO();
 		for (int i = 0; i < recDB.size(); i ++){
 			if (receptId == recDB.get(i).getReceptId()){
@@ -30,19 +29,19 @@ public class ReceptControl implements IReceptDAO {
 		return hentRecept;
 	}
 	@Override
-	public List<ReceptDTO> getReceptList() throws DALException {
+	public List<ReceptDTO> getReceptList(){
 		return recDB;
 	}
 
 	@Override
-	public void createRecept(ReceptDTO recept) throws DALException {
+	public void createRecept(ReceptDTO recept){
 		recDB.add(recept);
 		receptFil.writeReceptDB(recDB);
 		
 	}
 
 	@Override
-	public void updateRecept(ReceptDTO recept) throws DALException {
+	public void updateRecept(ReceptDTO recept){
 		for(int i = 0; i < recDB.size(); i++){
 			if(recept.getReceptId() == recDB.get(i).getReceptId()){
 				recDB.set(i, recept);
