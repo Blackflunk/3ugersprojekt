@@ -2,16 +2,6 @@ package cdio3.gwt.client.gui;
 
 import java.util.ArrayList;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
-
 import cdio3.gwt.client.model.OperatoerDTO;
 import cdio3.gwt.client.model.ProduktBatchDTO;
 import cdio3.gwt.client.model.ProduktBatchKompDTO;
@@ -19,6 +9,18 @@ import cdio3.gwt.client.model.RaavareBatchDTO;
 import cdio3.gwt.client.model.RaavareDTO;
 import cdio3.gwt.client.model.ReceptDTO;
 import cdio3.gwt.client.service.DBServiceClientImpl;
+
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class MainGUI extends Composite {
 	String rettighedsniveau = "0";
