@@ -48,7 +48,7 @@ public class WCUController {
 		System.out.println(forLength);
 		for (loopNumber=0; loopNumber < forLength; loopNumber++){
 		try { checkPreconditions();} catch (WeightException e) { e.printStackTrace();}
-		try { taraPreconditions();} catch (WeightException e) { e.printStackTrace();}
+		try { taraPreconditions(loopNumber);} catch (WeightException e) { e.printStackTrace();}
 		try { doWeighing(loopNumber);} catch (WeightException e) { e.printStackTrace();}
 		}
 		// for slut
@@ -155,17 +155,21 @@ public class WCUController {
 		}
 	}
 	
-	public void taraPreconditions() throws WeightException{
+	public void taraPreconditions(int loopNumber) throws WeightException{
 		CC.printMessage("Læg tarabeholderen på vægten, INDTAST 'OK' når dette er gjort");
 		String input = CC.getUserInput();
 		try {
+			System.out.println("teeest");
 			CC.controlOKMessage(input);
 			WC.writeSocket("T\r\n");
 		} catch (InvalidInputException e) {
 			CC.printMessage("Ukendt input");
-			taraPreconditions();
+			taraPreconditions(loopNumber);
 		}
+		if (loopNumber==0) {
 		weight = WC.readSocket();
+		}
+		
 		tara = weight;
 		System.out.println(tara);
 		WC.writeSocket("T\r\n");
@@ -201,6 +205,9 @@ public class WCUController {
 		else{
 		doWeighingControl();
 		}
+		System.out.println("her kommer s");
+		String n = WC.writeSocket("S");
+		System.out.println(n);
 	//	vareliste.add(new TempVare());
 		
 	}
