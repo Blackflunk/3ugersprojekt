@@ -29,8 +29,8 @@ public class WCUController {
 	Connector connect;
 	WeightCommunicator WC;
 	ArrayList<TempVare> vareliste = new ArrayList<TempVare>(); 
-	String weightChoice,user, tara,netto,brutto,weight,mode;
-	int produkt=0,forLength, loopNumber, BatchId, recept_id;
+	String weightChoice, user, tara, netto, brutto, weight, mode;
+	int produkt=0, forLength, loopNumber, BatchId, recept_id;
 	
 	public void init() {
 		runProcedure();
@@ -153,11 +153,11 @@ public class WCUController {
 	}
 	
 	public void taraPreconditions() throws WeightException{
-		WC.writeSocket("T\r\n");
 		CC.printMessage("Læg tarabeholderen på vægten, INDTAST 'OK' når dette er gjort");
 		String input = CC.getUserInput();
 		try {
 			CC.controlOKMessage(input);
+			WC.writeSocket("T\r\n");
 		} catch (InvalidInputException e) {
 			CC.printMessage("Ukendt input");
 			taraPreconditions();
