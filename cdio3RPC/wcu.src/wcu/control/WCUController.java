@@ -168,8 +168,10 @@ public class WCUController {
 		String weight = WC.readSocket();
 		tempvare.setTare(weight);
 		System.out.print(tempvare.tare);
-		// registrer tara værdi
-		// tarer vægt
+		WC.writeSocket("DW\r\n");
+		String response = WC.readSocket();
+		System.out.println(response);
+		WC.writeSocket("T\r\n");
 	}
 	
 	public void doWeighing() throws WeightException{
@@ -194,7 +196,9 @@ public class WCUController {
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
-		// sæt produktbatchnummerets status til 'afsluttet'
+		if (mode.equals("Simulator")) {
+			WC.writeSocket("Q\r\n");
+		}
 	}
 	
 	
