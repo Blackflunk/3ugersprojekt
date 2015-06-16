@@ -205,9 +205,9 @@ public class WCUController {
 		else{
 		doWeighingControl();
 		}
-		System.out.println("her kommer s");
-		String n = WC.writeSocket("S");
-		System.out.println(n);
+//		System.out.println("her kommer s");
+//		String n = WC.writeSocket("S");
+//		System.out.println(n);
 	//	vareliste.add(new TempVare());
 		
 	}
