@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import cdio3.gwt.server.*;
 import dao.impl.OperatoerDAO;
 import dao.impl.ProduktBatchDAO;
+import dao.impl.RaavareBatchDAO;
 import dao.impl.RaavareDAO;
 import dao.impl.ReceptDAO;
 import dao.impl.ReceptKompDAO;
@@ -25,12 +26,13 @@ public class WCUController {
 	public ReceptDAO receptDAO;
 	public ReceptKompDAO receptkompDAO;
 	public RaavareDAO raavareDAO;
+	public RaavareBatchDAO raavarebatchDAO;
 	public TempVare tempvare;
 	Connector connect;
 	WeightCommunicator WC;
 	ArrayList<TempVare> vareliste = new ArrayList<TempVare>(); 
-	String weightChoice, user, tara, netto, brutto, weight, mode;
-	int produkt=0, forLength, loopNumber, BatchId, recept_id;
+	String weightChoice, user, tara, netto, brutto, weight, mode, produktbatch;
+	int produkt=0, forLength, loopNumber, BatchId, recept_id, rbID, tempID;
 	
 	public void init() {
 		runProcedure();
@@ -82,6 +84,7 @@ public class WCUController {
 			receptDAO = new ReceptDAO();
 			receptkompDAO = new ReceptKompDAO();
 			raavareDAO = new RaavareDAO();
+			raavarebatchDAO = new RaavareBatchDAO();
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
@@ -178,16 +181,26 @@ public class WCUController {
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
-		System.out.println(raavare_id);
 		try {
 			raavare_name = raavareDAO.getRaavare(raavare_id).getRaavareNavn();
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
-		System.out.println(raavare_name);
 		CC.printMessage("indtast raavarebatch nummer på raavare "+ raavare_name);
-		String produktbatch = CC.getUserInput();
+		produktbatch = CC.getUserInput();
+		rbID = Integer.parseInt(produktbatch);
+		try {
+			tempID = raavarebatchDAO.getRaavareBatch(rbID).getRaavareId();
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		if(tempID != raavare_id){
+			CC.printMessage("invalid batch number please enter it again");
+			doWeighing(loopNumber);
+		}
+		else{
 		doWeighingControl();
+		}
 	//	vareliste.add(new TempVare());
 		
 	}
@@ -201,11 +214,6 @@ public class WCUController {
 			CC.printMessage("Ukendt input");
 			doWeighingControl();
 		}
-//		WC.writeSocket("S\r\n");
-//		weight = WC.readSocket();
-//		System.out.println(weight);
-		
-		
 	}
 	public void endProduction() {
 		try {
