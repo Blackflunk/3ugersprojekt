@@ -32,3 +32,40 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+.menubutton-style{
+	background-color: blue;
+	margin:0px;
+	border-width: 0px;
+}
+
+.page-style{
+	height: 1100px;
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	overflow:auto;
+}
+
+.submenu-style{
+	float: right;
+	width: 700px;
+	height:40px;
+	border-bottom:2px ridge;
+}
+
+.menu-style{
+	float:left;
+	width:100px;
+	height:1000px;
+	border-right:2px ridge;
+	margin-top:40px;
+}
+
+.content-style{
+	float:top;
+	float:left;
+	margin-left:10px;
+	border: 0px;
+}
+

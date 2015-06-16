@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -26,7 +27,7 @@ public class MainGUI extends Composite {
 	String rettighedsniveau = "0";
 	String token = "";
 	
-	private VerticalPanel vPanel = new VerticalPanel();
+	private AbsolutePanel vPanel = new AbsolutePanel();
 	private VerticalPanel menupanel = new VerticalPanel();
 	private HorizontalPanel submenupanel = new HorizontalPanel();
 	private VerticalPanel contentpanel = new VerticalPanel();
@@ -114,12 +115,15 @@ public class MainGUI extends Composite {
 	private DBServiceClientImpl serviceImpl;
 	
 	public MainGUI(DBServiceClientImpl serviceImpl) {
-
+		vPanel.setStyleName("page-style");
 		initWidget(this.vPanel);
 		this.serviceImpl = serviceImpl;
 		
+		submenupanel.setStyleName("submenu-style");
 		this.vPanel.add(submenupanel);
+		menupanel.setStyleName("menu-style");
 		this.vPanel.add(menupanel);
+		contentpanel.setStyleName("content-style");
 		this.vPanel.add(contentpanel);
 		this.vPanel.add(externalvpanel);
 		
@@ -287,7 +291,7 @@ public class MainGUI extends Composite {
 		code = code + "<b>Rettighedsniveau:</b> " + info.getRettighedsniveau() + "</br>";
 		
 		html.setHTML(code);
-		this.externalvpanel.add(html);
+		this.contentpanel.add(html);
 	}
 	
 	public void displayRaavare(RaavareDTO info) {
@@ -350,7 +354,7 @@ public class MainGUI extends Composite {
 			code = code + "<b>Rettighedsniveau:</b> " + oprList.get(i).getRettighedsniveau() + "</br>";
 			
 			html.setHTML(code);
-			this.externalvpanel.add(html);
+			this.contentpanel.add(html);
 		}
 	}
 	
