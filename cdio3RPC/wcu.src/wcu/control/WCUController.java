@@ -1,6 +1,7 @@
 package wcu.control;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import cdio3.gwt.server.*;
 import dao.impl.OperatoerDAO;
@@ -27,12 +28,9 @@ public class WCUController {
 	public TempVare tempvare;
 	Connector connect;
 	WeightCommunicator WC;
-	String user;
-	String[] start;
-	String weightChoice;
-	int produkt=0;
-	String mode;
-	int forLength, loopNumber, BatchId;
+	ArrayList<TempVare> vareliste = new ArrayList<TempVare>(); 
+	String weightChoice,user, tara,netto,brutto,weight,mode;
+	int produkt=0,forLength, loopNumber, BatchId, recept_id;
 	
 	public void init() {
 		runProcedure();
@@ -49,7 +47,7 @@ public class WCUController {
 		for (loopNumber=0; loopNumber < forLength; loopNumber++){
 		try { checkPreconditions();} catch (WeightException e) { e.printStackTrace();}
 		try { taraPreconditions();} catch (WeightException e) { e.printStackTrace();}
-		try { doWeighing();} catch (WeightException e) { e.printStackTrace();}
+		try { doWeighing(loopNumber);} catch (WeightException e) { e.printStackTrace();}
 		}
 		// for slut
 		endProduction();
@@ -124,7 +122,7 @@ public class WCUController {
 		String input = CC.getUserInput();
 		BatchId = Integer.parseInt(input);
 			if(BatchId == produktbatchDAO.getProduktBatch(BatchId).getPbId()){
-				int recept_id = produktbatchDAO.getProduktBatch(BatchId).getReceptId();
+				recept_id = produktbatchDAO.getProduktBatch(BatchId).getReceptId();
 				String recept_name = receptDAO.getRecept(recept_id).getReceptNavn();
 				CC.printMessage(recept_name);
 				System.out.println(BatchId +" "+ recept_id);
@@ -164,20 +162,34 @@ public class WCUController {
 			CC.printMessage("Ukendt input");
 			taraPreconditions();
 		}
-		tempvare= new TempVare();
-		String weight = WC.readSocket();
-		tempvare.setTare(weight);
-		System.out.print(tempvare.tare);
-		WC.writeSocket("DW\r\n");
-		String response = WC.readSocket();
-		System.out.println(response);
+		weight = WC.readSocket();
+		tara = weight;
+		System.out.println(tara);
 		WC.writeSocket("T\r\n");
+		System.out.println("test2");
+		
 	}
 	
-	public void doWeighing() throws WeightException{
-		CC.printMessage("indtast produktbatch nummer på produkt "+ produkt);
+	public void doWeighing(int loopNumber) throws WeightException{
+		int raavare_id = 0;
+		String raavare_name = "";
+		try {
+			raavare_id = receptkompDAO.getReceptKompList(recept_id).get(loopNumber).getRaavareId();
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		System.out.println(raavare_id);
+		try {
+			raavare_name = raavareDAO.getRaavare(raavare_id).getRaavareNavn();
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		System.out.println(raavare_name);
+		CC.printMessage("indtast raavarebatch nummer på raavare "+ raavare_name);
 		String produktbatch = CC.getUserInput();
 		doWeighingControl();
+	//	vareliste.add(new TempVare());
+		
 	}
 	public void doWeighingControl() {
 		
