@@ -53,14 +53,14 @@ public class MainGUI extends Composite {
 	private Label loginuserpass = new Label("Skriv kodeord:");
 	private TextBox userPwdTxt;
 	
-	private Label getusername = new Label("Skriv brugerens ID:");
+	private Label getusername = new Label("Skriv brugerens ID: (KUN TAL)");
 	private TextBox getUserNameTxt;
-	private Label deleteusertext = new Label("Skriv brugerens ID:");
+	private Label deleteusertext = new Label("Skriv brugerens ID: (KUN TAL)");
 	private TextBox deleteUserIdTxt;
 
-	private Label createuserid = new Label("Skriv brugerens ID:");
+	private Label createuserid = new Label("Skriv brugerens ID: (KUN TAL)");
 	private TextBox addUserIdTxt;
-	private Label createusername = new Label("Skriv brugerens navn:");
+	private Label createusername = new Label("Skriv brugerens navn: ");
 	private TextBox addUserNameTxt;
 	private Label createuserini = new Label("Skriv brugerens initialer:");
 	private TextBox addUserIniTxt;
@@ -68,36 +68,36 @@ public class MainGUI extends Composite {
 	private TextBox addUserCprTxt;
 	private Label createuserpass = new Label("Skriv brugerens kodeord: ");
 	private TextBox addUserPwdTxt;
-	private Label createuserret = new Label("Skriv brugerens rettighedsniveau: ");
+	private Label createuserret = new Label("Skriv brugerens rettighedsniveau: (KUN TAL)");
 	private TextBox addUserRetTxt;
 		
-	private Label createraavareid = new Label("Skriv råvarens id: ");
+	private Label createraavareid = new Label("Skriv råvarens id: (KUN TAL)");
 	private TextBox addRaavareIdTxt;
 	private Label createraavarenavn = new Label("Skriv råvarens navn: ");
 	private TextBox addRaavareNavnTxt;
 	private Label createraavareleverandoer = new Label("Skriv leverandør: ");
 	private TextBox addRaavareLeverandoerTxt;
 	
-	private Label createreceptid = new Label("Skriv receptens id: ");
+	private Label createreceptid = new Label("Skriv receptens id: (KUN TAL)");
 	private TextBox addReceptIdTxt;
 	private Label createreceptnavn = new Label("Skriv receptens navn: ");
 	private TextBox addReceptNavnTxt;
 	
-	private Label createraavarebatchid = new Label("Skriv råvarebatchens id: ");
+	private Label createraavarebatchid = new Label("Skriv råvarebatchens id: (KUN TAL)");
 	private TextBox addRaavareBatchIdTxt;
-	private Label createraavarebatchraavareid = new Label("Skriv råvarens ID: ");
+	private Label createraavarebatchraavareid = new Label("Skriv råvarens ID: (KUN TAL)");
 	private TextBox addRaavareBatchRaavareIdTxt;
 	private Label createraavarebatchmaengde = new Label("Skriv mængden: ");
 	private TextBox addRaavareBatchMaengdeTxt;
 	
-	private Label createproduktbatchid = new Label("Skriv produktbatchens ID: ");
+	private Label createproduktbatchid = new Label("Skriv produktbatchens ID: (KUN TAL)");
 	private TextBox addProduktBatchIdTxt;
 	private Label createproduktbatchstatus = new Label("Skriv status på produktbatchen: ");
 	private TextBox addProduktBatchStatusTxt;
-	private Label createproduktbatchreceptid = new Label("Skriv produktbatchens recept ID: ");
+	private Label createproduktbatchreceptid = new Label("Skriv produktbatchens recept ID: (KUN TAL)");
 	private TextBox addProduktBatchReceptIdTxt;
 	
-	private Label upuserid = new Label("Skriv brugerens ID: ");
+	private Label upuserid = new Label("Skriv brugerens ID: (KUN TAL)");
 	private TextBox upUserIdTxt;
 	private Label upusername = new Label("Skriv brugerens nye navn: ");
 	private TextBox upUserNameTxt;
@@ -107,7 +107,7 @@ public class MainGUI extends Composite {
 	private TextBox upUserCprTxt;
 	private Label upuserpass = new Label("Skriv brugerens nye password: ");
 	private TextBox upUserPwdTxt;
-	private Label upuserret = new Label("Skriv brugerens rettighedsniveau: ");
+	private Label upuserret = new Label("Skriv brugerens rettighedsniveau: (KUN TAL)");
 	private TextBox upUserRetTxt;
 	
 	
@@ -669,6 +669,14 @@ public class MainGUI extends Composite {
 		
 		this.contentpanel.add(createuserret);
 		addUserRetTxt = new TextBox();
+		addUserRetTxt.addKeyPressHandler(new KeyPressHandler() {
+
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addUserRetTxt);
 		
 		Button createUserBtn = new Button("OK");
@@ -708,6 +716,14 @@ public class MainGUI extends Composite {
 		
 		this.contentpanel.add(upuserret);
 		upUserRetTxt = new TextBox();
+		upUserRetTxt.addKeyPressHandler(new KeyPressHandler() {
+
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(upUserRetTxt);
 		
 		Button updateUserBtn = new Button("OK");
@@ -755,6 +771,14 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(createraavareid);
 		addRaavareIdTxt = new TextBox();
+		addRaavareIdTxt.addKeyPressHandler(new KeyPressHandler() {
+
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addRaavareIdTxt);
 		
 		this.contentpanel.add(createraavarenavn);
@@ -775,7 +799,16 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(createreceptid);
 		addReceptIdTxt = new TextBox();
+		addReceptIdTxt.addKeyPressHandler(new KeyPressHandler() {
+
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addReceptIdTxt);
+		
 		
 		this.contentpanel.add(createreceptnavn);
 		addReceptNavnTxt = new TextBox();
@@ -791,10 +824,26 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(createraavarebatchid);
 		addRaavareBatchIdTxt = new TextBox();
+		addRaavareBatchIdTxt.addKeyPressHandler(new KeyPressHandler() {
+
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addRaavareBatchIdTxt);
 		
 		this.contentpanel.add(createraavarebatchraavareid);
 		addRaavareBatchRaavareIdTxt = new TextBox();
+		addRaavareBatchRaavareIdTxt.addKeyPressHandler(new KeyPressHandler() {
+
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addRaavareBatchRaavareIdTxt);
 		
 		this.contentpanel.add(createraavarebatchmaengde);
@@ -811,6 +860,14 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(createproduktbatchid);
 		addProduktBatchIdTxt = new TextBox();
+		addProduktBatchIdTxt.addKeyPressHandler(new KeyPressHandler() {
+
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addProduktBatchIdTxt);
 		
 		this.contentpanel.add(createproduktbatchstatus);
@@ -819,6 +876,14 @@ public class MainGUI extends Composite {
 		
 		this.contentpanel.add(createproduktbatchreceptid);
 		addProduktBatchReceptIdTxt = new TextBox();
+		addProduktBatchReceptIdTxt.addKeyPressHandler(new KeyPressHandler() {
+
+		      public void onKeyPress(KeyPressEvent event) {
+		        if (!Character.isDigit(event.getCharCode())) {
+		          ((TextBox) event.getSource()).cancelKey();
+		        }
+		      }
+		    });
 		this.contentpanel.add(addProduktBatchReceptIdTxt);
 		
 		Button createUserBtn = new Button("OK");
