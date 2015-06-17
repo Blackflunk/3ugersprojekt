@@ -268,14 +268,13 @@ public class MainGUI extends Composite {
 		HTML html = new HTML();
 		int opr_id = Integer.parseInt(addUserIdTxt.getText());
 		String code = "";
-		if(opr_id == reply) { 
+		if(reply == 1) { 
 			code = "<b>Bruger ID eksisterer allerede, skriv et nyt</b></br>";
 			html.setHTML(code);
 			this.externalvpanel.add(html);
 		}
 		else
 			serviceImpl.validatePassword(addUserPwdTxt.getText());
-			createUser();
 	}
 	public void validatePassword(boolean svar){
 		if(svar){createUser();}
