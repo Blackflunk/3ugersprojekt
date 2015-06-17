@@ -144,7 +144,7 @@ public class MainGUI extends Composite {
 		this.vPanel.add(menupanel);
 		contentpanel.setStyleName("content-style");
 		this.vPanel.add(contentpanel);
-		this.vPanel.add(externalvpanel);
+		this.contentpanel.add(externalvpanel);
 
 		startMenu();
 	}
@@ -1129,6 +1129,8 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.externalvpanel.clear();
 
+		this.contentpanel.add(vaelgmenu);
+		
 		//TODO lav click handlers
 		openopretraavarebatch.setStyleName("submenubutton-style");
 		openopretraavarebatch.addClickHandler(new openCreateRaavareBatchClickHandler());
