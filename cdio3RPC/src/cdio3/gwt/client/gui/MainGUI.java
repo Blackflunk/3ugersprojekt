@@ -153,11 +153,7 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			RaavareDTO raa = new RaavareDTO();
-			raa.setRaavareId(Integer.parseInt(addRaavareIdTxt.getText()));
-			raa.setRaavareNavn(addRaavareNavnTxt.getText());
-			raa.setLeverandoer(addRaavareLeverandoerTxt.getText());
-			serviceImpl.createRaavare(raa);
+			createRaavare();
 		}
 	}
 
@@ -276,6 +272,10 @@ public class MainGUI extends Composite {
 		else
 			serviceImpl.validatePassword(addUserPwdTxt.getText());
 	}
+	
+	public void checkIfRaavareIdExists(int reply){
+		this.contentpanel.clear();
+	}
 	public void validatePassword(boolean svar){
 		if(svar){createUser();}
 		else{
@@ -297,6 +297,13 @@ public class MainGUI extends Composite {
 		serviceImpl.createUser(opr);
 
 	}
+	public void createRaavare() {
+	RaavareDTO raa = new RaavareDTO();
+	raa.setRaavareId(Integer.parseInt(addRaavareIdTxt.getText()));
+	raa.setRaavareNavn(addRaavareNavnTxt.getText());
+	raa.setLeverandoer(addRaavareLeverandoerTxt.getText());
+	serviceImpl.createRaavare(raa);
+}
 	public void deletedElement(boolean result) {
 		this.externalvpanel.clear();
 		HTML html = new HTML();
