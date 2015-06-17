@@ -278,7 +278,6 @@ public class MainGUI extends Composite {
 	public void validatePassword(boolean svar){
 		if(svar){createUser();}
 		else{
-			this.contentpanel.clear();
 			HTML html = new HTML();
 			String code = "<b>Dit password følger ikke reglerne, skriv et nyt</b></br>";
 			html.setHTML(code);
@@ -601,9 +600,6 @@ public class MainGUI extends Composite {
 			vaerkfoererSubMenu();
 		}
 	}
-
-
-
 
 	public void openLogin(){
 		this.externalvpanel.clear();
