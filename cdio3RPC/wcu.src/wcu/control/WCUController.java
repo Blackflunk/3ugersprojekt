@@ -36,7 +36,7 @@ public class WCUController {
 	WeightCommunicator WC;
 	ArrayList<TempVare> vareliste = new ArrayList<TempVare>(); 
 	String weightChoice, user, tara, netto, brutto, weight, mode, produktbatch, raavare_name, recept_name;
-	int produkt=0, forLength, loopNumber, BatchId, recept_id, rbID, tempID;
+	int produkt=0, forLength, loopNumber, BatchId, recept_id, rbID, tempID,raavare_id, tolerance, NegCalculatedTol, CalculatedTol;
 	
 	public void init() {
 		runProcedure();
@@ -203,7 +203,7 @@ public class WCUController {
 	
 	public void doWeighing(int loopNumber){
 		try {
-			int raavare_id = 0;
+			raavare_id = 0;
 			raavare_id = receptkompDAO.getReceptKompList(recept_id).get(loopNumber).getRaavareId();
 			raavare_name = raavareDAO.getRaavare(raavare_id).getRaavareNavn();
 			WC.writeSocket("RM20 8 indtast raavarebatch nummer på raavare " + raavare_name);
@@ -234,6 +234,14 @@ public class WCUController {
 		try {
 			CC.controlOKMessage(input);
 			netto = WC.writeSocket("S");
+			int nettoint = Integer.parseInt(netto.substring(7));
+			tolerance = receptkompDAO.getReceptKomp(recept_id, raavare_id).getTolerance();
+			CalculatedTol = ((nettoint / 100) * tolerance) + receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
+			NegCalculatedTol = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto() - ((nettoint / 100) * tolerance);
+			if(nettoint > CalculatedTol || nettoint < NegCalculatedTol){
+				WC.writeSocket("D weight is not within the Tolerance Bounds");
+				doWeighingControl();
+			}
 			int index1 = tara.indexOf("kg");
 			String temptara = tara.substring(10, index1);
 			double finaltara = Double.parseDouble(temptara);
