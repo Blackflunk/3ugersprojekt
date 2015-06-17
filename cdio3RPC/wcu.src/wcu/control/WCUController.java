@@ -1,7 +1,12 @@
 package wcu.control;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gwt.thirdparty.javascript.rhino.head.regexp.SubString;
 
@@ -15,11 +20,7 @@ import dao.impl.ReceptKompDAO;
 import wcu.data.TempVare;
 import wcu.exceptions.InvalidInputException;
 import wcu.exceptions.WeightException;
-import wcu.functionality.OprControl;
-import wcu.functionality.ProduktBatchControl;
-import wcu.functionality.ReceptControl;
-import wcu.functionality.ReceptKompControl;
-import weightsimulator.launch.*;
+
 
 public class WCUController {
 	ConsoleController CC = new ConsoleController();
@@ -30,10 +31,11 @@ public class WCUController {
 	public RaavareDAO raavareDAO;
 	public RaavareBatchDAO raavarebatchDAO;
 	public TempVare tempvare;
+	public FileWriter filewriter;
 	Connector connect;
 	WeightCommunicator WC;
 	ArrayList<TempVare> vareliste = new ArrayList<TempVare>(); 
-	String weightChoice, user, tara, netto, brutto, weight, mode, produktbatch;
+	String weightChoice, user, tara, netto, brutto, weight, mode, produktbatch, raavare_name, recept_name;
 	int produkt=0, forLength, loopNumber, BatchId, recept_id, rbID, tempID;
 	
 	public void init() {
@@ -43,6 +45,7 @@ public class WCUController {
 	public void runProcedure() {
 		connectToDatabase();
 		createDAO();
+		createFilewriter();
 		try { chooseWeight();} catch (WeightException e) { e.printStackTrace();}
 		connectToWeight();
 		try { verifyOperatoer();} catch (WeightException | DALException e) { e.printStackTrace();}
@@ -55,6 +58,14 @@ public class WCUController {
 		}
 		// for slut
 		endProduction();
+	}
+	
+	public void createFilewriter() {
+		try {
+			filewriter = new FileWriter("log.txt");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void connectToDatabase() {
@@ -125,7 +136,7 @@ public class WCUController {
 		BatchId = Integer.parseInt(input);
 			if(BatchId == produktbatchDAO.getProduktBatch(BatchId).getPbId()){
 				recept_id = produktbatchDAO.getProduktBatch(BatchId).getReceptId();
-				String recept_name = receptDAO.getRecept(recept_id).getReceptNavn();
+				recept_name = receptDAO.getRecept(recept_id).getReceptNavn();
 				CC.printMessage(recept_name);
 				System.out.println(BatchId +" "+ recept_id);
 				
@@ -176,7 +187,6 @@ public class WCUController {
 	
 	public void doWeighing(int loopNumber) throws WeightException{
 		int raavare_id = 0;
-		String raavare_name = "";
 		try {
 			raavare_id = receptkompDAO.getReceptKompList(recept_id).get(loopNumber).getRaavareId();
 		} catch (DALException e) {
@@ -202,9 +212,6 @@ public class WCUController {
 		else{
 		doWeighingControl();
 		}
-		System.out.println("her kommer s");
-		netto = WC.writeSocket("S");
-		System.out.println(netto);
 
 		
 	}
@@ -214,6 +221,10 @@ public class WCUController {
 		String input = CC.getUserInput();
 		try {
 			CC.controlOKMessage(input);
+			System.out.println("her kommer s");
+			netto = WC.writeSocket("S");
+			System.out.println(netto);
+			
 			int index1 = tara.indexOf("kg");
 			String temptara = tara.substring(10, index1);
 			double finaltara = Double.parseDouble(temptara);
@@ -222,7 +233,7 @@ public class WCUController {
 			String tempnetto = netto.substring(10, index2);
 			double finalnetto = Double.parseDouble(tempnetto);
 			System.out.println("netto: "+finalnetto);
-			vareliste.add(new TempVare(finalnetto, finalnetto+finaltara, finalnetto));
+			vareliste.add(new TempVare(raavare_name, finalnetto, finalnetto+finaltara, finalnetto));
 			
 		} catch (InvalidInputException e) {
 			CC.printMessage("Ukendt input");
@@ -238,6 +249,26 @@ public class WCUController {
 		}
 		if (mode.equals("Simulator")) {
 			WC.writeSocket("Q");
+		}
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		String raavareformat="";
+		for (int i=0; i<vareliste.size(); i++){
+			raavareformat += vareliste.get(i).name;
+			raavareformat += "\n brutto: ";
+			raavareformat += vareliste.get(i).brutto;
+			raavareformat += " netto: ";
+			raavareformat += vareliste.get(i).netto;
+			raavareformat += " tara: ";
+			raavareformat += vareliste.get(i).tara;
+			raavareformat += "\n \n";
+					}
+		try {
+			filewriter.write("log for recept: "+recept_name+"\n"+"Operatoer: "+user+"\n"+
+					"Date and time: "+dateFormat.format(date)+"\n \n"+ raavareformat
+					);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

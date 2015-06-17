@@ -4,6 +4,7 @@ public class TempVare {
 	public double tara;
 	public double brutto;
 	public double netto;
+	public String name;
 	
 	public TempVare() {
 		this.tara = 0.0;
@@ -11,10 +12,11 @@ public class TempVare {
 		this.netto = 0.0;
 	}
 	
-	public TempVare(double netto, double brutto, double tara) {
+	public TempVare(String name, double netto, double brutto, double tara) {
 		this.tara = tara;
 		this.brutto = brutto;
 		this.netto = netto;
+		this.name = name;
 	}
 	public void setNetto(double n){
 		this.netto = n;
