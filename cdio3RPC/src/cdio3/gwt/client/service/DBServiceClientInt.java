@@ -25,4 +25,5 @@ public interface DBServiceClientInt {
 	void createProduktBatch(ProduktBatchDTO prb);
 	void getProduktBatchKompList();
 	void getUserID(int opr_id);
+	void validatePassword(String password);
 }

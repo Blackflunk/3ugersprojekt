@@ -20,6 +20,12 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 	//TODO mangler slet og create funktionalitet mange af de nye metoder.
 
 	@Override
+	public boolean validatePassword(String password){
+		PwdFunctions pwdTest = new PwdFunctions();
+		return pwdTest.checkPwd(password);
+	}
+	
+	@Override
 	public String getUserRights(String token){
 		TokenHandler th = new TokenHandler();
 		return th.getUserRights(token);
