@@ -117,10 +117,10 @@ public class WCUController {
 	}
 	
 	public void verifyOperatoer() throws WeightException, DALException {
-		WC.writeSocket("RM20 8 Intast Operatoer nummer:");
+		WC.writeSocket("RM20 8 Indtast Operatoer nummer:");
 		String input = WC.readSocket();
-		CC.printMessage(input + "DETTE ER HVAD JEG VIL VIDE");
-		//String input = CC.getUserInput();
+		String substring = input.substring(7);
+		CC.printMessage(substring);
 		int OpId = Integer.parseInt(input);
 		if(OpId == oprDAO.getOperatoer(OpId).getOprId()){
 			user = oprDAO.getOperatoer(OpId).getOprNavn();
