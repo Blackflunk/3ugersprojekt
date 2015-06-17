@@ -9,9 +9,11 @@ import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -31,7 +33,7 @@ public class MainGUI extends Composite {
 	private AbsolutePanel vPanel = new AbsolutePanel();
 	private VerticalPanel menupanel = new VerticalPanel();
 	private HorizontalPanel submenupanel = new HorizontalPanel();
-	private VerticalPanel contentpanel = new VerticalPanel();
+	private FlowPanel contentpanel = new FlowPanel();
 	private VerticalPanel externalvpanel = new VerticalPanel();
 
 	private Label vaelgmenu = new Label("Vælg nu i submenu.");
@@ -144,7 +146,9 @@ public class MainGUI extends Composite {
 		this.vPanel.add(menupanel);
 		contentpanel.setStyleName("content-style");
 		this.vPanel.add(contentpanel);
-		this.contentpanel.add(externalvpanel);
+		externalvpanel.setStyleName("externalvpanel-style");
+		contentpanel.add(externalvpanel);
+		
 
 		startMenu();
 	}
@@ -1128,7 +1132,11 @@ public class MainGUI extends Composite {
 		this.submenupanel.clear();
 		this.contentpanel.clear();
 		this.externalvpanel.clear();
-
+		
+		openfarmaceutpanel.setStyleName("menubutton-style");
+		openvaerkfoererpanel.setStyleName("menubuttonselected-style");
+		logout.setStyleName("menubutton-style");
+		openadminpanel.setStyleName("menubutton-style");
 		this.contentpanel.add(vaelgmenu);
 		
 		//TODO lav click handlers

@@ -169,3 +169,8 @@ body{
 	box-shadow: 0px 1px 7px 1px grey;
 }
 
+.externalvpanel-style{
+	height: 700px;
+	width:500px;
+	background-color:black;
+}
