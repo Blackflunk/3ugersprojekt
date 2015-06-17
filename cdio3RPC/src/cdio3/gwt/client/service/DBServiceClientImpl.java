@@ -186,8 +186,12 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 				}
 			else if(result instanceof Integer){
 				int svar = (Integer) result;
-				if(entity.equals("operatoer")){maingui.checkIfUserIdExists(svar);}
-			}
+				if(entity.equals("operatoer")){maingui.checkUserId(svar);}
+				if(entity.equals("raavare")){maingui.checkRaavareId(svar);}
+				if(entity.equals("raavarebatch")){maingui.checkRaavareBatchId(svar);}
+				if(entity.equals("recept")){maingui.checkReceptId(svar);}
+				if(entity.equals("produktbatch")){maingui.checkProduktBatchId(svar);}
+						}
 		
 			//Listerne
 			else if(result instanceof ArrayList<?>){
