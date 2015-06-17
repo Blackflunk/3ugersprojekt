@@ -150,6 +150,7 @@ public class WCUController {
 		tara = WC.writeSocket("T");
 		try {
 			produktbatchDAO.getProduktBatch(BatchId).setStatus(1);
+			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId));
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
@@ -231,6 +232,7 @@ public class WCUController {
 	public void endProduction() {
 		try {
 			produktbatchDAO.getProduktBatch(BatchId).setStatus(2);
+			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId));
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
