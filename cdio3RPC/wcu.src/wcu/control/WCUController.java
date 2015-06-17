@@ -238,7 +238,7 @@ public class WCUController {
 			tolerance = receptkompDAO.getReceptKomp(recept_id, raavare_id).getTolerance();
 			CalculatedTol = ((nettoint / 100) * tolerance) + receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
 			NegCalculatedTol = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto() - ((nettoint / 100) * tolerance);
-			if (nettoint < CalculatedTol && nettoint > NegCalculatedTol)
+			if (nettoint > CalculatedTol || nettoint < NegCalculatedTol)
 				throw new WeightException();
 			int index1 = tara.indexOf("kg");
 			String temptara = tara.substring(10, index1);
