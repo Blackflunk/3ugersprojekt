@@ -145,6 +145,7 @@ public class WCUController {
 			CC.printMessage("Ukendt input");
 			checkPreconditions();
 		}
+		tara = WC.writeSocket("T");
 		try {
 			produktbatchDAO.getProduktBatch(BatchId).setStatus(1);
 		} catch (DALException e) {
@@ -158,16 +159,15 @@ public class WCUController {
 		try {
 			System.out.println("teeest");
 			CC.controlOKMessage(input);
-			weight = WC.writeSocket("T");
+			tara = WC.writeSocket("T");
 		} catch (InvalidInputException e) {
 			CC.printMessage("Ukendt input");
 			taraPreconditions(loopNumber);
 		}
 		
-		tara = weight;
 		System.out.println(tara);
-		WC.writeSocket("T");
 		System.out.println("test2");
+		System.out.println(tara);
 		
 	}
 	
@@ -199,10 +199,10 @@ public class WCUController {
 		else{
 		doWeighingControl();
 		}
-//		System.out.println("her kommer s");
-//		String n = WC.writeSocket("S");
-//		System.out.println(n);
-	//	vareliste.add(new TempVare());
+		System.out.println("her kommer s");
+		netto = WC.writeSocket("S");
+		System.out.println(netto);
+
 		
 	}
 	public void doWeighingControl() {
