@@ -129,20 +129,22 @@ public class WCUController {
 		else{ 
 			WC.writeSocket("D Invalid operator number");
 			CC.printMessage("Invalid operator number");
+			verifyOperatoer();
 		}
 		// vis navn hvis godkendt
 	}
 	
 	public void verifyBatch() throws WeightException, DALException {
-		CC.printMessage("Indtast produktbatch nummer: ");
-		String input = CC.getUserInput();
+		WC.writeSocket("RM20 8 Indtast produktbatch nummer");
+		String input = WC.readSocket().substring(7);
+		CC.printMessage(input);
 		BatchId = Integer.parseInt(input);
 			if(BatchId == produktbatchDAO.getProduktBatch(BatchId).getPbId()){
 				recept_id = produktbatchDAO.getProduktBatch(BatchId).getReceptId();
 				recept_name = receptDAO.getRecept(recept_id).getReceptNavn();
+				WC.writeSocket(recept_name);
 				CC.printMessage(recept_name);
-				System.out.println(BatchId +" "+ recept_id);
-				
+				CC.printMessage(BatchId +" "+ recept_id);
 				forLength = receptkompDAO.getReceptKompList(recept_id).size();
 			}
 			else {
@@ -153,8 +155,8 @@ public class WCUController {
 	}
 	
 	public void checkPreconditions() throws WeightException {
-		CC.printMessage("Sikre dig at vægten er ubelastet, INDTAST 'OK' når dette er gjort");
-		String input = CC.getUserInput();
+		WC.writeSocket("RM20 8 Sikre dig at vægten er ubelastet, INDTAST 'OK' når dette er gjort");
+		String input = WC.readSocket().substring(7);
 		try {
 			CC.controlOKMessage(input);
 		} catch (InvalidInputException e) {
@@ -171,13 +173,13 @@ public class WCUController {
 	}
 	
 	public void taraPreconditions(int loopNumber) throws WeightException{
-		CC.printMessage("Læg tarabeholderen på vægten, INDTAST 'OK' når dette er gjort");
-		String input = CC.getUserInput();
+		WC.writeSocket("RM20 8 Læg tarabeholderen på vægten, INDTAST 'OK' når dette er gjort");
+		String input = WC.readSocket().substring(7);
 		try {
-			System.out.println("teeest");
 			CC.controlOKMessage(input);
 			tara = WC.writeSocket("T");
 		} catch (InvalidInputException e) {
+			WC.writeSocket("D U kendt input");
 			CC.printMessage("Ukendt input");
 			taraPreconditions(loopNumber);
 		}
@@ -200,8 +202,8 @@ public class WCUController {
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
-		CC.printMessage("indtast raavarebatch nummer på raavare "+ raavare_name);
-		produktbatch = CC.getUserInput();
+		WC.writeSocket("RM20 8 indtast raavarebatch nummer på raavare " + raavare_name);
+		produktbatch = WC.readSocket().substring(7);
 		rbID = Integer.parseInt(produktbatch);
 		try {
 			tempID = raavarebatchDAO.getRaavareBatch(rbID).getRaavareId();
@@ -209,7 +211,7 @@ public class WCUController {
 			e.printStackTrace();
 		}
 		if(tempID != raavare_id){
-			CC.printMessage("invalid batch number please enter it again");
+			WC.writeSocket("D invalid batch number please enter it again");
 			doWeighing(loopNumber);
 		}
 		else{
