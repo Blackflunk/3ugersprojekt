@@ -238,10 +238,8 @@ public class WCUController {
 			tolerance = receptkompDAO.getReceptKomp(recept_id, raavare_id).getTolerance();
 			CalculatedTol = ((nettoint / 100) * tolerance) + receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
 			NegCalculatedTol = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto() - ((nettoint / 100) * tolerance);
-			if(nettoint > CalculatedTol || nettoint < NegCalculatedTol){
-				WC.writeSocket("D weight is not within the Tolerance Bounds");
-				doWeighingControl();
-			}
+			if (nettoint < CalculatedTol && nettoint > NegCalculatedTol)
+				throw new WeightException();
 			int index1 = tara.indexOf("kg");
 			String temptara = tara.substring(10, index1);
 			double finaltara = Double.parseDouble(temptara);
@@ -258,6 +256,10 @@ public class WCUController {
 			WC.writeSocket("D Fejl i databehandling");
 			CC.printMessage("Fejl i databehandling");
 			doWeighing(loopNumber);
+		} catch (WeightException e) {
+			WC.writeSocket("D Vægt er ikke inde for tolerance grænserne");
+			CC.printMessage("Vægt er ikke inde for tolerance grænserne");
+			doWeighingControl();
 		}
 	}
 	public void endProduction() {
