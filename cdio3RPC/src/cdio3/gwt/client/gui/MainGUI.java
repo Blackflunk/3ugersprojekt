@@ -144,14 +144,7 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			OperatoerDTO opr = new OperatoerDTO();
-			opr.setOprId(Integer.parseInt(addUserIdTxt.getText()));
-			opr.setOprNavn(addUserNameTxt.getText());
-			opr.setIni(addUserIniTxt.getText());
-			opr.setCpr(addUserCprTxt.getText());
-			opr.setPassword(addUserPwdTxt.getText());
-			opr.setRettighedsniveau(addUserRetTxt.getText());
-			serviceImpl.createUser(opr);
+			createUser();
 		}
 	}
 	
@@ -269,6 +262,17 @@ public class MainGUI extends Composite {
 		}
 	}
 	
+	public void createUser(){
+		OperatoerDTO opr = new OperatoerDTO();
+		opr.setOprId(Integer.parseInt(addUserIdTxt.getText()));
+		opr.setOprNavn(addUserNameTxt.getText());
+		opr.setIni(addUserIniTxt.getText());
+		opr.setCpr(addUserCprTxt.getText());
+		opr.setPassword(addUserPwdTxt.getText());
+		opr.setRettighedsniveau(addUserRetTxt.getText());
+		serviceImpl.createUser(opr);
+		
+	}
 	public void deletedElement(boolean result) {
 		this.externalvpanel.clear();
 		HTML html = new HTML();
