@@ -221,15 +221,13 @@ public class WCUController {
 		
 	}
 	public void doWeighingControl() {
-		
-		CC.printMessage("Fuldfør afvejningen med den ønskede mængde, og indtast OK");
-		String input = CC.getUserInput();
+		WC.writeSocket("RM20 8 Fuldfør afvejningen med den ønskede mængde, og indtast OK");
+		String input = WC.readSocket().substring(7);
 		try {
 			CC.controlOKMessage(input);
 			System.out.println("her kommer s");
 			netto = WC.writeSocket("S");
 			System.out.println(netto);
-			
 			int index1 = tara.indexOf("kg");
 			String temptara = tara.substring(10, index1);
 			double finaltara = Double.parseDouble(temptara);
@@ -241,6 +239,7 @@ public class WCUController {
 			vareliste.add(new TempVare(raavare_name, finalnetto, finalnetto+finaltara, finalnetto));
 			
 		} catch (InvalidInputException e) {
+			WC.writeSocket("D Ukendt Input");
 			CC.printMessage("Ukendt input");
 			doWeighingControl();
 		}
