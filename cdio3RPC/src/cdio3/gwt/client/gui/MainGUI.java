@@ -144,7 +144,7 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			checkIfUserIdExists();
+			serviceImpl.getUserID(Integer.parseInt(addUserIdTxt.getText()));
 		}
 	}
 
@@ -262,13 +262,12 @@ public class MainGUI extends Composite {
 		}
 	}
 
-	public void checkIfUserIdExists(){
+	public void checkIfUserIdExists(int reply){
 		this.contentpanel.clear();
 		HTML html = new HTML();
 		int opr_id = Integer.parseInt(addUserIdTxt.getText());
 		String code = "";
-		int db_id = serviceImpl.getUserID();
-		if(opr_id == db_id) { 
+		if(opr_id == reply) { 
 			code = "<b>Bruger ID eksisterer allerede, skriv et nyt</b></br>";
 			html.setHTML(code);
 			this.externalvpanel.add(html);

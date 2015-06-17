@@ -31,6 +31,11 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 		
 		this.maingui = new MainGUI(this);
 	}
+
+	@Override
+	public void getUserID(int opr_id) {
+		this.service.getUserID(opr_id, new DefaultCallback());
+	}
 	
 	@Override
 	public void authenticateUser(String username, String password){
@@ -168,7 +173,11 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 					boolean svar = (Boolean) result;
 					maingui.deletedElement(svar);
 				}
-			
+			else if(result instanceof Integer){
+				int svar = (Integer) result;
+				maingui.checkIfUserIdExists(svar);
+			}
+		
 			//Listerne
 			else if(result instanceof ArrayList<?>){
 				if (((ArrayList<?>)result).get(0) instanceof OperatoerDTO){
@@ -199,11 +208,4 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 			}
 		}
 	}
-
-	@Override
-	public int getUserID() {
-		return 1;
-		
-	}
-
 }
