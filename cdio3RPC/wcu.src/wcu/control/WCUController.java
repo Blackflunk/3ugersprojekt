@@ -72,6 +72,7 @@ public class WCUController {
 			WC = new WeightCommunicator("169.254.2.3", 8000);
 		}
 		WC.connectToServer();
+		System.out.println(WC.readSocket());
 	}
 	
 	public void createDAO() {
@@ -157,13 +158,10 @@ public class WCUController {
 		try {
 			System.out.println("teeest");
 			CC.controlOKMessage(input);
-			WC.writeSocket("T");
+			weight = WC.writeSocket("T");
 		} catch (InvalidInputException e) {
 			CC.printMessage("Ukendt input");
 			taraPreconditions(loopNumber);
-		}
-		if (loopNumber==0) {
-		weight = WC.readSocket();
 		}
 		
 		tara = weight;
