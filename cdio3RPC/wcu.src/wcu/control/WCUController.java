@@ -46,17 +46,15 @@ public class WCUController {
 		connectToDatabase();
 		createDAO();
 		createFilewriter();
-		try { chooseWeight();} catch (WeightException e) { e.printStackTrace();}
+		chooseWeight();
 		connectToWeight();
-		try { verifyOperatoer();} catch (WeightException | DALException e) { e.printStackTrace();}
-		try { verifyBatch();} catch (WeightException | DALException e) { e.printStackTrace();}
-		System.out.println(forLength);
+		verifyOperatoer();
+		verifyBatch();
 		for (loopNumber=0; loopNumber < forLength; loopNumber++){
-		try { checkPreconditions();} catch (WeightException e) { e.printStackTrace();}
-		try { taraPreconditions(loopNumber);} catch (WeightException e) { e.printStackTrace();}
-		try { doWeighing(loopNumber);} catch (WeightException e) { e.printStackTrace();}
+			checkPreconditions();
+			taraPreconditions(loopNumber);
+			doWeighing(loopNumber);
 		}
-		// for slut
 		endProduction();
 	}
 	
@@ -73,7 +71,6 @@ public class WCUController {
 			connect = new Connector();
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException | SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -85,7 +82,7 @@ public class WCUController {
 			WC = new WeightCommunicator("169.254.2.3", 8000);
 		}
 		WC.connectToServer();
-		System.out.println(WC.readSocket());
+		CC.printMessage(WC.readSocket());
 	}
 	
 	public void createDAO() {
@@ -101,143 +98,150 @@ public class WCUController {
 		}
 	}
 	
-	public void chooseWeight() throws WeightException {
-		CC.printMessage("Please enter W for normal weight or WS for simulator");
+	public void chooseWeight(){
+		CC.printMessage("Forbind til en af vægtene fra listen \n 1. Mettler BBK Vægt \n 2. Mettler BBK Vægt-simulator");
 		weightChoice = CC.getUserInput();
-		if(weightChoice.equals("WS")){
+		if(weightChoice.equals("2")){
 			mode = "Simulator";
 		}
-		else if(weightChoice.equals("W")){
+		else if(weightChoice.equals("1")){
 			mode = "Weight";
 		}
 		else {
-			CC.printMessage("Invalid input please try again");
+			CC.printMessage("Ukendt input");
 			chooseWeight();
 		}
 	}
 	
-	public void verifyOperatoer() throws WeightException, DALException {
+	public void verifyOperatoer() {
 		WC.writeSocket("RM20 8 Indtast Operatoer nummer:");
 		String input = WC.readSocket().substring(7);
-		CC.printMessage(input);		
-		int OpId = Integer.parseInt(input);
-		if(OpId == oprDAO.getOperatoer(OpId).getOprId()){
+		CC.printMessage(input);
+		try {
+			int OpId = Integer.parseInt(input);
+			if(OpId != oprDAO.getOperatoer(OpId).getOprId())
+				throw new WeightException();
 			user = oprDAO.getOperatoer(OpId).getOprNavn();
 			WC.writeSocket("D " + user);
-			CC.printMessage(user);
-		}
-		else{ 
-			WC.writeSocket("D Invalid operator number");
-			CC.printMessage("Invalid operator number");
+			CC.printMessage("Operatoer: "+user);
+		} catch (WeightException e) {
+			WC.writeSocket("D Ukendt operatoer");
+			CC.printMessage("Ukendt operatoer");
+			verifyOperatoer();
+		} catch (NumberFormatException e){
+			WC.writeSocket("D Ukendt input");
+			CC.printMessage("Ukendt input");
+			verifyOperatoer();
+		} catch (DALException e) {
+			WC.writeSocket("D Fejl i databehandling");
+			CC.printMessage("Fejl i databehandling");
 			verifyOperatoer();
 		}
-		// vis navn hvis godkendt
 	}
 	
-	public void verifyBatch() throws WeightException, DALException {
+	public void verifyBatch() {
 		WC.writeSocket("RM20 8 Indtast produktbatch nummer");
 		String input = WC.readSocket().substring(7);
 		CC.printMessage(input);
-		BatchId = Integer.parseInt(input);
-			if(BatchId == produktbatchDAO.getProduktBatch(BatchId).getPbId()){
-				recept_id = produktbatchDAO.getProduktBatch(BatchId).getReceptId();
-				recept_name = receptDAO.getRecept(recept_id).getReceptNavn();
-				WC.writeSocket(recept_name);
-				CC.printMessage(recept_name);
-				CC.printMessage(BatchId +" "+ recept_id);
-				forLength = receptkompDAO.getReceptKompList(recept_id).size();
-			}
-			else {
+		try {
+			BatchId = Integer.parseInt(input);
+			if(BatchId != produktbatchDAO.getProduktBatch(BatchId).getPbId())
 				throw new WeightException();
-			}
-		// godkend batch
-		// else: throw WeightExceptions
+			recept_id = produktbatchDAO.getProduktBatch(BatchId).getReceptId();
+			recept_name = receptDAO.getRecept(recept_id).getReceptNavn();
+			WC.writeSocket(recept_name);
+			CC.printMessage(recept_name);
+			CC.printMessage(BatchId +" "+ recept_id);
+			forLength = receptkompDAO.getReceptKompList(recept_id).size();
+		} catch (WeightException e) {
+			WC.writeSocket("D Ukendt produktbatch");
+			CC.printMessage("Ukendt produktbatch");
+			verifyBatch();
+		} catch (NumberFormatException e) {
+			WC.writeSocket("D Ukendt input");
+			CC.printMessage("Ukendt input");
+			verifyBatch();
+		} catch (DALException e) {
+			WC.writeSocket("D Fejl i databehandling");
+			CC.printMessage("Fejl i databehandling");
+			verifyBatch();
+		}
 	}
 	
-	public void checkPreconditions() throws WeightException {
+	public void checkPreconditions() {
 		WC.writeSocket("RM20 8 Sikre dig at vægten er ubelastet, INDTAST 'OK' når dette er gjort");
 		String input = WC.readSocket().substring(7);
 		try {
 			CC.controlOKMessage(input);
-		} catch (InvalidInputException e) {
-			CC.printMessage("Ukendt input");
-			checkPreconditions();
-		}
-		tara = WC.writeSocket("T");
-		try {
+			tara = WC.writeSocket("T");
 			produktbatchDAO.getProduktBatch(BatchId).setStatus(1);
 			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId));
+		} catch (InvalidInputException e) {
+			WC.writeSocket("D Ukendt input");
+			CC.printMessage("Ukendt input");
+			checkPreconditions();
 		} catch (DALException e) {
-			e.printStackTrace();
+			WC.writeSocket("D Fejl i databehandling");
+			CC.printMessage("Fejl i databehandling");
+			checkPreconditions();
 		}
 	}
 	
-	public void taraPreconditions(int loopNumber) throws WeightException{
+	public void taraPreconditions(int loopNumber){
 		WC.writeSocket("RM20 8 Læg tarabeholderen på vægten, INDTAST 'OK' når dette er gjort");
 		String input = WC.readSocket().substring(7);
 		try {
 			CC.controlOKMessage(input);
 			tara = WC.writeSocket("T");
+			CC.printMessage(tara);
 		} catch (InvalidInputException e) {
-			WC.writeSocket("D U kendt input");
+			WC.writeSocket("D Ukendt input");
 			CC.printMessage("Ukendt input");
 			taraPreconditions(loopNumber);
 		}
-		
-		System.out.println(tara);
-		System.out.println("test2");
-		System.out.println(tara);
-		
 	}
 	
-	public void doWeighing(int loopNumber) throws WeightException{
-		int raavare_id = 0;
+	public void doWeighing(int loopNumber){
 		try {
+			int raavare_id = 0;
 			raavare_id = receptkompDAO.getReceptKompList(recept_id).get(loopNumber).getRaavareId();
-		} catch (DALException e) {
-			e.printStackTrace();
-		}
-		try {
 			raavare_name = raavareDAO.getRaavare(raavare_id).getRaavareNavn();
-		} catch (DALException e) {
-			e.printStackTrace();
-		}
-		WC.writeSocket("RM20 8 indtast raavarebatch nummer på raavare " + raavare_name);
-		produktbatch = WC.readSocket().substring(7);
-		rbID = Integer.parseInt(produktbatch);
-		try {
+			WC.writeSocket("RM20 8 indtast raavarebatch nummer på raavare " + raavare_name);
+			produktbatch = WC.readSocket().substring(7);
+			rbID = Integer.parseInt(produktbatch);
 			tempID = raavarebatchDAO.getRaavareBatch(rbID).getRaavareId();
+			if(tempID != raavare_id)
+				throw new WeightException();
+			doWeighingControl();
 		} catch (DALException e) {
-			e.printStackTrace();
-		}
-		if(tempID != raavare_id){
-			WC.writeSocket("D invalid batch number please enter it again");
+			WC.writeSocket("D Fejl i databehandling");
+			CC.printMessage("Fejl i databehandling");
+			doWeighing(loopNumber);
+		} catch (WeightException e) {
+			WC.writeSocket("D Ukendt produktbatch");
+			CC.printMessage("Ukendt produktbatch");
+			doWeighing(loopNumber);
+		} catch (NumberFormatException e) {
+			WC.writeSocket("D Ukendt input");
+			CC.printMessage("Ukendt input");
 			doWeighing(loopNumber);
 		}
-		else{
-		doWeighingControl();
-		}
-
-		
 	}
+	
 	public void doWeighingControl() {
 		WC.writeSocket("RM20 8 Fuldfør afvejningen med den ønskede mængde, og indtast OK");
 		String input = WC.readSocket().substring(7);
 		try {
 			CC.controlOKMessage(input);
-			System.out.println("her kommer s");
 			netto = WC.writeSocket("S");
-			System.out.println(netto);
 			int index1 = tara.indexOf("kg");
 			String temptara = tara.substring(10, index1);
 			double finaltara = Double.parseDouble(temptara);
-			System.out.println("tara: "+finaltara);
 			int index2 = netto.indexOf("kg");
 			String tempnetto = netto.substring(10, index2);
 			double finalnetto = Double.parseDouble(tempnetto);
-			System.out.println("netto: "+finalnetto);
+			CC.printMessage(raavare_name+": \n"+"netto: "+finalnetto+"\n tara: "+finaltara+"\n brutto: "+finalnetto+finaltara);
 			vareliste.add(new TempVare(raavare_name, finalnetto, finalnetto+finaltara, finalnetto));
-			
 		} catch (InvalidInputException e) {
 			WC.writeSocket("D Ukendt Input");
 			CC.printMessage("Ukendt input");
