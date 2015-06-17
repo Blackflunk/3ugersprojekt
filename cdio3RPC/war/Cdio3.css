@@ -133,7 +133,7 @@ body{
 	padding: 20px;
 	border-radius: 10px;
 	height: 1100px;
-	width: 800px;
+	width: 1100px;
 	margin-left: auto;
 	margin-right: auto;
 	overflow:auto;
@@ -144,8 +144,7 @@ body{
 	position:relative;
 	align:center;
 	float: top;
-	margin-left:auto;
-	margin-right:auto;
+	margin-left:200px;	
 	width: auto;
 	height:auto;
 }
@@ -164,7 +163,7 @@ body{
 	float:left;
 	padding:10px;
 	height:900px !important; 
-	width:600px !important; 
+	width:680px !important; 
 	background-color:white;
 	box-shadow: 0px 1px 7px 1px grey;
 }
@@ -173,4 +172,15 @@ body{
 	height: 700px;
 	width:500px;
 	background-color:black;
+}
+
+.infopanel-style{
+	border-radius: 10px;
+	padding: 10px;
+	float:right;
+	height:100px;
+	width:150px;
+	background-color:white;
+	box-shadow: 0px 1px 7px 1px grey;
+	
 }
