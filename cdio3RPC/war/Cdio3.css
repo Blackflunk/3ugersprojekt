@@ -10,6 +10,11 @@ h1 {
   text-align: center;
 }
 
+tr {
+	display:block;
+	width:auto;
+}
+
 .sendButton {
   display: block;
   font-size: 16pt;
@@ -33,39 +38,134 @@ h1 {
   margin: 15px 6px 6px;
 }
 
+body{
+	background: -webkit-linear-gradient(#FFFFA4, white) !important; /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#FFFFA4, white) !important; /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#FFFFA4, white) !important; /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#FFFFA4, white) !important; /* Standard syntax */
+}
+
+.submenubutton-style:hover{
+	 background-color: white;
+}
+
+.menubutton-style:hover{
+	 background-color: white;
+}
+
+.submenubutton-style{
+  text-decoration: none;
+  cursor: pointer;
+  cursor: hand;
+  font-size: small;
+  border-bottom:0px;
+  background-color: grey;
+  opacity:0.5;
+  filter:alpha(opacity=50);
+  width:auto;
+  -webkit-border-top-left-radius: 7px;
+  -webkit-border-top-right-radius: 7px;
+  -moz-border-radius-topright: 7px;
+  -moz-border-radius-topleft: 7px;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  outline:none;
+}
+
+.submenubuttonselected-style{
+  margin-left:2px;
+  margin-right:2px;
+  text-decoration: none;
+  cursor: pointer;
+  cursor: hand;
+  font-size: small;
+  border-bottom:0px;
+  background-color: white;
+  -webkit-border-top-left-radius: 7px;
+  -webkit-border-top-right-radius: 7px;
+  -moz-border-radius-topright: 7px;
+  -moz-border-radius-topleft: 7px;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  outline:none;
+}
+
 .menubutton-style{
-	background-color: blue;
-	margin:0px;
-	border-width: 0px;
+  margin-top:4px;
+  margin-bottom:4px;
+  text-decoration: none;
+  cursor: pointer;
+  cursor: hand;
+  font-size: small;
+  background-color: grey;
+  opacity:0.5;
+  filter:alpha(opacity=50);
+  width:100px;
+  -webkit-border-top-left-radius: 7px;
+  -webkit-border-bottom-left-radius: 7px;
+  -moz-border-radius-topleft: 7px;
+  -moz-border-radius-bottomleft: 7px;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+  box-shadow: -3px 1px 11px -2px grey;
+  outline:none;
+}
+
+.menubuttonselected-style{
+  margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+  cursor: hand;
+  font-size: small;
+  width:100px;
+  background-color: white;
+  border-right:0px;
+  -webkit-border-top-left-radius: 7px;
+  -webkit-border-bottom-left-radius: 7px;
+  -moz-border-radius-topleft: 7px;
+  -moz-border-radius-bottomleft: 7px;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+  outline:none;
 }
 
 .page-style{
+	padding: 20px;
+	border-radius: 10px;
 	height: 1100px;
 	width: 800px;
 	margin-left: auto;
 	margin-right: auto;
 	overflow:auto;
+	background-color:#D3D3D3;
 }
 
 .submenu-style{
-	float: right;
-	width: 700px;
-	height:40px;
-	border-bottom:2px ridge;
+	position:relative;
+	align:center;
+	float: top;
+	margin-left:auto;
+	margin-right:auto;
+	width: auto;
+	height:auto;
 }
 
 .menu-style{
+	position:relative;
 	float:left;
 	width:100px;
 	height:1000px;
-	border-right:2px ridge;
-	margin-top:40px;
+	margin-top:60px;
 }
 
 .content-style{
+	border-radius: 10px;
 	float:top;
 	float:left;
-	margin-left:10px;
-	border: 0px;
+	padding:10px;
+	height:900px !important; 
+	width:600px !important; 
+	background-color:white;
+	box-shadow: 0px 1px 7px 1px grey;
 }
 
