@@ -19,6 +19,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	private MainGUI maingui;
 	private int rettighedsniveau = 0;
 	String token = "";
+	private int typeofBoolean = 0;
 	
 	//TODO mangler metoder som slet på alle.
 	
@@ -30,6 +31,17 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 		endpoint.setServiceEntryPoint(url);
 		
 		this.maingui = new MainGUI(this);
+	}
+
+	@Override
+	public void validatePassword(String password){
+		this.service.validatePassword(password, new DefaultCallback());
+		typeofBoolean = 6;
+	}
+	
+	@Override
+	public void getUserID(int opr_id) {
+		this.service.getUserID(opr_id, new DefaultCallback());
 	}
 	
 	@Override
@@ -49,6 +61,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	@Override
 	public void deleteElement(int eId, String valg) {
 		this.service.deleteElement(eId, valg, new DefaultCallback());
+		typeofBoolean = 3;
 	}
 
 	@Override
@@ -166,9 +179,14 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 				}
 			else if(result instanceof Boolean){
 					boolean svar = (Boolean) result;
-					maingui.deletedElement(svar);
+					if(typeofBoolean == 3){maingui.deletedElement(svar);}
+					if(typeofBoolean == 6){maingui.validatePassword(svar);}
 				}
-			
+			else if(result instanceof Integer){
+				int svar = (Integer) result;
+				maingui.checkIfUserIdExists(svar);
+			}
+		
 			//Listerne
 			else if(result instanceof ArrayList<?>){
 				if (((ArrayList<?>)result).get(0) instanceof OperatoerDTO){
@@ -199,11 +217,4 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 			}
 		}
 	}
-
-	@Override
-	public int getUserID() {
-		return 1;
-		
-	}
-
 }

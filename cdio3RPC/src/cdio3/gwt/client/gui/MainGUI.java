@@ -22,6 +22,7 @@ import cdio3.gwt.client.model.RaavareBatchDTO;
 import cdio3.gwt.client.model.RaavareDTO;
 import cdio3.gwt.client.model.ReceptDTO;
 import cdio3.gwt.client.service.DBServiceClientImpl;
+import cdio3.gwt.server.PwdFunctions;
 
 public class MainGUI extends Composite {
 	String rettighedsniveau = "0";
@@ -144,7 +145,7 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			checkIfUserIdExists();
+			serviceImpl.getUserID(Integer.parseInt(addUserIdTxt.getText()));
 		}
 	}
 
@@ -262,21 +263,30 @@ public class MainGUI extends Composite {
 		}
 	}
 
-	public void checkIfUserIdExists(){
+	public void checkIfUserIdExists(int reply){
 		this.contentpanel.clear();
 		HTML html = new HTML();
 		int opr_id = Integer.parseInt(addUserIdTxt.getText());
 		String code = "";
-		int db_id = serviceImpl.getUserID();
-		if(opr_id == db_id) { 
+		if(opr_id == reply) { 
 			code = "<b>Bruger ID eksisterer allerede, skriv et nyt</b></br>";
 			html.setHTML(code);
 			this.externalvpanel.add(html);
 		}
 		else
+			serviceImpl.validatePassword(addUserPwdTxt.getText());
 			createUser();
 	}
-
+	public void validatePassword(boolean svar){
+		if(svar){createUser();}
+		else{
+			this.contentpanel.clear();
+			HTML html = new HTML();
+			String code = "<b>Dit password følger ikke reglerne, skriv et nyt</b></br>";
+			html.setHTML(code);
+			this.externalvpanel.add(html);
+		}
+	}
 	public void createUser(){
 		OperatoerDTO opr = new OperatoerDTO();
 		opr.setOprId(Integer.parseInt(addUserIdTxt.getText()));
