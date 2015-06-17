@@ -9,9 +9,11 @@ import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -31,15 +33,33 @@ public class MainGUI extends Composite {
 	private AbsolutePanel vPanel = new AbsolutePanel();
 	private VerticalPanel menupanel = new VerticalPanel();
 	private HorizontalPanel submenupanel = new HorizontalPanel();
-	private VerticalPanel contentpanel = new VerticalPanel();
+	private FlowPanel contentpanel = new FlowPanel();
 	private VerticalPanel externalvpanel = new VerticalPanel();
 
-	private Button openlogin;
-	private Button opengetuser;
-	private Button opengetuserlist;
-	private Button opendeleteuser;
-	private Button opencreateuser;
-	private Button openupdateuser;
+	private Label vaelgmenu = new Label("Vælg nu i submenu.");
+	
+	Button opengetuser = new Button("Find user");
+	Button opengetuserlist = new Button("Get userlist");
+	Button opendeleteuser = new Button("Delete user");
+	Button openupdateuser = new Button("Update user");
+	Button opencreateuser = new Button("Create user");
+
+	Button logout = new Button ("Log ud");
+
+	Button openadminpanel = new Button ("Admin panel");
+	Button openfarmaceutpanel = new Button ("Farmaceut panel");
+	Button openvaerkfoererpanel = new Button ("Værkfører panel");
+	
+	Button openopretraavare = new Button("Opret Råvare");
+	Button opengetraavarelist = new Button("Vis Råvarer");
+	Button openopretrecept = new Button("Opret Recept");
+	Button openreceptliste = new Button("Vis Recepter");
+	
+	Button openopretraavarebatch = new Button("Opret Råvarebatch");
+	Button opengetraavarebatchlist = new Button("Vis Råvarebatches");
+	Button opencreateproduktbatch = new Button("Opret Produktbatch");
+	Button openproduktbatchlist = new Button("Vis Produktbatches");
+	Button openproduktbatchkomplist = new Button("Vis Produktbatchkomponenter");
 
 	private Label getuserlist = new Label("Nedenfor er brugerne opstillet: ");
 	private Label getraavarelist = new Label("Nedenfor er råvarerne opstillet: ");
@@ -126,7 +146,9 @@ public class MainGUI extends Composite {
 		this.vPanel.add(menupanel);
 		contentpanel.setStyleName("content-style");
 		this.vPanel.add(contentpanel);
-		this.vPanel.add(externalvpanel);
+		externalvpanel.setStyleName("externalvpanel-style");
+		contentpanel.add(externalvpanel);
+		
 
 		startMenu();
 	}
@@ -262,7 +284,6 @@ public class MainGUI extends Composite {
 	public void checkIfUserIdExists(int reply){
 		this.contentpanel.clear();
 		HTML html = new HTML();
-		int opr_id = Integer.parseInt(addUserIdTxt.getText());
 		String code = "";
 		if(reply == 1) { 
 			code = "<b>Bruger ID eksisterer allerede, skriv et nyt</b></br>";
@@ -279,7 +300,6 @@ public class MainGUI extends Composite {
 	public void validatePassword(boolean svar){
 		if(svar){createUser();}
 		else{
-			this.contentpanel.clear();
 			HTML html = new HTML();
 			String code = "<b>Dit password følger ikke reglerne, skriv et nyt</b></br>";
 			html.setHTML(code);
@@ -610,9 +630,6 @@ public class MainGUI extends Composite {
 		}
 	}
 
-
-
-
 	public void openLogin(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
@@ -633,6 +650,13 @@ public class MainGUI extends Composite {
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(getusername);
+		
+		opengetuser.setStyleName("submenubuttonselected-style");
+		opengetuserlist.setStyleName("submenubutton-style");
+		opendeleteuser.setStyleName("submenubutton-style");
+		openupdateuser.setStyleName("submenubutton-style");
+		opencreateuser.setStyleName("submenubutton-style");
+		
 		getUserNameTxt = new TextBox();
 		getUserNameTxt.addKeyPressHandler(new KeyPressHandler() {
 			public void onKeyPress(KeyPressEvent event) {
@@ -653,12 +677,25 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(getuserlist);
 		serviceImpl.getUserList();
+		
+		opengetuser.setStyleName("submenubutton-style");
+		opengetuserlist.setStyleName("submenubuttonselected-style");
+		opendeleteuser.setStyleName("submenubutton-style");
+		openupdateuser.setStyleName("submenubutton-style");
+		opencreateuser.setStyleName("submenubutton-style");
 	}
 
 	public void openDeleteUser(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(deleteusertext);
+		
+		opengetuser.setStyleName("submenubutton-style");
+		opengetuserlist.setStyleName("submenubutton-style");
+		opendeleteuser.setStyleName("submenubuttonselected-style");
+		openupdateuser.setStyleName("submenubutton-style");
+		opencreateuser.setStyleName("submenubutton-style");
+		
 		deleteUserIdTxt = new TextBox();
 		deleteUserIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
@@ -679,6 +716,13 @@ public class MainGUI extends Composite {
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(createuserid);
+		
+		opengetuser.setStyleName("submenubutton-style");
+		opengetuserlist.setStyleName("submenubutton-style");
+		opendeleteuser.setStyleName("submenubutton-style");
+		openupdateuser.setStyleName("submenubutton-style");
+		opencreateuser.setStyleName("submenubuttonselected-style");
+		
 		addUserIdTxt = new TextBox();
 		addUserIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
@@ -727,6 +771,13 @@ public class MainGUI extends Composite {
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(upuserid);
+		
+		opengetuser.setStyleName("submenubutton-style");
+		opengetuserlist.setStyleName("submenubutton-style");
+		opendeleteuser.setStyleName("submenubutton-style");
+		openupdateuser.setStyleName("submenubuttonselected-style");
+		opencreateuser.setStyleName("submenubutton-style");
+		
 		upUserIdTxt = new TextBox();
 		upUserIdTxt.addKeyPressHandler(new KeyPressHandler() {
 			public void onKeyPress(KeyPressEvent event) {
@@ -775,6 +826,11 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(getraavarelist);
 		serviceImpl.getRaavareList();
+		
+		openopretraavare.setStyleName("submenubutton-style");
+		opengetraavarelist.setStyleName("submenubuttonselected-style");
+		openopretrecept.setStyleName("submenubutton-style");
+		openreceptliste.setStyleName("submenubutton-style");
 	}
 
 	public void openGetReceptList(){
@@ -782,6 +838,11 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(getreceptlist);
 		serviceImpl.getReceptList();
+		
+		openopretraavare.setStyleName("submenubutton-style");
+		opengetraavarelist.setStyleName("submenubutton-style");
+		openopretrecept.setStyleName("submenubutton-style");
+		openreceptliste.setStyleName("submenubuttonselected-style");
 	}
 
 	public void openGetRaavareBatchList(){
@@ -789,6 +850,12 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(getraavarebatchlist);
 		serviceImpl.getRaavareBatchList();
+		
+		openopretraavarebatch.setStyleName("submenubutton-style");
+		opengetraavarebatchlist.setStyleName("submenubuttonselected-style");
+		opencreateproduktbatch.setStyleName("submenubutton-style");
+		openproduktbatchlist.setStyleName("submenubutton-style");
+		openproduktbatchkomplist.setStyleName("submenubutton-style");
 	}
 
 	public void openGetProduktBatchList(){
@@ -796,6 +863,12 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(getproduktbatchlist);
 		serviceImpl.getProduktBatchList();
+		
+		openopretraavarebatch.setStyleName("submenubutton-style");
+		opengetraavarebatchlist.setStyleName("submenubutton-style");
+		opencreateproduktbatch.setStyleName("submenubutton-style");
+		openproduktbatchlist.setStyleName("submenubuttonselected-style");
+		openproduktbatchkomplist.setStyleName("submenubutton-style");
 	}
 
 	public void openGetProduktBatchKomponentList(){
@@ -803,12 +876,24 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.contentpanel.add(getproduktbatchkomplist);
 		serviceImpl.getProduktBatchKompList();
+		
+		openopretraavarebatch.setStyleName("submenubutton-style");
+		opengetraavarebatchlist.setStyleName("submenubutton-style");
+		opencreateproduktbatch.setStyleName("submenubutton-style");
+		openproduktbatchlist.setStyleName("submenubutton-style");
+		openproduktbatchkomplist.setStyleName("submenubuttonselected-style");
 	}
 
 	public void openCreateRaavare(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(createraavareid);
+		
+		openopretraavare.setStyleName("submenubuttonselected-style");
+		opengetraavarelist.setStyleName("submenubutton-style");
+		openopretrecept.setStyleName("submenubutton-style");
+		openreceptliste.setStyleName("submenubutton-style");
+		
 		addRaavareIdTxt = new TextBox();
 		addRaavareIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
@@ -837,6 +922,12 @@ public class MainGUI extends Composite {
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(createreceptid);
+		
+		openopretraavare.setStyleName("submenubutton-style");
+		opengetraavarelist.setStyleName("submenubutton-style");
+		openopretrecept.setStyleName("submenubuttonselected-style");
+		openreceptliste.setStyleName("submenubutton-style");
+		
 		addReceptIdTxt = new TextBox();
 		addReceptIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
@@ -862,6 +953,13 @@ public class MainGUI extends Composite {
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(createraavarebatchid);
+		
+		openopretraavarebatch.setStyleName("submenubuttonselected-style");
+		opengetraavarebatchlist.setStyleName("submenubutton-style");
+		opencreateproduktbatch.setStyleName("submenubutton-style");
+		openproduktbatchlist.setStyleName("submenubutton-style");
+		openproduktbatchkomplist.setStyleName("submenubutton-style");
+		
 		addRaavareBatchIdTxt = new TextBox();
 		addRaavareBatchIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
@@ -898,6 +996,13 @@ public class MainGUI extends Composite {
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(createproduktbatchid);
+		
+		openopretraavarebatch.setStyleName("submenubutton-style");
+		opengetraavarebatchlist.setStyleName("submenubutton-style");
+		opencreateproduktbatch.setStyleName("submenubuttonselected-style");
+		openproduktbatchlist.setStyleName("submenubutton-style");
+		openproduktbatchkomplist.setStyleName("submenubutton-style");
+		
 		addProduktBatchIdTxt = new TextBox();
 		addProduktBatchIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
@@ -932,13 +1037,13 @@ public class MainGUI extends Composite {
 
 	public void mainMenu(){
 		this.menupanel.clear();
-		Button logout = new Button ("Log ud");
 		logout.addClickHandler(new openLogUdClickHandler());
-		Button openadminpanel = new Button ("Admin panel");
+		logout.setStyleName("menubutton-style");
+		openadminpanel.setStyleName("menubutton-style");
 		openadminpanel.addClickHandler(new openAdminSubMenuClickHandler());
-		Button openfarmaceutpanel = new Button ("Farmaceut panel");
+		openfarmaceutpanel.setStyleName("menubutton-style");
 		openfarmaceutpanel.addClickHandler(new openFarmaceutSubMenuClickHandler());
-		Button openvaerkfoererpanel = new Button ("Værkfører panel");
+		openvaerkfoererpanel.setStyleName("menubutton-style");
 		openvaerkfoererpanel.addClickHandler(new openVaerkfoererSubMenuClickHandler());
 
 		if (rettighedsniveau == "1"){
@@ -973,24 +1078,30 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.externalvpanel.clear();
 
-		Button opengetuser = new Button("Find user");
-
+		openfarmaceutpanel.setStyleName("menubutton-style");
+		openvaerkfoererpanel.setStyleName("menubutton-style");
+		logout.setStyleName("menubutton-style");
+		openadminpanel.setStyleName("menubuttonselected-style");
+		
+		this.contentpanel.add(vaelgmenu);
+		
+		opengetuser.setStyleName("submenubutton-style");
 		opengetuser.addClickHandler(new openGetUserClickHandler());
 		this.submenupanel.add(opengetuser);
-
-		Button opengetuserlist = new Button("Get userlist");
+		
+		opengetuserlist.setStyleName("submenubutton-style");
 		opengetuserlist.addClickHandler(new openGetUserListClickHandler());
 		this.submenupanel.add(opengetuserlist);
-
-		Button opendeleteuser = new Button("Delete user");
+		
+		opendeleteuser.setStyleName("submenubutton-style");
 		opendeleteuser.addClickHandler(new openDeleteUserClickHandler());
 		this.submenupanel.add(opendeleteuser);
-
-		Button openupdateuser = new Button("Update user");
+		
+		openupdateuser.setStyleName("submenubutton-style");
 		openupdateuser.addClickHandler(new openUpdateUserClickHandler());
 		this.submenupanel.add(openupdateuser);
-
-		Button opencreateuser = new Button("Create user");
+		
+		opencreateuser.setStyleName("submenubutton-style");
 		opencreateuser.addClickHandler(new openCreateUserClickHandler());
 		this.submenupanel.add(opencreateuser);
 	}
@@ -1000,19 +1111,25 @@ public class MainGUI extends Composite {
 		this.contentpanel.clear();
 		this.externalvpanel.clear();
 
-		Button openopretraavare = new Button("Opret Råvare");
+		openfarmaceutpanel.setStyleName("menubuttonselected-style");
+		openvaerkfoererpanel.setStyleName("menubutton-style");
+		logout.setStyleName("menubutton-style");
+		openadminpanel.setStyleName("menubutton-style");
+		this.contentpanel.add(vaelgmenu);
+		
+		openopretraavare.setStyleName("submenubutton-style");
 		openopretraavare.addClickHandler(new openCreateRaavareClickHandler());
 		this.submenupanel.add(openopretraavare);
-
-		Button opengetraavarelist = new Button("Vis Råvarer");
+		
+		opengetraavarelist.setStyleName("submenubutton-style");
 		opengetraavarelist.addClickHandler(new openGetRaavareListClickHandler());
 		this.submenupanel.add(opengetraavarelist);
-
-		Button openopretrecept = new Button("Opret Recept");
+		
+		openopretrecept.setStyleName("submenubutton-style");
 		openopretrecept.addClickHandler(new openCreateReceptClickHandler());
 		this.submenupanel.add(openopretrecept);
-
-		Button openreceptliste = new Button("Vis Recepter");
+		
+		openreceptliste.setStyleName("submenubutton-style");
 		openreceptliste.addClickHandler(new openGetReceptListClickHandler());
 		this.submenupanel.add(openreceptliste);
 
@@ -1022,26 +1139,31 @@ public class MainGUI extends Composite {
 		this.submenupanel.clear();
 		this.contentpanel.clear();
 		this.externalvpanel.clear();
-
+		
+		openfarmaceutpanel.setStyleName("menubutton-style");
+		openvaerkfoererpanel.setStyleName("menubuttonselected-style");
+		logout.setStyleName("menubutton-style");
+		openadminpanel.setStyleName("menubutton-style");
+		this.contentpanel.add(vaelgmenu);
+		
 		//TODO lav click handlers
-		Button openopretraavarebatch = new Button("Opret Råvarebatch");
+		openopretraavarebatch.setStyleName("submenubutton-style");
 		openopretraavarebatch.addClickHandler(new openCreateRaavareBatchClickHandler());
 		this.submenupanel.add(openopretraavarebatch);
-
-		Button opengetraavarebatchlist = new Button("Vis Råvarebatches");
+		
+		opengetraavarebatchlist.setStyleName("submenubutton-style");
 		opengetraavarebatchlist.addClickHandler(new openGetRaavarebatchListClickHandler());
 		this.submenupanel.add(opengetraavarebatchlist);
-
-
-		Button opencreateproduktbatch = new Button("Opret Produktbatch");
+		
+		opencreateproduktbatch.setStyleName("submenubutton-style");
 		opencreateproduktbatch.addClickHandler(new openCreateProduktBatchClickHandler());
 		this.submenupanel.add(opencreateproduktbatch);
-
-		Button openproduktbatchlist = new Button("Vis Produktbatches");
+		
+		openproduktbatchlist.setStyleName("submenubutton-style");
 		openproduktbatchlist.addClickHandler(new openGetProduktBatchClickHandler());
 		this.submenupanel.add(openproduktbatchlist);
-
-		Button openproduktbatchkomplist = new Button("Vis Produktbatchkomponenter");
+		
+		openproduktbatchkomplist.setStyleName("submenubutton-style");
 		openproduktbatchkomplist.addClickHandler(new openGetProduktBatchKomponentClickHandler());
 		this.submenupanel.add(openproduktbatchlist);
 

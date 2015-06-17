@@ -30,13 +30,14 @@ public class PwdFunctions {
 		boolean Lcase = false;
 		boolean Number = false;
 		boolean Sign = false;
-		
-		String UnixPwd = password.substring(0, 7);
-		if(Pattern.matches("[a-z]", UnixPwd)){Lcase = true;}
-		if(Pattern.matches("[A-Z]", UnixPwd)){Ucase = true;}
-		if(Pattern.matches("[0-9]", UnixPwd)){Number = true;}
-		if(Pattern.matches("[.-_+!?=\"]", UnixPwd)){Lcase = true;}
-		if(Ucase == true && Lcase == true && Number == true && Sign == true){return true;}
+		String UnixPwd = "";
+		if(password.length() > 8){UnixPwd = password.substring(0, 7);}
+		else{UnixPwd = password;}
+		if(Pattern.compile(".*[a-z].*").matcher(UnixPwd).matches()){Lcase = true;}
+		if(Pattern.compile(".*[A-Z].*").matcher(UnixPwd).matches()){Ucase = true;}
+		if(Pattern.compile(".*[0-9].*").matcher(UnixPwd).matches()){Number = true;}
+		if(Pattern.compile(".*[.-_+!?=].*").matcher(UnixPwd).matches()){Sign = true;}
+		if(Ucase && Lcase && Number && Sign){return true;}
 		else{return false;}
 	}
 }
