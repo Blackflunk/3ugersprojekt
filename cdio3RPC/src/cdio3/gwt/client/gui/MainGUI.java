@@ -266,7 +266,6 @@ public class MainGUI extends Composite {
 	public void checkIfUserIdExists(int reply){
 		this.contentpanel.clear();
 		HTML html = new HTML();
-		int opr_id = Integer.parseInt(addUserIdTxt.getText());
 		String code = "";
 		if(reply == 1) { 
 			code = "<b>Bruger ID eksisterer allerede, skriv et nyt</b></br>";
