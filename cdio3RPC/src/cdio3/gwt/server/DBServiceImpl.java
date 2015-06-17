@@ -602,9 +602,29 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		return pb;
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public int getUserID(int ID) {
-		// TODO Auto-generated method stub
+		ResultSet rs = null;
+		try {
+			Connector conn = new Connector();
+			rs = conn.doQuery("SELECT * FROM operatoer WHERE opr_id = \"" + ID + "\"");
+		} catch (DALException e1) {
+			e1.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if(!rs.first()) return 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return 1;
 	}
 	
