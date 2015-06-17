@@ -118,15 +118,16 @@ public class WCUController {
 	
 	public void verifyOperatoer() throws WeightException, DALException {
 		WC.writeSocket("RM20 8 Indtast Operatoer nummer:");
-		String input = WC.readSocket();
-		String substring = input.substring(7);
-		CC.printMessage(substring);
+		String input = WC.readSocket().substring(7);
+		CC.printMessage(input);		
 		int OpId = Integer.parseInt(input);
 		if(OpId == oprDAO.getOperatoer(OpId).getOprId()){
 			user = oprDAO.getOperatoer(OpId).getOprNavn();
+			WC.writeSocket("D " + user);
 			CC.printMessage(user);
 		}
 		else{ 
+			WC.writeSocket("D Invalid operator number");
 			CC.printMessage("Invalid operator number");
 		}
 		// vis navn hvis godkendt
