@@ -53,7 +53,6 @@ public class WCUController {
 		}
 		// for slut
 		endProduction();
-		
 	}
 	
 	public void connectToDatabase() {
@@ -73,8 +72,7 @@ public class WCUController {
 			WC = new WeightCommunicator("169.254.2.3", 8000);
 		}
 		WC.connectToServer();
-		
-		
+		System.out.println(WC.readSocket());
 	}
 	
 	public void createDAO() {
@@ -119,7 +117,6 @@ public class WCUController {
 		// vis navn hvis godkendt
 	}
 	
-
 	public void verifyBatch() throws WeightException, DALException {
 		CC.printMessage("Indtast produktbatch nummer: ");
 		String input = CC.getUserInput();
@@ -161,18 +158,15 @@ public class WCUController {
 		try {
 			System.out.println("teeest");
 			CC.controlOKMessage(input);
-			WC.writeSocket("T\r\n");
+			weight = WC.writeSocket("T");
 		} catch (InvalidInputException e) {
 			CC.printMessage("Ukendt input");
 			taraPreconditions(loopNumber);
 		}
-		if (loopNumber==0) {
-		weight = WC.readSocket();
-		}
 		
 		tara = weight;
 		System.out.println(tara);
-		WC.writeSocket("T\r\n");
+		WC.writeSocket("T");
 		System.out.println("test2");
 		
 	}
@@ -229,13 +223,7 @@ public class WCUController {
 			e.printStackTrace();
 		}
 		if (mode.equals("Simulator")) {
-			WC.writeSocket("Q\r\n");
+			WC.writeSocket("Q");
 		}
 	}
-	
-	
-	
-	
-	
-
 }
