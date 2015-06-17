@@ -25,7 +25,7 @@ public class ReceptKompDAO implements IReceptKompDAO {
 			while (rs.next()) 
 			{
 				
-				resReceptKomp = new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"), rs.getDouble("nom_netto"), rs.getDouble("tolerance"));
+				resReceptKomp = new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"), rs.getDouble("nom_netto"), rs.getInt("tolerance"));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e); }
@@ -41,7 +41,7 @@ public class ReceptKompDAO implements IReceptKompDAO {
 		{
 			while (rs.next()) 
 			{
-				list.add(new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"), rs.getDouble("nom_netto"), rs.getDouble("tolerance")));
+				list.add(new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"), rs.getDouble("nom_netto"), rs.getInt("tolerance")));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e); }
@@ -56,7 +56,7 @@ public class ReceptKompDAO implements IReceptKompDAO {
 		{
 			while (rs.next()) 
 			{
-				list.add(new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"), rs.getDouble("nom_netto"), rs.getDouble("tolerance")));
+				list.add(new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"), rs.getDouble("nom_netto"), rs.getInt("tolerance")));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e); }
