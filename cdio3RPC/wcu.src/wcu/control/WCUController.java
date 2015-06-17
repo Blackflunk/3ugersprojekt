@@ -35,8 +35,8 @@ public class WCUController {
 	Connector connect;
 	WeightCommunicator WC;
 	ArrayList<TempVare> vareliste = new ArrayList<TempVare>(); 
-	String weightChoice, user, tara, netto, brutto, weight, mode, produktbatch, raavare_name, recept_name;
-	int produkt=0, forLength, loopNumber, BatchId, recept_id, rbID, tempID,raavare_id, tolerance, NegCalculatedTol, CalculatedTol;
+	String weightChoice="", user="", tara="", netto="", brutto="", weight="", mode="", produktbatch="", raavare_name="", recept_name="";
+	int produkt=0, forLength=0, loopNumber=0, BatchId=0, recept_id=0, rbID=0, tempID=0,raavare_id=0, tolerance=0, NegCalculatedTol=0, CalculatedTol=0;
 	
 	public void init() {
 		runProcedure();
@@ -254,6 +254,10 @@ public class WCUController {
 			WC.writeSocket("D Ukendt Input");
 			CC.printMessage("Ukendt input");
 			doWeighingControl();
+		} catch (DALException e) {
+			WC.writeSocket("D Fejl i databehandling");
+			CC.printMessage("Fejl i databehandling");
+			doWeighing(loopNumber);
 		}
 	}
 	public void endProduction() {
