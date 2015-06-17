@@ -20,6 +20,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	private int rettighedsniveau = 0;
 	String token = "";
 	private int typeofBoolean = 0;
+	private String entity = "";
 	
 	//TODO mangler metoder som slet på alle.
 	
@@ -41,6 +42,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	
 	@Override
 	public void checkIdExist(int id, String entity) {
+		this.entity = entity;
 		this.service.checkIdExist(id, entity, new DefaultCallback());
 	}
 	
@@ -184,7 +186,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 				}
 			else if(result instanceof Integer){
 				int svar = (Integer) result;
-				maingui.checkIfUserIdExists(svar);
+				if(entity.equals("operatoer")){maingui.checkIfUserIdExists(svar);}
 			}
 		
 			//Listerne
