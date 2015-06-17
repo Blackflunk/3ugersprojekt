@@ -142,7 +142,7 @@ public class WeightController implements IWeightController{
 	@Override
 	public void writeSocket(String s) throws IOException {
 
-		outstream.writeBytes(s + " crlf\r\n");
+		outstream.writeBytes(s + "\r\n");
 	}
 	@Override
 	public void closeStreams() {

@@ -39,7 +39,7 @@ public class WeightCommunicator {
 	}
 	public String writeSocket(String message){
 		try {
-			outstream.writeBytes(message);
+			outstream.writeBytes(message + "\r\n");
 			return instream.readLine();
 		} catch (IOException e) {
 			System.out.println("Write failed");
