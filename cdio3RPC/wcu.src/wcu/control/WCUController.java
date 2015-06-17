@@ -3,6 +3,8 @@ package wcu.control;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.google.gwt.thirdparty.javascript.rhino.head.regexp.SubString;
+
 import cdio3.gwt.server.*;
 import dao.impl.OperatoerDAO;
 import dao.impl.ProduktBatchDAO;
@@ -211,6 +213,16 @@ public class WCUController {
 		String input = CC.getUserInput();
 		try {
 			CC.controlOKMessage(input);
+			int index1 = tara.indexOf("kg");
+			String temptara = tara.substring(10, index1);
+			double finaltara = Double.parseDouble(temptara);
+			System.out.println("tara: "+finaltara);
+			int index2 = netto.indexOf("kg");
+			String tempnetto = netto.substring(10, index2);
+			double finalnetto = Double.parseDouble(tempnetto);
+			System.out.println("netto: "+finalnetto);
+			vareliste.add(new TempVare(finalnetto, finalnetto+finaltara, finalnetto));
+			
 		} catch (InvalidInputException e) {
 			CC.printMessage("Ukendt input");
 			doWeighingControl();

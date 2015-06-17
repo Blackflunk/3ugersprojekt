@@ -1,37 +1,37 @@
 package wcu.data;
 
 public class TempVare {
-	public String tara;
-	public String brutto;
-	public String netto;
+	public double tara;
+	public double brutto;
+	public double netto;
 	
 	public TempVare() {
-		this.tara = "";
-		this.brutto = "";
-		this.netto = "";
+		this.tara = 0.0;
+		this.brutto = 0.0;
+		this.netto = 0.0;
 	}
 	
-	public TempVare(String netto, String brutto, String tara) {
+	public TempVare(double netto, double brutto, double tara) {
 		this.tara = tara;
 		this.brutto = brutto;
 		this.netto = netto;
 	}
-	public void setNetto(String n){
+	public void setNetto(double n){
 		this.netto = n;
 	}
-	public String getNetto(){
+	public double getNetto(){
 		return this.netto;
 	}
-	public void setTare(String t){
+	public void setTare(double t){
 		this.tara = t;
 	}
-	public String getTare(){
+	public double getTare(){
 		return this.tara;
 	}
-	public void setBrutto(String b){
+	public void setBrutto(double b){
 		this.brutto = b;
 	}
-	public String getBrutto(){
+	public double getBrutto(){
 		return this.brutto;
 	}
 
