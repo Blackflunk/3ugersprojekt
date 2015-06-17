@@ -40,8 +40,8 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	}
 	
 	@Override
-	public void getUserID(int opr_id) {
-		this.service.getUserID(opr_id, new DefaultCallback());
+	public void checkIdExist(int id, String entity) {
+		this.service.checkIdExist(id, entity, new DefaultCallback());
 	}
 	
 	@Override

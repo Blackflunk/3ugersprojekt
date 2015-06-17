@@ -604,11 +604,11 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 
 	@SuppressWarnings("static-access")
 	@Override
-	public int getUserID(int ID) {
+	public int checkIdExist(int id, String entity) {
 		ResultSet rs = null;
 		try {
 			Connector conn = new Connector();
-			rs = conn.doQuery("SELECT * FROM operatoer WHERE opr_id = \"" + ID + "\"");
+			rs = conn.doQuery("SELECT * FROM + \"" + entity + "\" + WHERE opr_id = \"" + id + "\"");
 		} catch (DALException e1) {
 			e1.printStackTrace();
 		} catch (InstantiationException e) {

@@ -15,7 +15,7 @@ public interface DBServiceAsync {
 	@SuppressWarnings("rawtypes")
 	void validatePassword(String password, AsyncCallback callback);
 	@SuppressWarnings("rawtypes")
-	void getUserID(int ID, AsyncCallback callback);
+	void checkIdExist(int id, String entity, AsyncCallback callback);
 	@SuppressWarnings("rawtypes")
 	void getUserRights(String token, AsyncCallback callback);
 	@SuppressWarnings("rawtypes")

@@ -167,8 +167,9 @@ public class MainGUI extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			serviceImpl.getUserID(Integer.parseInt(addUserIdTxt.getText()));
-		}
+			String entity = "operatoer";
+			serviceImpl.checkIdExist(Integer.parseInt(addUserIdTxt.getText()), entity);
+			}
 	}
 
 	private class createRaavareClickHandler implements ClickHandler {
