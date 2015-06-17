@@ -24,4 +24,5 @@ public interface DBServiceClientInt {
 	void getProduktBatchList();
 	void createProduktBatch(ProduktBatchDTO prb);
 	void getProduktBatchKompList();
+	int getUserID();
 }

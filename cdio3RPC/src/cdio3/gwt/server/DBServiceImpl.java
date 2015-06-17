@@ -595,4 +595,11 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		}
 		return pb;
 	}
+
+	@Override
+	public int getUserID(int ID) {
+		// TODO Auto-generated method stub
+		return 1;
+	}
+	
 }

@@ -16,6 +16,7 @@ import cdio3.gwt.client.model.ReceptDTO;
 public interface DBService extends RemoteService {
 	//TODO mangler slet raavare, recept, raavarebatch, produktbatch, produktbatchkomp.
 	
+	int getUserID(int ID);
 	String getUserRights(String token);
 	String authenticateUser(String username, String password);
 	OperatoerDTO getUser(int OprId, String token);
@@ -33,4 +34,5 @@ public interface DBService extends RemoteService {
 	ProduktBatchDTO createProduktBatch(ProduktBatchDTO rec);
 	ArrayList<ProduktBatchKompDTO> getProduktBatchKomponentList();
 	ProduktBatchKompDTO createProduktBatchKomponent(ProduktBatchKompDTO rec);
+	
 }

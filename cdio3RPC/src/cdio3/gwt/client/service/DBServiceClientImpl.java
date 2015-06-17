@@ -199,4 +199,11 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 			}
 		}
 	}
+
+	@Override
+	public int getUserID() {
+		return 1;
+		
+	}
+
 }

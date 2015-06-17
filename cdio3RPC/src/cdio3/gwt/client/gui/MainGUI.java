@@ -26,34 +26,34 @@ import cdio3.gwt.client.service.DBServiceClientImpl;
 public class MainGUI extends Composite {
 	String rettighedsniveau = "0";
 	String token = "";
-	
+
 	private AbsolutePanel vPanel = new AbsolutePanel();
 	private VerticalPanel menupanel = new VerticalPanel();
 	private HorizontalPanel submenupanel = new HorizontalPanel();
 	private VerticalPanel contentpanel = new VerticalPanel();
 	private VerticalPanel externalvpanel = new VerticalPanel();
-	
+
 	private Button openlogin;
 	private Button opengetuser;
 	private Button opengetuserlist;
 	private Button opendeleteuser;
 	private Button opencreateuser;
 	private Button openupdateuser;
-	
+
 	private Label getuserlist = new Label("Nedenfor er brugerne opstillet: ");
 	private Label getraavarelist = new Label("Nedenfor er råvarerne opstillet: ");
 	private Label getreceptlist = new Label("Nedenfor er recepterne opstillet: ");
 	private Label getraavarebatchlist = new Label("Nedenfor er råvarebatchesne opstillet:");
 	private Label getproduktbatchlist = new Label("Nedenfor er produktbatchesne opstillet:");
 	private Label getproduktbatchkomplist = new Label("Nedenfor er produktbatchkomponenterne opstillet: ");
-	
+
 	private Label brugerinaktiv = new Label("Brugeren eksisterer ikke.");
 
 	private Label loginuseracc = new Label("Skriv brugernavn:");
 	private TextBox userNameTxt;
 	private Label loginuserpass = new Label("Skriv kodeord:");
 	private TextBox userPwdTxt;
-	
+
 	private Label getusername = new Label("Skriv brugerens ID: (KUN TAL)");
 	private TextBox getUserNameTxt;
 	private Label deleteusertext = new Label("Skriv brugerens ID: (KUN TAL)");
@@ -71,33 +71,33 @@ public class MainGUI extends Composite {
 	private TextBox addUserPwdTxt;
 	private Label createuserret = new Label("Skriv brugerens rettighedsniveau: (KUN TAL)");
 	private TextBox addUserRetTxt;
-		
+
 	private Label createraavareid = new Label("Skriv råvarens id: (KUN TAL)");
 	private TextBox addRaavareIdTxt;
 	private Label createraavarenavn = new Label("Skriv råvarens navn: ");
 	private TextBox addRaavareNavnTxt;
 	private Label createraavareleverandoer = new Label("Skriv leverandør: ");
 	private TextBox addRaavareLeverandoerTxt;
-	
+
 	private Label createreceptid = new Label("Skriv receptens id: (KUN TAL)");
 	private TextBox addReceptIdTxt;
 	private Label createreceptnavn = new Label("Skriv receptens navn: ");
 	private TextBox addReceptNavnTxt;
-	
+
 	private Label createraavarebatchid = new Label("Skriv råvarebatchens id: (KUN TAL)");
 	private TextBox addRaavareBatchIdTxt;
 	private Label createraavarebatchraavareid = new Label("Skriv råvarens ID: (KUN TAL)");
 	private TextBox addRaavareBatchRaavareIdTxt;
 	private Label createraavarebatchmaengde = new Label("Skriv mængden: ");
 	private TextBox addRaavareBatchMaengdeTxt;
-	
+
 	private Label createproduktbatchid = new Label("Skriv produktbatchens ID: (KUN TAL)");
 	private TextBox addProduktBatchIdTxt;
 	private Label createproduktbatchstatus = new Label("Skriv status på produktbatchen: ");
 	private TextBox addProduktBatchStatusTxt;
 	private Label createproduktbatchreceptid = new Label("Skriv produktbatchens recept ID: (KUN TAL)");
 	private TextBox addProduktBatchReceptIdTxt;
-	
+
 	private Label upuserid = new Label("Skriv brugerens ID: (KUN TAL)");
 	private TextBox upUserIdTxt;
 	private Label upusername = new Label("Skriv brugerens nye navn: ");
@@ -110,15 +110,15 @@ public class MainGUI extends Composite {
 	private TextBox upUserPwdTxt;
 	private Label upuserret = new Label("Skriv brugerens rettighedsniveau: (KUN TAL)");
 	private TextBox upUserRetTxt;
-	
-	
+
+
 	private DBServiceClientImpl serviceImpl;
-	
+
 	public MainGUI(DBServiceClientImpl serviceImpl) {
 		vPanel.setStyleName("page-style");
 		initWidget(this.vPanel);
 		this.serviceImpl = serviceImpl;
-		
+
 		submenupanel.setStyleName("submenu-style");
 		this.vPanel.add(submenupanel);
 		menupanel.setStyleName("menu-style");
@@ -126,7 +126,7 @@ public class MainGUI extends Composite {
 		contentpanel.setStyleName("content-style");
 		this.vPanel.add(contentpanel);
 		this.vPanel.add(externalvpanel);
-		
+
 		startMenu();
 	}
 
@@ -139,15 +139,15 @@ public class MainGUI extends Composite {
 			serviceImpl.authenticateUser(username, pwd);
 		}
 	}
-	
+
 	private class createUserClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			createUser();
+			checkIfUserIdExists();
 		}
 	}
-	
+
 	private class createRaavareClickHandler implements ClickHandler {
 
 		@Override
@@ -159,7 +159,7 @@ public class MainGUI extends Composite {
 			serviceImpl.createRaavare(raa);
 		}
 	}
-	
+
 	private class createReceptClickHandler implements ClickHandler {
 
 		@Override
@@ -170,7 +170,7 @@ public class MainGUI extends Composite {
 			serviceImpl.createRecept(rac);
 		}
 	}
-	
+
 	private class createRaavareBatchClickHandler implements ClickHandler {
 
 		@Override
@@ -182,7 +182,7 @@ public class MainGUI extends Composite {
 			serviceImpl.createRaavareBatch(rab);
 		}
 	}
-	
+
 	private class createProduktBatchClickHandler implements ClickHandler {
 
 		@Override
@@ -194,9 +194,9 @@ public class MainGUI extends Composite {
 			serviceImpl.createProduktBatch(pb);
 		}
 	}
-	
+
 	private class updateUserClickHandler implements ClickHandler {
-		
+
 		@Override
 		public void onClick(ClickEvent event) {
 			OperatoerDTO opr = new OperatoerDTO();
@@ -209,7 +209,7 @@ public class MainGUI extends Composite {
 			serviceImpl.updateUser(opr);
 		}
 	}
-	
+
 	private class getUserClickHandler implements ClickHandler {
 
 		@Override
@@ -218,7 +218,7 @@ public class MainGUI extends Composite {
 			serviceImpl.getUser(oprId, token);
 		}
 	}
-	
+
 	private class getUserListClickHandler implements ClickHandler {
 
 		@Override
@@ -226,7 +226,7 @@ public class MainGUI extends Composite {
 			serviceImpl.getUserList();
 		}
 	}
-	
+
 	private class deleteUserClickHandler implements ClickHandler {
 
 		@Override
@@ -261,7 +261,22 @@ public class MainGUI extends Composite {
 			mainMenu();
 		}
 	}
-	
+
+	public void checkIfUserIdExists(){
+		this.contentpanel.clear();
+		HTML html = new HTML();
+		int opr_id = Integer.parseInt(addUserIdTxt.getText());
+		String code = "";
+		int db_id = serviceImpl.getUserID();
+		if(opr_id == db_id) { 
+			code = "<b>Bruger ID eksisterer allerede, skriv et nyt</b></br>";
+			html.setHTML(code);
+			this.externalvpanel.add(html);
+		}
+		else
+			createUser();
+	}
+
 	public void createUser(){
 		OperatoerDTO opr = new OperatoerDTO();
 		opr.setOprId(Integer.parseInt(addUserIdTxt.getText()));
@@ -271,115 +286,115 @@ public class MainGUI extends Composite {
 		opr.setPassword(addUserPwdTxt.getText());
 		opr.setRettighedsniveau(addUserRetTxt.getText());
 		serviceImpl.createUser(opr);
-		
+
 	}
 	public void deletedElement(boolean result) {
 		this.externalvpanel.clear();
 		HTML html = new HTML();
-		
+
 		String code = "<b>Brugeren er gjort inaktiv:</b> " + result + "</br>";
-		
+
 		html.setHTML(code);
 		this.externalvpanel.add(html);
 	}
-	
+
 	public void displayOperatoer(OperatoerDTO info) {
 		this.externalvpanel.clear();
 		HTML html = new HTML();
-		
+
 		String code = "<b>ID:</b> " + info.getOprId() + "</br>";
 		code = code + "<b>Navn:</b> " + info.getOprNavn() + "</br>";
 		code = code + "<b>Ini:</b> " + info.getIni() + "</br>";
 		code = code + "<b>Cpr:</b> " + info.getCpr() + "</br>";
 		code = code + "<b>Password:</b> " + info.getPassword() + "</br>";
 		code = code + "<b>Rettighedsniveau:</b> " + info.getRettighedsniveau() + "</br>";
-		
+
 		html.setHTML(code);
 		this.contentpanel.add(html);
 	}
-	
+
 	public void displayRaavare(RaavareDTO info) {
 		this.externalvpanel.clear();
 		HTML html = new HTML();
-		
+
 		String code = "<b>ID:</b> " + info.getRaavareId() + "</br>";
 		code = code + "<b>Navn:</b> " + info.getRaavareNavn() + "</br>";
-		
+
 		html.setHTML(code);
 		this.externalvpanel.add(html);
 	}
-	
+
 	public void displayRecept(ReceptDTO info) {
 		this.externalvpanel.clear();
 		HTML html = new HTML();
-		
+
 		String code = "<b>ID:</b> " + info.getReceptId() + "</br>";
 		code = code + "<b>Navn:</b> " + info.getReceptNavn() + "</br>";
-		
+
 		html.setHTML(code);
 		this.externalvpanel.add(html);
 	}
-	
+
 	public void displayRaavareBatch(RaavareBatchDTO info) {
 		this.externalvpanel.clear();
 		HTML html = new HTML();
-		
+
 		String code = "<b>Råvarebatchens ID:</b> " + info.getRbId() + "</br>";
 		code = code + "<b>Råvarens ID:</b> " + info.getRaavareId() + "</br>";
 		code = code + "<b>Mængde:</b> " + info.getMaengde() + "</br>";
-		
+
 		html.setHTML(code);
 		this.externalvpanel.add(html);
 	}
-	
+
 	public void displayProduktBatch(ProduktBatchDTO info) {
 		this.externalvpanel.clear();
 		HTML html = new HTML();
-		
+
 		String code = "<b>Produktbatchens ID:</b> " + info.getPbId() + "</br>";
 		code = code + "<b>Produktbatchens status:</b> " + info.getStatus() + "</br>";
 		code = code + "<b>Receptens ID:</b> " + info.getReceptId() + "</br>";
-		
+
 		html.setHTML(code);
 		this.externalvpanel.add(html);
 	}
-	
+
 	public void displayOperatoerListe(ArrayList<OperatoerDTO> oprList){
 		this.externalvpanel.clear();
-		
+
 		for(int i = 0;i < oprList.size();i++){
 			HTML html = new HTML();
-			
+
 			String code = "</br><b>ID:</b> " + oprList.get(i).getOprId() + "</br>";
 			code = code + "<b>Navn:</b> " + oprList.get(i).getOprNavn() + "</br>";
 			code = code + "<b>Ini:</b> " + oprList.get(i).getIni() + "</br>";
 			code = code + "<b>Cpr:</b> " + oprList.get(i).getCpr() + "</br>";
 			code = code + "<b>Password:</b> " + oprList.get(i).getPassword() + "</br>";
 			code = code + "<b>Rettighedsniveau:</b> " + oprList.get(i).getRettighedsniveau() + "</br>";
-			
+
 			html.setHTML(code);
 			this.contentpanel.add(html);
 		}
 	}
-	
+
 	public void displayRaavareListe(ArrayList<RaavareDTO> raaList){
 		this.externalvpanel.clear();
 		for(int i = 0;i < raaList.size();i++){
 			HTML html = new HTML();
-			
+
 			String code = "</br><b>ID:</b> " + raaList.get(i).getRaavareId() + "</br>";
 			code = code + "<b>Navn:</b> " + raaList.get(i).getRaavareNavn() + "</br>";
-			
+
 			html.setHTML(code);
 			this.externalvpanel.add(html);
 		}
 	}
-	
+
 	public void displayReceptListe(ArrayList<ReceptDTO> racList){
 		this.externalvpanel.clear();
 		for(int i = 0;i < racList.size();i++){
 			HTML html = new HTML();
-			
+
 			String code = "</br><b>ID:</b> " + racList.get(i).getReceptId() + "</br>";
 			code = code + "<b>Navn:</b> " + racList.get(i).getReceptNavn() + "</br>";
 
@@ -387,12 +402,12 @@ public class MainGUI extends Composite {
 			this.externalvpanel.add(html);
 		}
 	}
-	
+
 	public void displayRaavareBatchListe(ArrayList<RaavareBatchDTO> rabList){
 		this.externalvpanel.clear();
 		for(int i = 0;i < rabList.size();i++){
 			HTML html = new HTML();
-			
+
 			String code = "</br><b>Råvarebatchens ID:</b> " + rabList.get(i).getRbId() + "</br>";
 			code = code + "<b>Råvarens ID:</b> " + rabList.get(i).getRaavareId() + "</br>";
 			code = code + "<b>Mængden:</b> " + rabList.get(i).getMaengde() + "</br>";
@@ -401,26 +416,26 @@ public class MainGUI extends Composite {
 			this.externalvpanel.add(html);
 		}
 	}
-	
+
 	public void displayProduktBatchListe(ArrayList<ProduktBatchDTO> pbList){
 		this.externalvpanel.clear();
 		for(int i = 0;i < pbList.size();i++){
 			HTML html = new HTML();
-			
+
 			String code = "</br><b>Produktbatchens ID:</b> " + pbList.get(i).getPbId() + "</br>";
 			code = code + "<b>Status:</b> " + pbList.get(i).getStatus() + "</br>";
 			code = code + "<b>Receptens ID:</b> " + pbList.get(i).getReceptId() + "</br>";
-			
+
 			html.setHTML(code);
 			this.externalvpanel.add(html);
 		}
 	}
-	
+
 	public void displayProduktBatchKompListe(ArrayList<ProduktBatchKompDTO> pbkList){
 		this.externalvpanel.clear();
 		for(int i = 0;i < pbkList.size();i++){
 			HTML html = new HTML();
-			
+
 			String code = "</br><b>Produktbatchens ID:</b>" + pbkList.get(i).getPbId() + "</br>";
 			code = code + "<b>Råvarebatchens ID:</b> " + pbkList.get(i).getRbId() + "</br>";
 			code = code + "<b>Tara:</b> " + pbkList.get(i).getTara() + "</br>";
@@ -431,7 +446,7 @@ public class MainGUI extends Composite {
 			this.externalvpanel.add(html);
 		}
 	}
-	
+
 	private class openGetUserClickHandler implements ClickHandler {
 
 		@Override
@@ -439,7 +454,7 @@ public class MainGUI extends Composite {
 			openGetUser();	
 		}
 	}
-	
+
 	private class openGetUserListClickHandler implements ClickHandler {
 
 		@Override
@@ -447,7 +462,7 @@ public class MainGUI extends Composite {
 			openGetUserList();
 		}
 	}
-	
+
 	private class openDeleteUserClickHandler implements ClickHandler {
 
 		@Override
@@ -455,7 +470,7 @@ public class MainGUI extends Composite {
 			openDeleteUser();
 		}
 	}
-	
+
 	private class openCreateUserClickHandler implements ClickHandler {
 
 		@Override
@@ -463,7 +478,7 @@ public class MainGUI extends Composite {
 			openCreateUser();
 		}
 	}
-	
+
 	private class openUpdateUserClickHandler implements ClickHandler {
 
 		@Override
@@ -471,7 +486,7 @@ public class MainGUI extends Composite {
 			openUpdateUser();
 		}
 	}
-	
+
 	private class openCreateRaavareClickHandler implements ClickHandler {
 
 		@Override
@@ -479,7 +494,7 @@ public class MainGUI extends Composite {
 			openCreateRaavare();
 		}
 	}
-	
+
 	private class openGetRaavareListClickHandler implements ClickHandler {
 
 		@Override
@@ -487,7 +502,7 @@ public class MainGUI extends Composite {
 			openGetRaavareList();
 		}
 	}
-	
+
 	private class openCreateReceptClickHandler implements ClickHandler {
 
 		@Override
@@ -495,7 +510,7 @@ public class MainGUI extends Composite {
 			openCreateRecept();
 		}
 	}
-	
+
 	private class openGetReceptListClickHandler implements ClickHandler {
 
 		@Override
@@ -503,7 +518,7 @@ public class MainGUI extends Composite {
 			openGetReceptList();
 		}
 	}
-	
+
 	private class openCreateRaavareBatchClickHandler implements ClickHandler {
 
 		@Override
@@ -511,7 +526,7 @@ public class MainGUI extends Composite {
 			openCreateRaavareBatch();
 		}
 	}
-	
+
 	private class openGetRaavarebatchListClickHandler implements ClickHandler {
 
 		@Override
@@ -519,7 +534,7 @@ public class MainGUI extends Composite {
 			openGetRaavareBatchList();
 		}
 	}
-	
+
 	private class openCreateProduktBatchClickHandler implements ClickHandler {
 
 		@Override
@@ -527,7 +542,7 @@ public class MainGUI extends Composite {
 			openCreateProduktBatch();
 		}
 	}
-	
+
 	private class openGetProduktBatchClickHandler implements ClickHandler {
 
 		@Override
@@ -535,7 +550,7 @@ public class MainGUI extends Composite {
 			openGetProduktBatchList();
 		}
 	}
-	
+
 	private class openGetProduktBatchKomponentClickHandler implements ClickHandler {
 
 		@Override
@@ -543,7 +558,7 @@ public class MainGUI extends Composite {
 			openGetProduktBatchKomponentList();
 		}
 	}
-	
+
 	private class openLogUdClickHandler implements ClickHandler {
 		//TODO
 		@Override
@@ -554,7 +569,7 @@ public class MainGUI extends Composite {
 			startMenu();
 		}
 	}
-	
+
 	private class openAdminSubMenuClickHandler implements ClickHandler {
 
 		@Override
@@ -562,7 +577,7 @@ public class MainGUI extends Composite {
 			adminSubMenu();
 		}
 	}
-	
+
 	private class openFarmaceutSubMenuClickHandler implements ClickHandler {
 
 		@Override
@@ -570,7 +585,7 @@ public class MainGUI extends Composite {
 			farmaceutSubMenu();
 		}
 	}
-	
+
 	private class openVaerkfoererSubMenuClickHandler implements ClickHandler {
 
 		@Override
@@ -578,52 +593,52 @@ public class MainGUI extends Composite {
 			vaerkfoererSubMenu();
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	public void openLogin(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(loginuseracc);
 		userNameTxt = new TextBox();
 		this.contentpanel.add(userNameTxt);
-		
+
 		this.contentpanel.add(loginuserpass);
 		userPwdTxt = new TextBox();
 		this.contentpanel.add(userPwdTxt);
-		
+
 		Button authenticateBtn = new Button("Login");
 		authenticateBtn.addClickHandler(new AuthenticationClickHandler());
 		this.contentpanel.add(authenticateBtn);
 	}
-	
+
 	public void openGetUser(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(getusername);
 		getUserNameTxt = new TextBox();
 		getUserNameTxt.addKeyPressHandler(new KeyPressHandler() {
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
+			public void onKeyPress(KeyPressEvent event) {
+				if (!Character.isDigit(event.getCharCode())) {
+					((TextBox) event.getSource()).cancelKey();
+				}
+			}
+		});
 		this.contentpanel.add(getUserNameTxt);
-		
+
 		Button getUserBtn = new Button("OK");
 		getUserBtn.addClickHandler(new getUserClickHandler());
 		this.contentpanel.add(getUserBtn);
 	}
-	
+
 	public void openGetUserList(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(getuserlist);
 		serviceImpl.getUserList();
 	}
-	
+
 	public void openDeleteUser(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
@@ -631,19 +646,19 @@ public class MainGUI extends Composite {
 		deleteUserIdTxt = new TextBox();
 		deleteUserIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
+			public void onKeyPress(KeyPressEvent event) {
+				if (!Character.isDigit(event.getCharCode())) {
+					((TextBox) event.getSource()).cancelKey();
+				}
+			}
+		});
 		this.contentpanel.add(deleteUserIdTxt);
-		
+
 		Button deleteUserBtn = new Button("OK");
 		deleteUserBtn.addClickHandler(new deleteUserClickHandler());
 		this.contentpanel.add(deleteUserBtn);
 	}
-	
+
 	public void openCreateUser(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
@@ -651,129 +666,129 @@ public class MainGUI extends Composite {
 		addUserIdTxt = new TextBox();
 		addUserIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
+			public void onKeyPress(KeyPressEvent event) {
+				if (!Character.isDigit(event.getCharCode())) {
+					((TextBox) event.getSource()).cancelKey();
+				}
+			}
+		});
 		this.contentpanel.add(addUserIdTxt);
-		
+
 		this.contentpanel.add(createusername);
 		addUserNameTxt = new TextBox();
 		this.contentpanel.add(addUserNameTxt);
-		
+
 		this.contentpanel.add(createuserini);
 		addUserIniTxt = new TextBox();
 		this.contentpanel.add(addUserIniTxt);
-		
+
 		this.contentpanel.add(createusercpr);
 		addUserCprTxt = new TextBox();
 		this.contentpanel.add(addUserCprTxt);
-		
+
 		this.contentpanel.add(createuserpass);
 		addUserPwdTxt = new TextBox();
 		this.contentpanel.add(addUserPwdTxt);
-		
+
 		this.contentpanel.add(createuserret);
 		addUserRetTxt = new TextBox();
 		addUserRetTxt.addKeyPressHandler(new KeyPressHandler() {
 
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
+			public void onKeyPress(KeyPressEvent event) {
+				if (!Character.isDigit(event.getCharCode())) {
+					((TextBox) event.getSource()).cancelKey();
+				}
+			}
+		});
 		this.contentpanel.add(addUserRetTxt);
-		
+
 		Button createUserBtn = new Button("OK");
 		createUserBtn.addClickHandler(new createUserClickHandler());
 		this.contentpanel.add(createUserBtn);	
 	}
-	
+
 	public void openUpdateUser(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(upuserid);
 		upUserIdTxt = new TextBox();
 		upUserIdTxt.addKeyPressHandler(new KeyPressHandler() {
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
+			public void onKeyPress(KeyPressEvent event) {
+				if (!Character.isDigit(event.getCharCode())) {
+					((TextBox) event.getSource()).cancelKey();
+				}
+			}
+		});
 		this.contentpanel.add(upUserIdTxt);
-		
+
 		this.contentpanel.add(upusername);
 		upUserNameTxt = new TextBox();
 		this.contentpanel.add(upUserNameTxt);
-		
+
 		this.contentpanel.add(upuserini);
 		upUserIniTxt = new TextBox();
 		this.contentpanel.add(upUserIniTxt);
-		
+
 		this.contentpanel.add(upusercpr);
 		upUserCprTxt = new TextBox();
 		this.contentpanel.add(upUserCprTxt);
-		
+
 		this.contentpanel.add(upuserpass);
 		upUserPwdTxt = new TextBox();
 		this.contentpanel.add(upUserPwdTxt);
-		
+
 		this.contentpanel.add(upuserret);
 		upUserRetTxt = new TextBox();
 		upUserRetTxt.addKeyPressHandler(new KeyPressHandler() {
 
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
+			public void onKeyPress(KeyPressEvent event) {
+				if (!Character.isDigit(event.getCharCode())) {
+					((TextBox) event.getSource()).cancelKey();
+				}
+			}
+		});
 		this.contentpanel.add(upUserRetTxt);
-		
+
 		Button updateUserBtn = new Button("OK");
 		updateUserBtn.addClickHandler(new updateUserClickHandler());
 		this.contentpanel.add(updateUserBtn);	
 	}
-	
+
 	public void openGetRaavareList(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(getraavarelist);
 		serviceImpl.getRaavareList();
 	}
-	
+
 	public void openGetReceptList(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(getreceptlist);
 		serviceImpl.getReceptList();
 	}
-	
+
 	public void openGetRaavareBatchList(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(getraavarebatchlist);
 		serviceImpl.getRaavareBatchList();
 	}
-	
+
 	public void openGetProduktBatchList(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(getproduktbatchlist);
 		serviceImpl.getProduktBatchList();
 	}
-	
+
 	public void openGetProduktBatchKomponentList(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
 		this.contentpanel.add(getproduktbatchkomplist);
 		serviceImpl.getProduktBatchKompList();
 	}
-	
+
 	public void openCreateRaavare(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
@@ -781,27 +796,27 @@ public class MainGUI extends Composite {
 		addRaavareIdTxt = new TextBox();
 		addRaavareIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
+			public void onKeyPress(KeyPressEvent event) {
+				if (!Character.isDigit(event.getCharCode())) {
+					((TextBox) event.getSource()).cancelKey();
+				}
+			}
+		});
 		this.contentpanel.add(addRaavareIdTxt);
-		
+
 		this.contentpanel.add(createraavarenavn);
 		addRaavareNavnTxt = new TextBox();
 		this.contentpanel.add(addRaavareNavnTxt);
-		
+
 		this.contentpanel.add(createraavareleverandoer);
 		addRaavareLeverandoerTxt = new TextBox();
 		this.contentpanel.add(addRaavareLeverandoerTxt);	
-		
+
 		Button createUserBtn = new Button("OK");
 		createUserBtn.addClickHandler(new createRaavareClickHandler());
 		this.contentpanel.add(createUserBtn);	
 	}
-	
+
 	public void openCreateRecept(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
@@ -809,24 +824,24 @@ public class MainGUI extends Composite {
 		addReceptIdTxt = new TextBox();
 		addReceptIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
+			public void onKeyPress(KeyPressEvent event) {
+				if (!Character.isDigit(event.getCharCode())) {
+					((TextBox) event.getSource()).cancelKey();
+				}
+			}
+		});
 		this.contentpanel.add(addReceptIdTxt);
-		
-		
+
+
 		this.contentpanel.add(createreceptnavn);
 		addReceptNavnTxt = new TextBox();
 		this.contentpanel.add(addReceptNavnTxt);
-		
+
 		Button createUserBtn = new Button("OK");
 		createUserBtn.addClickHandler(new createReceptClickHandler());
 		this.contentpanel.add(createUserBtn);	
 	}
-	
+
 	public void openCreateRaavareBatch(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
@@ -834,35 +849,35 @@ public class MainGUI extends Composite {
 		addRaavareBatchIdTxt = new TextBox();
 		addRaavareBatchIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
+			public void onKeyPress(KeyPressEvent event) {
+				if (!Character.isDigit(event.getCharCode())) {
+					((TextBox) event.getSource()).cancelKey();
+				}
+			}
+		});
 		this.contentpanel.add(addRaavareBatchIdTxt);
-		
+
 		this.contentpanel.add(createraavarebatchraavareid);
 		addRaavareBatchRaavareIdTxt = new TextBox();
 		addRaavareBatchRaavareIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
+			public void onKeyPress(KeyPressEvent event) {
+				if (!Character.isDigit(event.getCharCode())) {
+					((TextBox) event.getSource()).cancelKey();
+				}
+			}
+		});
 		this.contentpanel.add(addRaavareBatchRaavareIdTxt);
-		
+
 		this.contentpanel.add(createraavarebatchmaengde);
 		addRaavareBatchMaengdeTxt = new TextBox();
 		this.contentpanel.add(addRaavareBatchMaengdeTxt);
-		
+
 		Button createUserBtn = new Button("OK");
 		createUserBtn.addClickHandler(new createRaavareBatchClickHandler());
 		this.contentpanel.add(createUserBtn);	
 	}
-	
+
 	public void openCreateProduktBatch(){
 		this.externalvpanel.clear();
 		this.contentpanel.clear();
@@ -870,35 +885,35 @@ public class MainGUI extends Composite {
 		addProduktBatchIdTxt = new TextBox();
 		addProduktBatchIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
+			public void onKeyPress(KeyPressEvent event) {
+				if (!Character.isDigit(event.getCharCode())) {
+					((TextBox) event.getSource()).cancelKey();
+				}
+			}
+		});
 		this.contentpanel.add(addProduktBatchIdTxt);
-		
+
 		this.contentpanel.add(createproduktbatchstatus);
 		addProduktBatchStatusTxt = new TextBox();
 		this.contentpanel.add(addProduktBatchStatusTxt);
-		
+
 		this.contentpanel.add(createproduktbatchreceptid);
 		addProduktBatchReceptIdTxt = new TextBox();
 		addProduktBatchReceptIdTxt.addKeyPressHandler(new KeyPressHandler() {
 
-		      public void onKeyPress(KeyPressEvent event) {
-		        if (!Character.isDigit(event.getCharCode())) {
-		          ((TextBox) event.getSource()).cancelKey();
-		        }
-		      }
-		    });
+			public void onKeyPress(KeyPressEvent event) {
+				if (!Character.isDigit(event.getCharCode())) {
+					((TextBox) event.getSource()).cancelKey();
+				}
+			}
+		});
 		this.contentpanel.add(addProduktBatchReceptIdTxt);
-		
+
 		Button createUserBtn = new Button("OK");
 		createUserBtn.addClickHandler(new createProduktBatchClickHandler());
 		this.contentpanel.add(createUserBtn);	
 	}
-	
+
 	public void mainMenu(){
 		this.menupanel.clear();
 		Button logout = new Button ("Log ud");
@@ -909,7 +924,7 @@ public class MainGUI extends Composite {
 		openfarmaceutpanel.addClickHandler(new openFarmaceutSubMenuClickHandler());
 		Button openvaerkfoererpanel = new Button ("Værkfører panel");
 		openvaerkfoererpanel.addClickHandler(new openVaerkfoererSubMenuClickHandler());
-		
+
 		if (rettighedsniveau == "1"){
 			this.menupanel.add(openadminpanel);
 			this.menupanel.add(openfarmaceutpanel);
@@ -929,91 +944,91 @@ public class MainGUI extends Composite {
 			this.menupanel.add(logout);
 		}
 	}
-	
+
 	public void startMenu(){
 		this.menupanel.clear();
 		this.contentpanel.clear();
 		this.externalvpanel.clear();
 		openLogin();
 	}
-	
+
 	public void adminSubMenu(){
 		this.submenupanel.clear();
 		this.contentpanel.clear();
 		this.externalvpanel.clear();
-		
+
 		Button opengetuser = new Button("Find user");
-		
+
 		opengetuser.addClickHandler(new openGetUserClickHandler());
 		this.submenupanel.add(opengetuser);
-		
+
 		Button opengetuserlist = new Button("Get userlist");
 		opengetuserlist.addClickHandler(new openGetUserListClickHandler());
 		this.submenupanel.add(opengetuserlist);
-		
+
 		Button opendeleteuser = new Button("Delete user");
 		opendeleteuser.addClickHandler(new openDeleteUserClickHandler());
 		this.submenupanel.add(opendeleteuser);
-		
+
 		Button openupdateuser = new Button("Update user");
 		openupdateuser.addClickHandler(new openUpdateUserClickHandler());
 		this.submenupanel.add(openupdateuser);
-		
+
 		Button opencreateuser = new Button("Create user");
 		opencreateuser.addClickHandler(new openCreateUserClickHandler());
 		this.submenupanel.add(opencreateuser);
 	}
-	
+
 	public void farmaceutSubMenu(){
 		this.submenupanel.clear();
 		this.contentpanel.clear();
 		this.externalvpanel.clear();
-		
+
 		Button openopretraavare = new Button("Opret Råvare");
 		openopretraavare.addClickHandler(new openCreateRaavareClickHandler());
 		this.submenupanel.add(openopretraavare);
-		
+
 		Button opengetraavarelist = new Button("Vis Råvarer");
 		opengetraavarelist.addClickHandler(new openGetRaavareListClickHandler());
 		this.submenupanel.add(opengetraavarelist);
-		
+
 		Button openopretrecept = new Button("Opret Recept");
 		openopretrecept.addClickHandler(new openCreateReceptClickHandler());
 		this.submenupanel.add(openopretrecept);
-		
+
 		Button openreceptliste = new Button("Vis Recepter");
 		openreceptliste.addClickHandler(new openGetReceptListClickHandler());
 		this.submenupanel.add(openreceptliste);
-		
+
 	}
-	
+
 	public void vaerkfoererSubMenu(){
 		this.submenupanel.clear();
 		this.contentpanel.clear();
 		this.externalvpanel.clear();
-		
+
 		//TODO lav click handlers
 		Button openopretraavarebatch = new Button("Opret Råvarebatch");
 		openopretraavarebatch.addClickHandler(new openCreateRaavareBatchClickHandler());
 		this.submenupanel.add(openopretraavarebatch);
-		
+
 		Button opengetraavarebatchlist = new Button("Vis Råvarebatches");
 		opengetraavarebatchlist.addClickHandler(new openGetRaavarebatchListClickHandler());
 		this.submenupanel.add(opengetraavarebatchlist);
-		
-		
+
+
 		Button opencreateproduktbatch = new Button("Opret Produktbatch");
 		opencreateproduktbatch.addClickHandler(new openCreateProduktBatchClickHandler());
 		this.submenupanel.add(opencreateproduktbatch);
-		
+
 		Button openproduktbatchlist = new Button("Vis Produktbatches");
 		openproduktbatchlist.addClickHandler(new openGetProduktBatchClickHandler());
 		this.submenupanel.add(openproduktbatchlist);
-		
+
 		Button openproduktbatchkomplist = new Button("Vis Produktbatchkomponenter");
 		openproduktbatchkomplist.addClickHandler(new openGetProduktBatchKomponentClickHandler());
 		this.submenupanel.add(openproduktbatchlist);
-		
+
 	}
 
 }
