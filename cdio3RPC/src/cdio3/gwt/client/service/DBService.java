@@ -35,5 +35,6 @@ public interface DBService extends RemoteService {
 	ArrayList<ProduktBatchKompDTO> getProduktBatchKomponentList();
 	ProduktBatchKompDTO createProduktBatchKomponent(ProduktBatchKompDTO rec);
 	boolean validatePassword(String password);
+	String getUserStilling(String token);
 	
 }

@@ -19,7 +19,11 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	private MainGUI maingui;
 	private int rettighedsniveau = 0;
 	String token = "";
-	private int typeofBoolean = 0;
+	private String authenticateCallback = "";
+	private String stillingCallback = "";
+	private String getUserCallback = "";
+	private String validateCallback = "";
+	private String deleteCallback = "";
 	private String entity = "";
 	
 	//TODO mangler metoder som slet på alle.
@@ -37,7 +41,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	@Override
 	public void validatePassword(String password){
 		this.service.validatePassword(password, new DefaultCallback());
-		typeofBoolean = 6;
+		validateCallback = "yes";
 	}
 	
 	@Override
@@ -48,7 +52,13 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	
 	@Override
 	public void authenticateUser(String username, String password){
+		authenticateCallback = "yes";
 		this.service.authenticateUser(username, password, new DefaultCallback());
+	}
+	@Override
+	public void getStilling(String token){
+		stillingCallback = "yes";
+		this.service.getUserStilling(token, new DefaultCallback());
 	}
 	@Override
 	public void getUser(int oprId, String token) {
@@ -63,7 +73,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	@Override
 	public void deleteElement(int eId, String valg) {
 		this.service.deleteElement(eId, valg, new DefaultCallback());
-		typeofBoolean = 3;
+		deleteCallback = "yes";
 	}
 
 	@Override
@@ -135,6 +145,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 	
 	@Override
 	public void getUserRights(String token) {
+		getUserCallback = "yes";
 		this.service.getUserRights(token, new DefaultCallback());
 		
 	}
@@ -176,14 +187,19 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 			// Hvis der modtages integer (Login)
 			else if(result instanceof String){
 				String rettighedsniveau = (String) result;
+				if(authenticateCallback.equals("yes")){
+				authenticateCallback = "";
 				token = rettighedsniveau;
 				maingui.authenticateOperatoer(rettighedsniveau);
 				}
+				else if(getUserCallback.equals("yes")){maingui.authenticateOperatoer(rettighedsniveau);getUserCallback = "";}
+				else if(stillingCallback.equals("yes")){maingui.setStilling(rettighedsniveau);stillingCallback = "";}
+			}
 			else if(result instanceof Boolean){
 					boolean svar = (Boolean) result;
-					if(typeofBoolean == 3){maingui.deletedElement(svar);}
-					if(typeofBoolean == 6){maingui.validatePassword(svar);}
-				}
+					if(deleteCallback.equals("yes")){maingui.deletedElement(svar);deleteCallback = "";}
+					if(validateCallback.equals("yes")){maingui.validatePassword(svar);validateCallback = "";}
+			}
 			else if(result instanceof Integer){
 				int svar = (Integer) result;
 				if(entity.equals("operatoer")){maingui.checkUserId(svar);}
@@ -191,7 +207,7 @@ public class DBServiceClientImpl implements DBServiceClientInt {
 				if(entity.equals("raavarebatch")){maingui.checkRaavareBatchId(svar);}
 				if(entity.equals("recept")){maingui.checkReceptId(svar);}
 				if(entity.equals("produktbatch")){maingui.checkProduktBatchId(svar);}
-						}
+			}
 		
 			//Listerne
 			else if(result instanceof ArrayList<?>){

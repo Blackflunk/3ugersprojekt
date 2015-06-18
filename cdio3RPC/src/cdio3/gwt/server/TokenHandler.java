@@ -29,12 +29,12 @@ public class TokenHandler {
 	}
 
 	
-	public String createToken(String user_id, String rettighedsniveau){
+	public String createToken(String user_id, String rettighedsniveau, String stilling){
 		if(user_id.contains("\n")) throw new IllegalArgumentException("User Id cannot contain line breaks!");
 		String signature = encrypt(SIGNATURE, SIGNATURE_KEY);
 		String timestamp = prettyTime();
 		String unixTime = String.valueOf(System.currentTimeMillis());
-		String token = signature+"\n"+user_id+"\n"+timestamp+"\n"+unixTime+"\n"+rettighedsniveau;
+		String token = signature+"\n"+user_id+"\n"+timestamp+"\n"+unixTime+"\n"+rettighedsniveau+"\n"+stilling+"\n";
 		return encrypt(token);
 	}
 	public String validateToken(String token){
@@ -79,6 +79,15 @@ public class TokenHandler {
 			String _data = decrypt(token);
 			String[] data = _data.split("\n");
 			return data[4];
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public String getUserStilling(String token){
+		try {
+			String _data = decrypt(token);
+			String[] data = _data.split("\n");
+			return data[5];
 		} catch (Exception e) {
 			return null;
 		}

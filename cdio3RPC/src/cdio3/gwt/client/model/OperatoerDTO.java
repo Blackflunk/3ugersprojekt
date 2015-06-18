@@ -18,6 +18,7 @@ public class OperatoerDTO implements Serializable
 	String cpr;
 	String password;
 	String rettighedsniveau;
+	String stilling;
 
 	public OperatoerDTO(){
 		

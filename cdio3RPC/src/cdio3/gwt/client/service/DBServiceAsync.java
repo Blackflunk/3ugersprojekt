@@ -13,6 +13,8 @@ public interface DBServiceAsync {
 	//TODO mangler slet raavare, recept, raavarebatch, produktbatch, produktbatchkomp.
 
 	@SuppressWarnings("rawtypes")
+	void getUserStilling(String token, AsyncCallback callback);
+	@SuppressWarnings("rawtypes")
 	void validatePassword(String password, AsyncCallback callback);
 	@SuppressWarnings("rawtypes")
 	void checkIdExist(int id, String entity, AsyncCallback callback);

@@ -33,6 +33,7 @@ public class MainGUI extends Composite {
 	String currusername = "";
 	String curruserpass = "";
 	String curruseret = "";
+	String stilling = "";
 	boolean infocall = false;
 
 	private AbsolutePanel vPanel = new AbsolutePanel();
@@ -166,9 +167,6 @@ public class MainGUI extends Composite {
 			String pwd = userPwdTxt.getText();
 			curruserpass = pwd;
 			serviceImpl.authenticateUser(username, pwd);
-			
-			infocall = true;
-			serviceImpl.getUserList();
 		}
 	}
 
@@ -268,16 +266,17 @@ public class MainGUI extends Composite {
 			serviceImpl.getUserRights(token);
 			code = "<b>Henter bruger rettighedsniveau</b></br>";
 			html.setHTML(code);
-			this.externalvpanel.add(html);
-		}else {
+			this.contentpanel.add(html);
+		}else{
+			serviceImpl.getStilling(token);
 			this.rettighedsniveau = rettighedsniveau;
 			code = "<b>Har hentet rettighedsniveau: " + rettighedsniveau + "</b></br>";
 			html.setHTML(code);
-			this.externalvpanel.add(html);
+			this.contentpanel.add(html);
 			if (rettighedsniveau.equals("0")){
 				code = "<b>Brugeren eksisterer ikke</b></br>";
 				html.setHTML(code);
-				this.externalvpanel.add(html);
+				this.contentpanel.add(html);
 				startMenu();
 				this.contentpanel.clear();
 			}
@@ -367,6 +366,11 @@ public class MainGUI extends Composite {
 			html.setHTML(code);
 			this.externalvpanel.add(html);
 		}
+	}
+	public void setStilling(String stilling){
+		this.stilling = stilling;
+		userInfo();
+		sysInfo();
 	}
 	public void createUser(){
 		OperatoerDTO opr = new OperatoerDTO();
@@ -1173,7 +1177,6 @@ public class MainGUI extends Composite {
 		openfarmaceutpanel.addClickHandler(new openFarmaceutSubMenuClickHandler());
 		openvaerkfoererpanel.setStyleName("menubutton-style");
 		openvaerkfoererpanel.addClickHandler(new openVaerkfoererSubMenuClickHandler());
-
 		if (rettighedsniveau == "1"){
 			adminSubMenu();
 			this.menupanel.add(openadminpanel);
@@ -1237,9 +1240,6 @@ public class MainGUI extends Composite {
 		opencreateuser.setStyleName("submenubutton-style");
 		opencreateuser.addClickHandler(new openCreateUserClickHandler());
 		this.submenupanel.add(opencreateuser);
-
-		userInfo();
-		sysInfo();
 	}
 
 	public void farmaceutSubMenu(){
@@ -1270,9 +1270,6 @@ public class MainGUI extends Composite {
 		openreceptliste.setStyleName("submenubutton-style");
 		openreceptliste.addClickHandler(new openGetReceptListClickHandler());
 		this.submenupanel.add(openreceptliste);
-
-		userInfo();
-		sysInfo();
 	}
 
 	public void vaerkfoererSubMenu(){
@@ -1308,9 +1305,6 @@ public class MainGUI extends Composite {
 		openproduktbatchkomplist.setStyleName("submenubutton-style");
 		openproduktbatchkomplist.addClickHandler(new openGetProduktBatchKomponentClickHandler());
 		this.submenupanel.add(openproduktbatchlist);
-
-		userInfo();
-		sysInfo();
 	}
 	
 	public void sysInfo(){
@@ -1329,13 +1323,13 @@ public class MainGUI extends Composite {
 	}
 	
 	public void userInfo(){
+		infopanel.clear();
 		infopanel.setStyleName("infopanel-style");
 		this.vPanel.add(infopanel);
-		
 		HTML html = new HTML();
 		String userinfo = "<b><h4>Bruger information</b></h4>";
 		userinfo = userinfo + "<b>Dit navn: </b>" + currusername + "</br>";
-		userinfo = userinfo + "<b>Dit rettighedsniveau: </b>" + curruseret;
+		userinfo = userinfo + "<b>Din stilling: </b>" + stilling + "</br>";
 		html.setHTML(userinfo);
 		this.infopanel.add(html);
 	}

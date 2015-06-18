@@ -26,4 +26,5 @@ public interface DBServiceClientInt {
 	void getProduktBatchKompList();
 	void checkIdExist(int id, String entity);
 	void validatePassword(String password);
+	void getStilling(String token);
 }

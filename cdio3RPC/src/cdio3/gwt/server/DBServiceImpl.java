@@ -31,6 +31,12 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		return th.getUserRights(token);
 	}
 	
+	@Override
+	public String getUserStilling(String token){
+		TokenHandler th = new TokenHandler();
+		return th.getUserStilling(token);
+	}
+	
 	@SuppressWarnings("static-access")
 	@Override
 	public String authenticateUser(String username, String password) {
@@ -39,8 +45,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		TokenHandler th = new TokenHandler();
 		try {
 			Connector conn = new Connector();
-			rs = conn.doQuery("SELECT * FROM operatoer WHERE opr_navn = \"" + username + "\" AND password = \"" + password + "\"");
-		} catch (DALException e1) {
+			rs = conn.doQuery("SELECT * FROM operatoer NATURAL JOIN rettighed WHERE opr_navn = \"" + username + "\" AND password = \"" + password + "\" AND rettighedsniveau = rettighed.rettighedsniveau");		} catch (DALException e1) {
 			e1.printStackTrace();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -53,7 +58,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		}
 		try {
 			if(!rs.first()) token = null;
-			else if (rs.first()) token = th.createToken(rs.getInt("opr_id") + "", rs.getString("rettighedsniveau"));
+			else {rs.beforeFirst();rs.next();token = th.createToken(rs.getInt("opr_id") + "", rs.getString("rettighedsniveau"), rs.getString("stilling"));}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
