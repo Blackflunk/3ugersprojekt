@@ -67,7 +67,12 @@ public class ClientController implements Runnable, IClientController {
 			wc.writeSocket("RM20 A " + getStringInput());
 			vaegtdata.setRm20_kommando("");
 			runMenu();
-		} else {
+		} else if(answer.equals("F")) {
+			double temp = 0;
+			temp -= vaegtdata.getBrutto();
+			vaegtdata.setBrutto(temp);
+			runMenu();
+		}else {
 			tui.printMessage("Not a known input, please try again:");
 			runMenu();
 		}

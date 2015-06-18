@@ -36,8 +36,8 @@ public class WCUController {
 	WeightCommunicator WC;
 	ArrayList<TempVare> vareliste = new ArrayList<TempVare>(); 
 	String weightChoice="", user="", tara="", netto="", brutto="", weight="", mode="", produktbatch="", raavare_name="", recept_name="";
-	int produkt=0, forLength=0, loopNumber=0, BatchId2=0, recept_id=0, rbID=0, tempID=0,raavare_id=0, Negtara = 0, Curweight = 0;
-	double tolerance=0, NegCalculatedTol=0, CalculatedTol=0;
+	int produkt=0, forLength=0, loopNumber=0, recept_id=0, rbID=0, tempID=0,raavare_id=0, BatchId = 0;
+	double tolerance=0, NegCalculatedTol=0, CalculatedTol=0, Negtara = 0, Curweight = 0, finaltara=0, finalnetto=0, finalbrutto=0 ;
 	public void init() {
 		runProcedure();
 	}
@@ -145,8 +145,7 @@ public class WCUController {
 		String input = WC.readSocket().substring(7);
 		CC.printMessage(input);
 		try {
-			int BatchId = Integer.parseInt(input);
-			BatchId2 = BatchId;
+			BatchId = Integer.parseInt(input);
 			if(BatchId != produktbatchDAO.getProduktBatch(BatchId).getPbId())
 				throw new WeightException();
 			recept_id = produktbatchDAO.getProduktBatch(BatchId).getReceptId();
@@ -176,8 +175,8 @@ public class WCUController {
 		try {
 			CC.controlOKMessage(input);
 			tara = WC.writeSocket("T");
-			produktbatchDAO.getProduktBatch(BatchId2).setStatus(1);
-			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId2));
+			produktbatchDAO.getProduktBatch(BatchId).setStatus(1);
+			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId));
 		} catch (InvalidInputException e) {
 			WC.writeSocket("D Ukendt input");
 			CC.printMessage("Ukendt input");
@@ -253,27 +252,19 @@ public class WCUController {
 				throw new WeightException();
 			}
 			
-			WC.writeSocket("RM20 8 Fjern Råvare og Beholder og indtast OK");
-//			String secInput = WC.readSocket().substring(7);
-//			try{
-//				CC.controlOKMessage(secInput);
-//				Curweight = Integer.parseInt(WC.writeSocket("S"));
-//				int tempTara = Integer.parseInt(tara.substring(7));
-//				Negtara -= tempTara;
-//			}catch (InvalidInputException e) {
-//				WC.writeSocket("D Ukendt Input");
-//				CC.printMessage("Ukendt input");
-//				doWeighingControl();
-//			}
-//			
+			int index1 = tara.indexOf("kg");
+			String temptara = tara.substring(10, index1);
+			finaltara = Double.parseDouble(temptara);
+			finalnetto = nettoDoub;
+			
+			emptyWeight();
+			System.out.println(Curweight);
+			System.out.println(Negtara);
+			
 			if(Curweight != Negtara){
 				throw new WeightException();
 			}
 			
-			int index1 = tara.indexOf("kg");
-			String temptara = tara.substring(10, index1);
-			double finaltara = Double.parseDouble(temptara);
-			double finalnetto = nettoDoub;
 			CC.printMessage(raavare_name+": \n"+"netto: "+finalnetto+"\n tara: "+finaltara+"\n brutto: "+finalnetto+finaltara);
 			vareliste.add(new TempVare(raavare_name, finalnetto, finalnetto+finaltara, finalnetto));
 		} catch (InvalidInputException e) {
@@ -294,10 +285,30 @@ public class WCUController {
 			doWeighingControl();
 		}
 	}
+	
+	public void emptyWeight() {
+		WC.writeSocket("RM20 8 Fjern Råvare og Beholder og indtast OK");
+		String secInput = WC.readSocket().substring(7);
+		try{
+			CC.controlOKMessage(secInput);
+			String SCurweight = WC.writeSocket("S");
+			int index4 = SCurweight.indexOf("kg");
+			SCurweight = SCurweight.substring(8,index4);
+			Curweight = Double.parseDouble(SCurweight);
+			Negtara -= finaltara;
+		}catch (InvalidInputException e) {
+			WC.writeSocket("D Ukendt Input");
+			CC.printMessage("Ukendt input");
+			doWeighingControl();
+		} catch (NumberFormatException e) {
+			CC.printMessage("feeeeeeejl lige her yo");
+		}
+	}
+	
 	public void endProduction() {
 		try {
-			produktbatchDAO.getProduktBatch(BatchId2).setStatus(2);
-			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId2));
+			produktbatchDAO.getProduktBatch(BatchId).setStatus(2);
+			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId));
 		} catch (DALException e) {
 			e.printStackTrace();
 		}

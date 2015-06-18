@@ -68,6 +68,7 @@ public class TUI implements IUI{
 		System.out.println("Tast T for tara \n\t(svarende til knaptryk paa vægt)");
 		System.out.println("Tast R for at reset vægt-værdier \n\t(svarende til at fjerne belastningen og tara)");
 		System.out.println("Tast Q for at afslutte program program");
+		System.out.println("Tast F for at fjerne beholder plus råvare");
 		System.out.println("Indtast (B/T/R/Q for: \n\t"
 				+ "(B)rutto Ændring / (T)arer Vægt / (R)Nultil Vægt / (Q)Afslut Vægt)");
 		if (this.vaegtdata.getRm20_kommando() != "") {
