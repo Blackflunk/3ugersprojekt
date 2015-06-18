@@ -1240,6 +1240,8 @@ public class MainGUI extends Composite {
 		opencreateuser.setStyleName("submenubutton-style");
 		opencreateuser.addClickHandler(new openCreateUserClickHandler());
 		this.submenupanel.add(opencreateuser);
+		userInfo();
+		sysInfo();
 	}
 
 	public void farmaceutSubMenu(){
@@ -1270,6 +1272,8 @@ public class MainGUI extends Composite {
 		openreceptliste.setStyleName("submenubutton-style");
 		openreceptliste.addClickHandler(new openGetReceptListClickHandler());
 		this.submenupanel.add(openreceptliste);
+		userInfo();
+		sysInfo();
 	}
 
 	public void vaerkfoererSubMenu(){
@@ -1305,6 +1309,8 @@ public class MainGUI extends Composite {
 		openproduktbatchkomplist.setStyleName("submenubutton-style");
 		openproduktbatchkomplist.addClickHandler(new openGetProduktBatchKomponentClickHandler());
 		this.submenupanel.add(openproduktbatchlist);
+		userInfo();
+		sysInfo();
 	}
 	
 	public void sysInfo(){
