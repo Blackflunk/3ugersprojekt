@@ -286,7 +286,9 @@ public class MainGUI extends Composite {
 	}
 
 	public void checkUserId(int reply){
-		this.contentpanel.clear();
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
+		this.externalvpanel.clear();
 		HTML html = new HTML();
 		String code = "";
 		if(reply == 1) { 
@@ -299,7 +301,9 @@ public class MainGUI extends Composite {
 	}
 
 	public void checkRaavareId(int reply){
-		this.contentpanel.clear();
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
+		this.externalvpanel.clear();
 		HTML html = new HTML();
 		String code = "";
 		if(reply == 1) { 
@@ -311,7 +315,9 @@ public class MainGUI extends Composite {
 			createRaavare();
 	}
 	public void checkReceptId(int reply){
-		this.contentpanel.clear();
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
+		this.externalvpanel.clear();
 		HTML html = new HTML();
 		String code = "";
 		if(reply == 1) { 
@@ -323,7 +329,9 @@ public class MainGUI extends Composite {
 		createRecept();
 	}
 	public void checkRaavareBatchId(int reply){
-		this.contentpanel.clear();
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
+		this.externalvpanel.clear();
 		HTML html = new HTML();
 		String code = "";
 		if(reply == 1) { 
@@ -334,8 +342,11 @@ public class MainGUI extends Composite {
 		else
 			createRaavareBatch();
 	}
+	
 	public void checkProduktBatchId(int reply){
-		this.contentpanel.clear();
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
+		this.externalvpanel.clear();
 		HTML html = new HTML();
 		String code = "";
 		if(reply == 1) { 
@@ -347,6 +358,8 @@ public class MainGUI extends Composite {
 			createProduktBatch();
 	}
 	public void validatePassword(boolean svar){
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		if(svar){createUser();}
 		else{
 			HTML html = new HTML();
@@ -395,6 +408,8 @@ public class MainGUI extends Composite {
 		}
 	
 	public void deletedElement(boolean result) {
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		this.externalvpanel.clear();
 		HTML html = new HTML();
 
@@ -405,7 +420,10 @@ public class MainGUI extends Composite {
 	}
 
 	public void displayOperatoer(OperatoerDTO info) {
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		this.externalvpanel.clear();
+		
 
 		HTML html = new HTML();
 
@@ -417,10 +435,12 @@ public class MainGUI extends Composite {
 		code = code + "<b>Rettighedsniveau:</b> " + info.getRettighedsniveau() + "</br>";
 
 		html.setHTML(code);
-		this.contentpanel.add(html);
+		this.externalvpanel.add(html);
 	}
 
 	public void displayRaavare(RaavareDTO info) {
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		this.externalvpanel.clear();
 		HTML html = new HTML();
 
@@ -432,6 +452,8 @@ public class MainGUI extends Composite {
 	}
 
 	public void displayRecept(ReceptDTO info) {
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		this.externalvpanel.clear();
 		HTML html = new HTML();
 
@@ -443,6 +465,8 @@ public class MainGUI extends Composite {
 	}
 
 	public void displayRaavareBatch(RaavareBatchDTO info) {
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		this.externalvpanel.clear();
 		HTML html = new HTML();
 
@@ -455,6 +479,8 @@ public class MainGUI extends Composite {
 	}
 
 	public void displayProduktBatch(ProduktBatchDTO info) {
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		this.externalvpanel.clear();
 		HTML html = new HTML();
 
@@ -467,6 +493,8 @@ public class MainGUI extends Composite {
 	}
 
 	public void displayOperatoerListe(ArrayList<OperatoerDTO> oprList){
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		this.externalvpanel.clear();
 
 		if(infocall){
@@ -490,13 +518,15 @@ public class MainGUI extends Composite {
 				code = code + "<b>Rettighedsniveau:</b> " + oprList.get(i).getRettighedsniveau() + "</br>";
 
 				html.setHTML(code);
-				this.contentpanel.add(html);
+				this.externalvpanel.add(html);
 			}
 		}
 		infocall = false;
 	}
 
 	public void displayRaavareListe(ArrayList<RaavareDTO> raaList){
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		this.externalvpanel.clear();
 		for(int i = 0;i < raaList.size();i++){
 			HTML html = new HTML();
@@ -510,6 +540,8 @@ public class MainGUI extends Composite {
 	}
 
 	public void displayReceptListe(ArrayList<ReceptDTO> racList){
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		this.externalvpanel.clear();
 		for(int i = 0;i < racList.size();i++){
 			HTML html = new HTML();
@@ -523,6 +555,8 @@ public class MainGUI extends Composite {
 	}
 
 	public void displayRaavareBatchListe(ArrayList<RaavareBatchDTO> rabList){
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		this.externalvpanel.clear();
 		for(int i = 0;i < rabList.size();i++){
 			HTML html = new HTML();
@@ -537,6 +571,8 @@ public class MainGUI extends Composite {
 	}
 
 	public void displayProduktBatchListe(ArrayList<ProduktBatchDTO> pbList){
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		this.externalvpanel.clear();
 		for(int i = 0;i < pbList.size();i++){
 			HTML html = new HTML();
@@ -551,6 +587,8 @@ public class MainGUI extends Composite {
 	}
 
 	public void displayProduktBatchKompListe(ArrayList<ProduktBatchKompDTO> pbkList){
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		this.externalvpanel.clear();
 		for(int i = 0;i < pbkList.size();i++){
 			HTML html = new HTML();
@@ -751,7 +789,7 @@ public class MainGUI extends Composite {
 			}
 		});
 		this.contentpanel.add(getUserNameTxt);
-
+		
 		Button getUserBtn = new Button("OK");
 		getUserBtn.addClickHandler(new getUserClickHandler());
 		this.contentpanel.add(getUserBtn);
