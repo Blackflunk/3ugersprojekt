@@ -241,11 +241,10 @@ public class WCUController {
 			int index3 = netto.indexOf("kg");
 			String tempnetto = netto.substring(7, index3);
 			double nettoDoub = Double.parseDouble(tempnetto);
-			double nomNetto = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
-			receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto()
-			System.out.println(nomNetto + "= nomnetto");
 			tolerance = receptkompDAO.getReceptKomp(recept_id, raavare_id).getTolerance();
 			System.out.println(tolerance + "= tolerance");
+			double nomNetto = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
+			System.out.println(nomNetto + "= nomnetto");
 			CalculatedTol = ((nettoDoub / 100) * tolerance) + nomNetto;
 			System.out.println(CalculatedTol + "= CalTol");
 			NegCalculatedTol = nomNetto - ((nettoDoub / 100) * tolerance);
