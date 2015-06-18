@@ -1314,6 +1314,7 @@ public class MainGUI extends Composite {
 	}
 	
 	public void sysInfo(){
+		sysinfopanel.clear();
 		sysinfopanel.setStyleName("sysinfopanel-style");
 		this.vPanel.add(sysinfopanel);
 		
