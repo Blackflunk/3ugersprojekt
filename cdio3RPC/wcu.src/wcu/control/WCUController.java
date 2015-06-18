@@ -36,7 +36,7 @@ public class WCUController {
 	WeightCommunicator WC;
 	ArrayList<TempVare> vareliste = new ArrayList<TempVare>(); 
 	String weightChoice="", user="", tara="", netto="", brutto="", weight="", mode="", produktbatch="", raavare_name="", recept_name="";
-	int produkt=0, forLength=0, loopNumber=0, BatchId=0, recept_id=0, rbID=0, tempID=0,raavare_id=0, tolerance=0, NegCalculatedTol=0, CalculatedTol=0, Negtara = 0, Curweight = 0;
+	int produkt=0, forLength=0, loopNumber=0, BatchId2=0, recept_id=0, rbID=0, tempID=0,raavare_id=0, tolerance=0, NegCalculatedTol=0, CalculatedTol=0, Negtara = 0, Curweight = 0;
 	
 	public void init() {
 		runProcedure();
@@ -144,7 +144,8 @@ public class WCUController {
 		String input = WC.readSocket().substring(7);
 		CC.printMessage(input);
 		try {
-			BatchId = Integer.parseInt(input);
+			int BatchId = Integer.parseInt(input);
+			BatchId2 = BatchId;
 			if(BatchId != produktbatchDAO.getProduktBatch(BatchId).getPbId())
 				throw new WeightException();
 			recept_id = produktbatchDAO.getProduktBatch(BatchId).getReceptId();
@@ -174,8 +175,8 @@ public class WCUController {
 		try {
 			CC.controlOKMessage(input);
 			tara = WC.writeSocket("T");
-			produktbatchDAO.getProduktBatch(BatchId).setStatus(1);
-			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId));
+			produktbatchDAO.getProduktBatch(BatchId2).setStatus(1);
+			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId2));
 		} catch (InvalidInputException e) {
 			WC.writeSocket("D Ukendt input");
 			CC.printMessage("Ukendt input");
@@ -283,8 +284,8 @@ public class WCUController {
 	}
 	public void endProduction() {
 		try {
-			produktbatchDAO.getProduktBatch(BatchId).setStatus(2);
-			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId));
+			produktbatchDAO.getProduktBatch(BatchId2).setStatus(2);
+			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId2));
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
