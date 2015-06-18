@@ -102,7 +102,8 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 			e.printStackTrace();
 		}
 		return null;
-	}}
+	}
+		}
 
 	@SuppressWarnings("static-access")
 	@Override
@@ -608,7 +609,7 @@ public class DBServiceImpl extends RemoteServiceServlet implements DBService {
 		ResultSet rs = null;
 		try {
 			Connector conn = new Connector();
-			rs = conn.doQuery("SELECT * FROM + \"" + entity + "\" + WHERE opr_id = \"" + id + "\"");
+			rs = conn.doQuery("SELECT * FROM " + entity + " WHERE opr_id = " + id);
 		} catch (DALException e1) {
 			e1.printStackTrace();
 		} catch (InstantiationException e) {
