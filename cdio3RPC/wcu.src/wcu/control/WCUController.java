@@ -82,7 +82,7 @@ public class WCUController {
 			WC = new WeightCommunicator("169.254.2.3", 8000);
 		}
 		WC.connectToServer();
-		// CC.printMessage(WC.readSocket());
+		CC.printMessage(WC.readSocket());
 	}
 	
 	public void createDAO() {
@@ -232,20 +232,28 @@ public class WCUController {
 	
 	public void doWeighingControl() {
 		WC.writeSocket("RM20 8 Fuldfør afvejningen med den ønskede mængde, og indtast OK");
-		String input = WC.readSocket().substring(7);
+		String input = WC.readSocket();
+		input = input.substring(7);
+		CC.printMessage(input);
 		try {
 			CC.controlOKMessage(input);
 			netto = WC.writeSocket("S");
 			int index3 = netto.indexOf("kg");
 			String tempnetto = netto.substring(7, index3);
 			double nettoDoub = Double.parseDouble(tempnetto);
-//			tolerance = receptkompDAO.getReceptKomp(recept_id, raavare_id).getTolerance();
-//			CalculatedTol = ((nettoDoub / 100) * tolerance) + receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
-//			NegCalculatedTol = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto() - ((nettoDoub / 100) * tolerance);
-//			if (nettoDoub > CalculatedTol || nettoDoub < NegCalculatedTol){
-//				throw new WeightException();
-//			}
-//			
+			double nomNetto = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
+			receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto()
+			System.out.println(nomNetto + "= nomnetto");
+			tolerance = receptkompDAO.getReceptKomp(recept_id, raavare_id).getTolerance();
+			System.out.println(tolerance + "= tolerance");
+			CalculatedTol = ((nettoDoub / 100) * tolerance) + nomNetto;
+			System.out.println(CalculatedTol + "= CalTol");
+			NegCalculatedTol = nomNetto - ((nettoDoub / 100) * tolerance);
+			System.out.println(NegCalculatedTol + "= negCalTol");
+			if (nettoDoub > CalculatedTol || nettoDoub < NegCalculatedTol){
+				throw new WeightException();
+			}
+			
 			WC.writeSocket("RM20 8 Fjern Råvare og Beholder og indtast OK");
 //			String secInput = WC.readSocket().substring(7);
 //			try{
@@ -273,10 +281,10 @@ public class WCUController {
 			WC.writeSocket("D Ukendt Input");
 			CC.printMessage("Ukendt input");
 			doWeighingControl();
-//		} catch (DALException e) {
-//			WC.writeSocket("D Fejl i databehandling");
-//			CC.printMessage("Fejl i databehandling");
-//			doWeighingControl();
+		} catch (DALException e) {
+			WC.writeSocket("D Fejl i databehandling");
+			CC.printMessage("Fejl i databehandling");
+			doWeighingControl();
 		} catch (WeightException e) {
 			WC.writeSocket("D Vægt er ikke inde for tolerance grænserne");
 			CC.printMessage("Vægt er ikke inde for tolerance grænserne");
