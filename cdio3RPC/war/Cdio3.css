@@ -171,16 +171,30 @@ body{
 .externalvpanel-style{
 	height: 700px;
 	width:500px;
-	background-color:black;
+	background-color:white;
 }
 
 .infopanel-style{
 	border-radius: 10px;
-	padding: 10px;
+	padding: 5px;
 	float:right;
+	float:top;
 	height:100px;
 	width:150px;
 	background-color:white;
 	box-shadow: 0px 1px 7px 1px grey;
 	
 }
+
+.sysinfopanel-style{
+	border-radius: 10px;
+	margin-top:10px;
+	padding: 5px;
+	float:right;
+	height:300px;
+	width:150px;
+	background-color:white;
+	box-shadow: 0px 1px 7px 1px grey;
+	
+}
+
