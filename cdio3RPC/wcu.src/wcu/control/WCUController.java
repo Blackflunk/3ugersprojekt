@@ -8,8 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.google.gwt.thirdparty.javascript.rhino.head.regexp.SubString;
-
 import cdio3.gwt.server.*;
 import dao.impl.OperatoerDAO;
 import dao.impl.ProduktBatchDAO;
@@ -17,9 +15,11 @@ import dao.impl.RaavareBatchDAO;
 import dao.impl.RaavareDAO;
 import dao.impl.ReceptDAO;
 import dao.impl.ReceptKompDAO;
+import wcu.data.LogDTO;
 import wcu.data.TempVare;
 import wcu.exceptions.InvalidInputException;
 import wcu.exceptions.WeightException;
+import wcu.functionality.FileHandler;
 
 
 public class WCUController {
@@ -36,8 +36,9 @@ public class WCUController {
 	WeightCommunicator WC;
 	ArrayList<TempVare> vareliste = new ArrayList<TempVare>(); 
 	String weightChoice="", user="", tara="", netto="", brutto="", weight="", mode="", produktbatch="", raavare_name="", recept_name="";
-	int produkt=0, forLength=0, loopNumber=0, recept_id=0, rbID=0, tempID=0,raavare_id=0, BatchId = 0;
+	int opr_id = 0,produkt=0, forLength=0, loopNumber=0, recept_id=0, rbID=0, tempID=0,raavare_id=0, BatchId = 0;
 	double tolerance=0, NegCalculatedTol=0, CalculatedTol=0, Negtara = 0, Curweight = 0, finaltara=0, finalnetto=0, finalbrutto=0 ;
+	
 	public void init() {
 		runProcedure();
 	}
@@ -119,10 +120,10 @@ public class WCUController {
 		input = input.substring(7);
 		CC.printMessage(input);
 		try {
-			int OpId = Integer.parseInt(input);
-			if(OpId != oprDAO.getOperatoer(OpId).getOprId())
+			opr_id = Integer.parseInt(input);
+			if(opr_id != oprDAO.getOperatoer(opr_id).getOprId())
 				throw new WeightException();
-			user = oprDAO.getOperatoer(OpId).getOprNavn();
+			user = oprDAO.getOperatoer(opr_id).getOprNavn();
 			WC.writeSocket("D " + user);
 			CC.printMessage("Operatoer: "+user);
 		} catch (WeightException e) {
@@ -327,13 +328,13 @@ public class WCUController {
 			raavareformat += " tara: ";
 			raavareformat += vareliste.get(i).tara;
 			raavareformat += "\n \n";
-					}
-		try {
-			filewriter.write("log for recept: "+recept_name+"\n"+"Operatoer: "+user+"\n"+
-					"Date and time: "+dateFormat.format(date)+"\n \n"+ raavareformat
-					);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
+		FileHandler fh = new FileHandler();
+		LogDTO log = new LogDTO();
+		log.setAfvejning(raavareformat);
+		log.setOprID(opr_id);
+		//log.setPaa_lager(paa_lager);
+		log.setRaavareID(raavare_id);
+		fh.writeLogDB(log);
 	}
 }

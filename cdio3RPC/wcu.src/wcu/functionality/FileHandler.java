@@ -14,10 +14,7 @@ import cdio3.gwt.client.model.*;
 
 public class FileHandler implements IFileHandler {
 	String csv_Character = ",";
-	String current_operatoer_File = "data.text/operatoer.txt";
-	String current_Raavare_File = "data.text/store.txt";
-	String current_Log_File = "data.text/log.txt";
-	String current_productBatch_File = "data.text/produktBatch.txt";
+	String current_Log_File = "wcu.data/log.txt";
 	BufferedReader br = null;
 	BufferedWriter bw = null;
 	String linje = "";
