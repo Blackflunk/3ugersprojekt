@@ -82,7 +82,7 @@ public class WCUController {
 			WC = new WeightCommunicator("169.254.2.3", 8000);
 		}
 		WC.connectToServer();
-		CC.printMessage(WC.readSocket());
+		// CC.printMessage(WC.readSocket());
 	}
 	
 	public void createDAO() {
@@ -115,7 +115,8 @@ public class WCUController {
 	
 	public void verifyOperatoer() {
 		WC.writeSocket("RM20 8 Indtast Operatoer nummer:");
-		String input = WC.readSocket().substring(7);
+		String input = WC.readSocket();
+		input = input.substring(7);
 		CC.printMessage(input);
 		try {
 			int OpId = Integer.parseInt(input);
@@ -235,28 +236,29 @@ public class WCUController {
 		try {
 			CC.controlOKMessage(input);
 			netto = WC.writeSocket("S");
-			double nettoDoub = Double.parseDouble(netto.substring(7));
-			//int nettoint = Integer.parseInt(netto.substring(7));
-			tolerance = receptkompDAO.getReceptKomp(recept_id, raavare_id).getTolerance();
-			CalculatedTol = ((nettoDoub / 100) * tolerance) + receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
-			NegCalculatedTol = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto() - ((nettoDoub / 100) * tolerance);
-			if (nettoDoub > CalculatedTol || nettoDoub < NegCalculatedTol){
-				throw new WeightException();
-			}
-			
+			int index3 = netto.indexOf("kg");
+			String tempnetto = netto.substring(7, index3);
+			double nettoDoub = Double.parseDouble(tempnetto);
+//			tolerance = receptkompDAO.getReceptKomp(recept_id, raavare_id).getTolerance();
+//			CalculatedTol = ((nettoDoub / 100) * tolerance) + receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
+//			NegCalculatedTol = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto() - ((nettoDoub / 100) * tolerance);
+//			if (nettoDoub > CalculatedTol || nettoDoub < NegCalculatedTol){
+//				throw new WeightException();
+//			}
+//			
 			WC.writeSocket("RM20 8 Fjern Råvare og Beholder og indtast OK");
-			String secInput = WC.readSocket().substring(7);
-			try{
-				CC.controlOKMessage(secInput);
-				Curweight = Integer.parseInt(WC.writeSocket("S"));
-				int tempTara = Integer.parseInt(tara.substring(7));
-				Negtara -= tempTara;
-			}catch (InvalidInputException e) {
-				WC.writeSocket("D Ukendt Input");
-				CC.printMessage("Ukendt input");
-				doWeighingControl();
-			}
-			
+//			String secInput = WC.readSocket().substring(7);
+//			try{
+//				CC.controlOKMessage(secInput);
+//				Curweight = Integer.parseInt(WC.writeSocket("S"));
+//				int tempTara = Integer.parseInt(tara.substring(7));
+//				Negtara -= tempTara;
+//			}catch (InvalidInputException e) {
+//				WC.writeSocket("D Ukendt Input");
+//				CC.printMessage("Ukendt input");
+//				doWeighingControl();
+//			}
+//			
 			if(Curweight != Negtara){
 				throw new WeightException();
 			}
@@ -264,22 +266,24 @@ public class WCUController {
 			int index1 = tara.indexOf("kg");
 			String temptara = tara.substring(10, index1);
 			double finaltara = Double.parseDouble(temptara);
-			int index2 = netto.indexOf("kg");
-			String tempnetto = netto.substring(10, index2);
-			double finalnetto = Double.parseDouble(tempnetto);
+			double finalnetto = nettoDoub;
 			CC.printMessage(raavare_name+": \n"+"netto: "+finalnetto+"\n tara: "+finaltara+"\n brutto: "+finalnetto+finaltara);
 			vareliste.add(new TempVare(raavare_name, finalnetto, finalnetto+finaltara, finalnetto));
 		} catch (InvalidInputException e) {
 			WC.writeSocket("D Ukendt Input");
 			CC.printMessage("Ukendt input");
 			doWeighingControl();
-		} catch (DALException e) {
-			WC.writeSocket("D Fejl i databehandling");
-			CC.printMessage("Fejl i databehandling");
-			doWeighing(loopNumber);
+//		} catch (DALException e) {
+//			WC.writeSocket("D Fejl i databehandling");
+//			CC.printMessage("Fejl i databehandling");
+//			doWeighingControl();
 		} catch (WeightException e) {
 			WC.writeSocket("D Vægt er ikke inde for tolerance grænserne");
 			CC.printMessage("Vægt er ikke inde for tolerance grænserne");
+			doWeighingControl();
+		} catch (NumberFormatException e) {
+			WC.writeSocket("D number");
+			CC.printMessage("number");
 			doWeighingControl();
 		}
 	}
