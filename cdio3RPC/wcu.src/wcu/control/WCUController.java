@@ -217,7 +217,7 @@ public class WCUController {
 			doWeighingControl();
 		} catch (DALException e) {
 			WC.writeSocket("D Fejl i databehandling");
-			CC.printMessage("Fejl i databehandling");
+			CC.printMessage("Fejl i databehandling 22");
 			doWeighing(loopNumber);
 		} catch (WeightException e) {
 			WC.writeSocket("D Ukendt produktbatch");
@@ -282,7 +282,7 @@ public class WCUController {
 			doWeighingControl();
 		} catch (DALException e) {
 			WC.writeSocket("D Fejl i databehandling");
-			CC.printMessage("Fejl i databehandling");
+			CC.printMessage("Fejl i databehandling den her");
 			doWeighingControl();
 		} catch (WeightException e) {
 			WC.writeSocket("D Vægt er ikke inde for tolerance grænserne");

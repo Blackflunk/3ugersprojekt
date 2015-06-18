@@ -18,7 +18,7 @@ public class ReceptKompDAO implements IReceptKompDAO {
 	public ReceptKompDTO getReceptKomp(int receptkompId, int raavareId)
 			throws DALException {
 		ReceptKompDTO resReceptKomp = null;
-		ResultSet rs = Connector.doQuery("SELECT * FROM receptkomponent WHERE recept_id = " + receptkompId + "AND raavare_id = " + raavareId);
+		ResultSet rs = Connector.doQuery("SELECT * FROM receptkomponent WHERE recept_id = " + receptkompId + " AND raavare_id = " + raavareId);
 		try
 		{
 
@@ -28,7 +28,9 @@ public class ReceptKompDAO implements IReceptKompDAO {
 				resReceptKomp = new ReceptKompDTO(rs.getInt("recept_id"), rs.getInt("raavare_id"), rs.getDouble("nom_netto"), rs.getDouble("tolerance"));
 			}
 		}
-		catch (SQLException e) { throw new DALException(e); }
+		catch (SQLException e) { 
+			e.printStackTrace();
+			throw new DALException(e); }
 		return resReceptKomp;
 	}
 
