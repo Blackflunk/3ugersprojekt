@@ -286,7 +286,9 @@ public class MainGUI extends Composite {
 	}
 
 	public void checkUserId(int reply){
-		this.contentpanel.clear();
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
+		this.externalvpanel.clear();
 		HTML html = new HTML();
 		String code = "";
 		if(reply == 1) { 
@@ -299,7 +301,9 @@ public class MainGUI extends Composite {
 	}
 
 	public void checkRaavareId(int reply){
-		this.contentpanel.clear();
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
+		this.externalvpanel.clear();
 		HTML html = new HTML();
 		String code = "";
 		if(reply == 1) { 
@@ -311,7 +315,9 @@ public class MainGUI extends Composite {
 			createRaavare();
 	}
 	public void checkReceptId(int reply){
-		this.contentpanel.clear();
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
+		this.externalvpanel.clear();
 		HTML html = new HTML();
 		String code = "";
 		if(reply == 1) { 
@@ -323,7 +329,9 @@ public class MainGUI extends Composite {
 		createRecept();
 	}
 	public void checkRaavareBatchId(int reply){
-		this.contentpanel.clear();
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
+		this.externalvpanel.clear();
 		HTML html = new HTML();
 		String code = "";
 		if(reply == 1) { 
@@ -334,8 +342,11 @@ public class MainGUI extends Composite {
 		else
 			createRaavareBatch();
 	}
+	
 	public void checkProduktBatchId(int reply){
-		this.contentpanel.clear();
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
+		this.externalvpanel.clear();
 		HTML html = new HTML();
 		String code = "";
 		if(reply == 1) { 
@@ -347,6 +358,8 @@ public class MainGUI extends Composite {
 			createProduktBatch();
 	}
 	public void validatePassword(boolean svar){
+		externalvpanel.setStyleName("externalvpanel-style");
+		this.contentpanel.add(externalvpanel);
 		if(svar){createUser();}
 		else{
 			HTML html = new HTML();
