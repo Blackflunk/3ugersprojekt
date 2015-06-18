@@ -36,7 +36,7 @@ public class WCUController {
 	WeightCommunicator WC;
 	ArrayList<TempVare> vareliste = new ArrayList<TempVare>(); 
 	String weightChoice="", user="", tara="", netto="", brutto="", weight="", mode="", produktbatch="", raavare_name="", recept_name="";
-	int produkt=0, forLength=0, loopNumber=0, BatchId=0, recept_id=0, rbID=0, tempID=0,raavare_id=0, tolerance=0, NegCalculatedTol=0, CalculatedTol=0;
+	int produkt=0, forLength=0, loopNumber=0, BatchId=0, recept_id=0, rbID=0, tempID=0,raavare_id=0, tolerance=0, NegCalculatedTol=0, CalculatedTol=0, Negtara = 0, Curweight = 0;
 	
 	public void init() {
 		runProcedure();
@@ -238,8 +238,27 @@ public class WCUController {
 			tolerance = receptkompDAO.getReceptKomp(recept_id, raavare_id).getTolerance();
 			CalculatedTol = ((nettoint / 100) * tolerance) + receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
 			NegCalculatedTol = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto() - ((nettoint / 100) * tolerance);
-			if (nettoint > CalculatedTol || nettoint < NegCalculatedTol)
+			if (nettoint > CalculatedTol || nettoint < NegCalculatedTol){
 				throw new WeightException();
+			}
+			
+			WC.writeSocket("RM20 8 Fjern Råvare og Beholder og indtast OK");
+			String secInput = WC.readSocket().substring(7);
+			try{
+				CC.controlOKMessage(secInput);
+				Curweight = Integer.parseInt(WC.writeSocket("S"));
+				int tempTara = Integer.parseInt(tara.substring(7));
+				Negtara -= tempTara;
+			}catch (InvalidInputException e) {
+				WC.writeSocket("D Ukendt Input");
+				CC.printMessage("Ukendt input");
+				doWeighingControl();
+			}
+			
+			if(Curweight != Negtara){
+				throw new WeightException();
+			}
+			
 			int index1 = tara.indexOf("kg");
 			String temptara = tara.substring(10, index1);
 			double finaltara = Double.parseDouble(temptara);
