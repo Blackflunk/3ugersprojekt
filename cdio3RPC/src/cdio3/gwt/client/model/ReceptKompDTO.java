@@ -14,14 +14,14 @@ public class ReceptKompDTO implements Serializable
 {
 	int receptId;               // auto genereres fra 1..n   
 	int raavareId;             	// i omraadet 1-99999999
-	int nomNetto;            // skal vaere positiv og passende stor
-	int tolerance;           // skal vaere positiv og passende stor
+	double nomNetto;            // skal vaere positiv og passende stor
+	double tolerance;           // skal vaere positiv og passende stor
 
 	public ReceptKompDTO() {
 
 	}
 
-	public ReceptKompDTO(int receptId, int raavareId, int nomNetto, int tolerance) {
+	public ReceptKompDTO(int receptId, int raavareId, double nomNetto, double tolerance) {
 		this.receptId = receptId;
 		this.raavareId = raavareId;
 		this.nomNetto = nomNetto;
@@ -32,9 +32,9 @@ public class ReceptKompDTO implements Serializable
 	public synchronized void setReceptId(int receptId) { this.receptId = receptId; }
 	public synchronized int getRaavareId() { return raavareId; }
 	public synchronized void setRaavareId(int raavareId) { this.raavareId = raavareId; }
-	public synchronized int getNomNetto() { return nomNetto; }
+	public synchronized double getNomNetto() { return nomNetto; }
 	public synchronized void setNomNetto(int nomNetto) { this.nomNetto = nomNetto; }
-	public synchronized int getTolerance() { return tolerance; }
+	public synchronized double getTolerance() { return tolerance; }
 	public synchronized void setTolerance(int tolerance) { this.tolerance = tolerance; }
 	public synchronized String toString() { 
 		return receptId + "\t" + raavareId + "\t" + nomNetto + "\t" + tolerance; 

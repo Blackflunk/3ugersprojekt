@@ -36,8 +36,8 @@ public class WCUController {
 	WeightCommunicator WC;
 	ArrayList<TempVare> vareliste = new ArrayList<TempVare>(); 
 	String weightChoice="", user="", tara="", netto="", brutto="", weight="", mode="", produktbatch="", raavare_name="", recept_name="";
-	int produkt=0, forLength=0, loopNumber=0, BatchId2=0, recept_id=0, rbID=0, tempID=0,raavare_id=0, tolerance=0, NegCalculatedTol=0, CalculatedTol=0, Negtara = 0, Curweight = 0;
-	
+	int produkt=0, forLength=0, loopNumber=0, BatchId2=0, recept_id=0, rbID=0, tempID=0,raavare_id=0, Negtara = 0, Curweight = 0;
+	double tolerance=0, NegCalculatedTol=0, CalculatedTol=0;
 	public void init() {
 		runProcedure();
 	}
@@ -235,11 +235,12 @@ public class WCUController {
 		try {
 			CC.controlOKMessage(input);
 			netto = WC.writeSocket("S");
-			int nettoint = Integer.parseInt(netto.substring(7));
+			double nettoDoub = Double.parseDouble(netto.substring(7));
+			//int nettoint = Integer.parseInt(netto.substring(7));
 			tolerance = receptkompDAO.getReceptKomp(recept_id, raavare_id).getTolerance();
-			CalculatedTol = ((nettoint / 100) * tolerance) + receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
-			NegCalculatedTol = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto() - ((nettoint / 100) * tolerance);
-			if (nettoint > CalculatedTol || nettoint < NegCalculatedTol){
+			CalculatedTol = ((nettoDoub / 100) * tolerance) + receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
+			NegCalculatedTol = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto() - ((nettoDoub / 100) * tolerance);
+			if (nettoDoub > CalculatedTol || nettoDoub < NegCalculatedTol){
 				throw new WeightException();
 			}
 			
