@@ -8,8 +8,6 @@ public class UserHandler {
 			4567);
 	public static LogControl lc = new LogControl();
 	public static TempVare tv = new TempVare();
-	public static OprControl oc = new OprControl();
-	public static RaavareControl rc = new RaavareControl();
 	public static boolean run = true;
 	public static String vaegtSvar = "";
 	public static int currentOperatoer = 0;
@@ -65,7 +63,7 @@ public class UserHandler {
 				
 				switch (svar) {
 				case "ja":
-					vaegtSvar = wc.writeSocket("RM20 8 \"" + rc.getRaavare(Integer.parseInt(vaegtSvar)).getRaavareNavn() + "?\"\"ja \" \" nej\" \r\n");
+					//vaegtSvar = wc.writeSocket("RM20 8 \"" + rc.getRaavare(Integer.parseInt(vaegtSvar)).getRaavareNavn() + "?\"\"ja \" \" nej\" \r\n");
 					vaegtSvar = wc.readSocket();
 					vaegtSvar = vaegtSvar.substring(7, vaegtSvar.length());
 					return STATE3;
@@ -85,7 +83,7 @@ public class UserHandler {
 				case "ja":
 					vaegtSvar = wc.writeSocket("T\r\n");
 					vaegtSvar = vaegtSvar.substring(8,vaegtSvar.length()-3);
-					tv.setTare(vaegtSvar);
+					//tv.setTare(vaegtSvar);
 					vaegtSvar = "ja";
 					return STATE4;
 				case "nej":
@@ -124,7 +122,7 @@ public class UserHandler {
 				case "ja":
 					vaegtSvar = wc.writeSocket("S\r\n");
 					vaegtSvar = vaegtSvar.substring(8, vaegtSvar.length()-3);
-					tv.setNetto(vaegtSvar);
+					//tv.setNetto(vaegtSvar);
 					return STATE6;
 				case "Q":
 					return STOP;
@@ -159,7 +157,7 @@ public class UserHandler {
 				case "ja":
 					vaegtSvar = wc.writeSocket("T\r\n");
 					vaegtSvar = vaegtSvar.substring(8,vaegtSvar.length()-3);
-					tv.setTare(vaegtSvar);
+					//tv.setTare(vaegtSvar);
 					vaegtSvar = "ja";
 					return STATE8;
 				case "Q":
@@ -192,7 +190,7 @@ public class UserHandler {
 				
 				switch (svar) {
 				case "ja":
-					lc.registerLogEntry(oc.getOperatoer(currentOperatoer), rc.getRaavare(currentRaavare), tv.netto.toString());
+					//lc.registerLogEntry(oc.getOperatoer(currentOperatoer), rc.getRaavare(currentRaavare), tv.netto.toString());
 					return START;
 				case "Q":
 					return STOP;
@@ -230,14 +228,14 @@ public class UserHandler {
 		UserHandler u = new UserHandler();
 		try {
 			u.runScheme("ja");
-			if(oc.getOperatoer(Integer.parseInt(vaegtSvar)).getOprId() != 999999){
-				currentOperatoer =  oc.getOperatoer(Integer.parseInt(vaegtSvar)).getOprId();
-				u.runScheme("ja");
-			}
-			if(rc.getRaavare(Integer.parseInt(vaegtSvar)).getRaavareId() != 999999) {
-				currentRaavare = rc.getRaavare(Integer.parseInt(vaegtSvar)).getRaavareId();
-				u.runScheme("ja");
-			}
+//			if(oc.getOperatoer(Integer.parseInt(vaegtSvar)).getOprId() != 999999){
+//				currentOperatoer =  oc.getOperatoer(Integer.parseInt(vaegtSvar)).getOprId();
+//				u.runScheme("ja");
+//			}
+//			if(rc.getRaavare(Integer.parseInt(vaegtSvar)).getRaavareId() != 999999) {
+//				currentRaavare = rc.getRaavare(Integer.parseInt(vaegtSvar)).getRaavareId();
+//				u.runScheme("ja");
+//			}
 			if(vaegtSvar.equals("ja")){
 				u.runScheme("ja");
 			}
