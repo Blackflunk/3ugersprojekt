@@ -3,7 +3,7 @@ package wcu.functionality;
 import java.util.ArrayList;
 
 import wcu.data.LogDTO;
-import cdio3.gwt.client.model.*;
+import cdio.gwt.client.model.*;
 
 
 

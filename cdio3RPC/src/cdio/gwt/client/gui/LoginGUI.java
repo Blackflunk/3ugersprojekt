@@ -1,4 +1,4 @@
-package cdio3.gwt.client.gui;
+package cdio.gwt.client.gui;
 
 public class LoginGUI {
 

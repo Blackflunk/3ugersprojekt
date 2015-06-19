@@ -5,14 +5,14 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 
-import cdio3.gwt.server.Connector;
-import cdio3.gwt.client.model.OperatoerDTO;
-import cdio3.gwt.server.DALException;
+import cdio.gwt.client.model.OperatoerDTO;
+import cdio.gwt.server.Connector;
+import cdio.gwt.server.DALException;
 import dao.interf.IOperatoerDAO;
 
 public class OperatoerDAO implements IOperatoerDAO {
 	
-	public OperatoerDAO() throws cdio3.gwt.server.DALException{
+	public OperatoerDAO() throws cdio.gwt.server.DALException{
 
 	}
 	public OperatoerDTO getOperatoer(int oprId) throws DALException {
@@ -25,7 +25,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 		
 	}
 	
-	public void createOperatoer(OperatoerDTO opr) throws DALException, cdio3.gwt.server.DALException {	
+	public void createOperatoer(OperatoerDTO opr) throws DALException, cdio.gwt.server.DALException {	
 		
 			Connector.doUpdate(
 				"call Operatoer('" + opr.getOprId() + "', '" + opr.getOprNavn() + "', '" + opr.getIni() + "', '" + 

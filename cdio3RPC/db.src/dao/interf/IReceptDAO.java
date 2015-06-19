@@ -1,8 +1,9 @@
 package dao.interf;
 
 import java.util.List;
-import cdio3.gwt.server.DALException;
-import cdio3.gwt.client.model.ReceptDTO;
+
+import cdio.gwt.client.model.ReceptDTO;
+import cdio.gwt.server.DALException;
 
 public interface IReceptDAO {
 	ReceptDTO getRecept(int receptId) throws DALException;

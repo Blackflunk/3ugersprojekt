@@ -6,10 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cdio3.gwt.server.Connector;
-import cdio3.gwt.client.model.RaavareBatchDTO;
-import cdio3.gwt.client.model.RaavareDTO;
-import cdio3.gwt.server.DALException;
+import cdio.gwt.client.model.RaavareBatchDTO;
+import cdio.gwt.client.model.RaavareDTO;
+import cdio.gwt.server.Connector;
+import cdio.gwt.server.DALException;
 import dao.interf.IRaavareDAO;
 
 public class RaavareDAO implements IRaavareDAO{

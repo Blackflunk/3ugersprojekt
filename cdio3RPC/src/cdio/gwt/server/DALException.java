@@ -1,4 +1,4 @@
-package cdio3.gwt.server;
+package cdio.gwt.server;
 
 public class DALException extends Exception
 {

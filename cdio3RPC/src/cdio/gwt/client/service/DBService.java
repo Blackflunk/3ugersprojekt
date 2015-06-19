@@ -1,16 +1,16 @@
-package cdio3.gwt.client.service;
+package cdio.gwt.client.service;
 
 import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import cdio3.gwt.client.model.OperatoerDTO;
-import cdio3.gwt.client.model.ProduktBatchDTO;
-import cdio3.gwt.client.model.ProduktBatchKompDTO;
-import cdio3.gwt.client.model.RaavareBatchDTO;
-import cdio3.gwt.client.model.RaavareDTO;
-import cdio3.gwt.client.model.ReceptDTO;
+import cdio.gwt.client.model.OperatoerDTO;
+import cdio.gwt.client.model.ProduktBatchDTO;
+import cdio.gwt.client.model.ProduktBatchKompDTO;
+import cdio.gwt.client.model.RaavareBatchDTO;
+import cdio.gwt.client.model.RaavareDTO;
+import cdio.gwt.client.model.ReceptDTO;
 
 @RemoteServiceRelativePath("dbservice")
 public interface DBService extends RemoteService {

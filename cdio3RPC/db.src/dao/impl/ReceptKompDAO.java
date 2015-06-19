@@ -6,10 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cdio3.gwt.server.Connector;
-import cdio3.gwt.client.model.ReceptDTO;
-import cdio3.gwt.client.model.ReceptKompDTO;
-import cdio3.gwt.server.DALException;
+import cdio.gwt.client.model.ReceptDTO;
+import cdio.gwt.client.model.ReceptKompDTO;
+import cdio.gwt.server.Connector;
+import cdio.gwt.server.DALException;
 import dao.interf.IReceptKompDAO;
 
 public class ReceptKompDAO implements IReceptKompDAO {

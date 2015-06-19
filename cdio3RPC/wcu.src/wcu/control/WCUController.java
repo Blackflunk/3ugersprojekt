@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import cdio3.gwt.server.*;
+import cdio.gwt.server.*;
 import dao.impl.OperatoerDAO;
 import dao.impl.ProduktBatchDAO;
 import dao.impl.RaavareBatchDAO;

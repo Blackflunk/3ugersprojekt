@@ -1,6 +1,7 @@
-package cdio3.gwt.client;
+package cdio.gwt.client;
 
-import cdio3.gwt.client.service.DBServiceClientImpl;
+import cdio.gwt.client.service.DBServiceClientImpl;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootPanel;

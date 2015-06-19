@@ -1,4 +1,4 @@
-package cdio3.gwt.client.gui;
+package cdio.gwt.client.gui;
 
 import java.util.ArrayList;
 
@@ -17,15 +17,15 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import cdio3.gwt.client.model.OperatoerDTO;
-import cdio3.gwt.client.model.ProduktBatchDTO;
-import cdio3.gwt.client.model.ProduktBatchKompDTO;
-import cdio3.gwt.client.model.RaavareBatchDTO;
-import cdio3.gwt.client.model.RaavareDTO;
-import cdio3.gwt.client.model.ReceptDTO;
-import cdio3.gwt.client.service.DBServiceClientImpl;
-import cdio3.gwt.server.PwdFunctions;
-import cdio3.gwt.server.TokenHandler;
+import cdio.gwt.client.model.OperatoerDTO;
+import cdio.gwt.client.model.ProduktBatchDTO;
+import cdio.gwt.client.model.ProduktBatchKompDTO;
+import cdio.gwt.client.model.RaavareBatchDTO;
+import cdio.gwt.client.model.RaavareDTO;
+import cdio.gwt.client.model.ReceptDTO;
+import cdio.gwt.client.service.DBServiceClientImpl;
+import cdio.gwt.server.PwdFunctions;
+import cdio.gwt.server.TokenHandler;
 
 public class MainGUI extends Composite {
 	String rettighedsniveau = "0";

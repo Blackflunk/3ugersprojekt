@@ -1,8 +1,9 @@
 package dao.interf;
 
 import java.util.List;
-import cdio3.gwt.server.DALException;
-import cdio3.gwt.client.model.RaavareBatchDTO;
+
+import cdio.gwt.client.model.RaavareBatchDTO;
+import cdio.gwt.server.DALException;
 
 public interface IRaavareBatchDAO {
 	RaavareBatchDTO getRaavareBatch(int rbId) throws DALException;

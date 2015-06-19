@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import wcu.data.LogDAO;
 import wcu.data.LogDTO;
-import cdio3.gwt.client.model.RaavareDTO;
-import cdio3.gwt.client.model.OperatoerDTO;
+import cdio.gwt.client.model.OperatoerDTO;
+import cdio.gwt.client.model.RaavareDTO;
 
 
 public class LogControl implements LogDAO{
