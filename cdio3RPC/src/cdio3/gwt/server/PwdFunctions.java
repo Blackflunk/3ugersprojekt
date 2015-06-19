@@ -16,7 +16,6 @@ public class PwdFunctions {
 		Random doRand = new Random();
 		for(int i = 0;i < 8;i++){
 			tempChoice = doRand.nextInt(4);
-			System.out.println(tempChoice);
 			if(tempChoice == 0){test[0] = 1;tempChar = doRand.nextInt(SmaaBogstaver.length()-1);password += SmaaBogstaver.substring(tempChar, tempChar+1);}
 			if(tempChoice == 1){test[1] = 1;tempChar = doRand.nextInt(StoreBogstaver.length()-1);password += StoreBogstaver.substring(tempChar, tempChar+1);}
 			if(tempChoice == 2){test[2] = 1;tempChar = doRand.nextInt(TilladteTegn.length()-1);password += TilladteTegn.substring(tempChar, tempChar+1);}
@@ -27,9 +26,6 @@ public class PwdFunctions {
 		}
 		if(pwdrdy < 4){genPwd();}
 		else if(pwdrdy == 4){return password;}
-		else{
-			return null;
-		}
 		return genPwd();
 		}
 	
