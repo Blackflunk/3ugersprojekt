@@ -1,0 +1,10 @@
+2015/06/18 22:23:25, 4, 5, dej
+ brutto: 5.0 netto: 5.0 tara: 5.0
+ 
+tomat
+ brutto: 2.0 netto: 2.0 tara: 2.0
+ 
+ost
+ brutto: 2.0 netto: 2.0 tara: 2.0
+ 
+, 
