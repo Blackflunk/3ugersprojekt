@@ -1,10 +1,10 @@
-package cdio.gwt.client.service;
+package cdio3.gwt.client.service;
 
-import cdio.gwt.client.model.OperatoerDTO;
-import cdio.gwt.client.model.ProduktBatchDTO;
-import cdio.gwt.client.model.RaavareBatchDTO;
-import cdio.gwt.client.model.RaavareDTO;
-import cdio.gwt.client.model.ReceptDTO;
+import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.ProduktBatchDTO;
+import cdio3.gwt.client.model.RaavareBatchDTO;
+import cdio3.gwt.client.model.RaavareDTO;
+import cdio3.gwt.client.model.ReceptDTO;
 
 public interface DBServiceClientInt {
 	//TODO mangler raavare (slet), recept(slet), raavarebatch, produktbatch, produktbatchkomp.

@@ -1,4 +1,4 @@
-package cdio.gwt.server;
+package cdio3.gwt.server;
 
 import java.util.Random;
 import java.util.regex.Pattern;

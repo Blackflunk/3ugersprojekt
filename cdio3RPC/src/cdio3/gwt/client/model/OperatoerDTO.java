@@ -1,4 +1,4 @@
-package cdio.gwt.client.model;
+package cdio3.gwt.client.model;
 
 import java.io.Serializable;
 

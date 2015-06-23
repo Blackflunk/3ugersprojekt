@@ -2,8 +2,8 @@ package dao.interf;
 
 import java.util.List;
 
-import cdio.gwt.client.model.RaavareDTO;
-import cdio.gwt.server.DALException;
+import cdio3.gwt.client.model.RaavareDTO;
+import cdio3.gwt.server.DALException;
 
 public interface IRaavareDAO {
 	RaavareDTO getRaavare(int raavareId) throws DALException;

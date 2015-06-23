@@ -1,16 +1,16 @@
-package cdio.gwt.server;
+package cdio3.gwt.server;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import cdio.gwt.client.model.OperatoerDTO;
-import cdio.gwt.client.model.ProduktBatchDTO;
-import cdio.gwt.client.model.ProduktBatchKompDTO;
-import cdio.gwt.client.model.RaavareBatchDTO;
-import cdio.gwt.client.model.RaavareDTO;
-import cdio.gwt.client.model.ReceptDTO;
-import cdio.gwt.client.service.DBService;
+import cdio3.gwt.client.model.OperatoerDTO;
+import cdio3.gwt.client.model.ProduktBatchDTO;
+import cdio3.gwt.client.model.ProduktBatchKompDTO;
+import cdio3.gwt.client.model.RaavareBatchDTO;
+import cdio3.gwt.client.model.RaavareDTO;
+import cdio3.gwt.client.model.ReceptDTO;
+import cdio3.gwt.client.service.DBService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 

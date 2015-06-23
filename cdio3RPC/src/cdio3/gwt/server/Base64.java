@@ -23,7 +23,7 @@
  * questions.
  */
 
-package cdio.gwt.server;
+package cdio3.gwt.server;
 
 import java.io.FilterOutputStream;
 import java.io.IOException;

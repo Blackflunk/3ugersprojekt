@@ -1,4 +1,4 @@
-package cdio.gwt.server;
+package cdio3.gwt.server;
 // erstat konstanterne nedenfor
 
 public abstract class Constant

@@ -1,4 +1,4 @@
-package cdio.gwt.server;
+package cdio3.gwt.server;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;

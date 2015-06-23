@@ -2,8 +2,8 @@ package dao.interf;
 
 import java.util.List;
 
-import cdio.gwt.client.model.ProduktBatchKompDTO;
-import cdio.gwt.server.DALException;
+import cdio3.gwt.client.model.ProduktBatchKompDTO;
+import cdio3.gwt.server.DALException;
 
 public interface IProduktBatchKompDAO {
 	ProduktBatchKompDTO getProduktBatchKomp(int pbId, int rbId) throws DALException;

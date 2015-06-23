@@ -1,4 +1,4 @@
-package cdio.gwt.server;
+package cdio3.gwt.server;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import cdio.gwt.server.DALException;
+import cdio3.gwt.server.DALException;
 
 
 public class Connector
