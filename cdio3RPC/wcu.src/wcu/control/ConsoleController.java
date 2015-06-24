@@ -5,6 +5,7 @@ import java.io.IOException;
 import wcu.boundary.TUI;
 import wcu.exceptions.InvalidInputException;
 
+//Tager imod besked fra bruger og laver fejlsøgning.
 public class ConsoleController {
 	TUI tui = new TUI();
 	

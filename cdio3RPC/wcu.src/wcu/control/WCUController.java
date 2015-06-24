@@ -59,6 +59,7 @@ public class WCUController {
 		endProduction();
 	}
 	
+	//Opretter filen log.txt til at tilføje log info i.
 	public void createFilewriter() {
 		try {
 			filewriter = new FileWriter("log.txt");
@@ -67,6 +68,7 @@ public class WCUController {
 		}
 	}
 	
+	//Forbinder os til databasen igennem vores connector.
 	public void connectToDatabase() {
 		try {
 			connect = new Connector();
@@ -87,6 +89,7 @@ public class WCUController {
 		CC.printMessage(WC.readSocket());
 	}
 	
+	//Opretter vores DAO til at få kontakt til databasen igennem, således at vi kan se og opdatere.
 	public void createDAO() {
 		try {
 			oprDAO = new OperatoerDAO();
@@ -100,6 +103,7 @@ public class WCUController {
 		}
 	}
 	
+	//Her vælges vægten.
 	public void chooseWeight(){
 		CC.printMessage("Forbind til en af vægtene fra listen \n 1. Mettler BBK Vægt \n 2. Mettler BBK Vægt-simulator");
 		weightChoice = CC.getUserInput();
@@ -115,13 +119,18 @@ public class WCUController {
 		}
 	}
 	
+	//Denne benyttes til at vi kan se hvilken operatør opererer på hvilket batch.
 	public void verifyOperatoer() {
+		// Skriver ud til operatøren.
 		WC.writeSocket("RM20 8 Indtast Operatoer nummer:");
+		// Læser operatørens svar.
 		String input = WC.readSocket();
 		input = input.substring(7);
+		//PrintMessage sender en besked tilbage i demo konsollen.
 		CC.printMessage(input);
 		try {
 			opr_id = Integer.parseInt(input);
+			// Ser på om operatør id'et eksisterer i databasen.
 			if(opr_id != oprDAO.getOperatoer(opr_id).getOprId())
 				throw new WeightException();
 			user = oprDAO.getOperatoer(opr_id).getOprNavn();
@@ -148,8 +157,10 @@ public class WCUController {
 		CC.printMessage(input);
 		try {
 			BatchId = Integer.parseInt(input);
+			// Sikrer sig at batchen eksisterer i databasen.
 			if(BatchId != produktbatchDAO.getProduktBatch(BatchId).getPbId())
 				throw new WeightException();
+			//Finder recept id ud fra produktbatch.
 			recept_id = produktbatchDAO.getProduktBatch(BatchId).getReceptId();
 			recept_name = receptDAO.getRecept(recept_id).getReceptNavn();
 			WC.writeSocket(recept_name);
@@ -175,9 +186,12 @@ public class WCUController {
 		WC.writeSocket("RM20 8 Sikre dig at vægten er ubelastet, INDTAST 'OK' når dette er gjort");
 		String input = WC.readSocket().substring(7);
 		try {
+			//Sikrer sig at brugeren har skrevet OK i inputtet.
 			CC.controlOKMessage(input);
 			tara = WC.writeSocket("T");
+			// Sætter status på produktbatchen til 1, altså at den nu arbejdes på.
 			produktbatchDAO.getProduktBatch(BatchId).setStatus(1);
+			// Opdaterer produktbatchen i databasen.
 			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId));
 		} catch (InvalidInputException e) {
 			WC.writeSocket("D Ukendt input");
@@ -194,6 +208,7 @@ public class WCUController {
 		WC.writeSocket("RM20 8 Læg tarabeholderen på vægten, INDTAST 'OK' når dette er gjort");
 		String input = WC.readSocket().substring(7);
 		try {
+			// Operatøren har nu sættet vægten på.
 			CC.controlOKMessage(input);
 			// Den tara automatisk.
 			tara = WC.writeSocket("T");
