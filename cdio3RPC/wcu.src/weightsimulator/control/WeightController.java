@@ -41,12 +41,14 @@ public class WeightController implements IWeightController{
 		while (!(inline = instream.readLine().toUpperCase()).isEmpty()
 				&& this.wd.isRun()) {
 			try{
+				//Når vægten modtager besked fra putty, kommer en mærkelig besked, denne har specifikt 21 tegn, vi starter derfor efter 21 tegn.
 			if (inline.startsWith("Ÿ")) {
 				inline = inline.substring(21, inline.length());
 			}
 			if (inline.startsWith("�")) {
 				inline = inline.substring(21, inline.length());
 			}
+			//Hvis vi modtager en RM20 kommando så sætter vi den i weightdata og skriver til socket at vi er 
 			if (inline.startsWith("RM20")) {
 				this.wd.setStreng_fra_bruger(inline.substring(0));
 				if(this.wd.getStreng_fra_bruger().length()<6){
@@ -86,11 +88,15 @@ public class WeightController implements IWeightController{
 					tui.printMenu(this.wd);
 				}
 			} else if (inline.startsWith("T")) {
+				//Sætter strengen fra brugeren herefter sætter vi tara til brutto vægten.
 				this.wd.setStreng_fra_bruger(inline);
 				this.wd.setTara(wd.getBrutto());
+				// Skriver tilbage til socket og sender beskeden.
 				writeSocket("T " + "S " + "     " + (wd.getTara()) + " kg ");
+				// Fremviser menuen igennem tui.
 				tui.printMenu(this.wd);
 			} else if (inline.equals("S")) {
+				//Hvis beskeden er S er det fordi vi gerne vil have vægten sendt tilbage til operatør.
 				this.wd.setStreng_fra_bruger(inline.substring(0));
 				if (wd.getNetto() >= 0) {
 					writeSocket("S " + "S" + "      " + (wd.getNetto())

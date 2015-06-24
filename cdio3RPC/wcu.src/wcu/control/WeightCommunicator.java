@@ -21,6 +21,7 @@ public class WeightCommunicator {
 		this.portdst = portdst;
 	}
 
+	//Med denne metode forbinder vi til enten vægten eller vægt simulatoren.
 	public void connectToServer() {
 		try {
 			sock = new Socket(IP, portdst);
@@ -37,6 +38,8 @@ public class WeightCommunicator {
 			e.printStackTrace();
 		} 
 	}
+	
+	//Når vi skal sende beskeder igennem vores socket fungerer det således:
 	public String writeSocket(String message){
 		try {
 			outstream.writeBytes(message + "\r\n");
@@ -48,6 +51,8 @@ public class WeightCommunicator {
 		return message;
 		
 	}
+	
+	//Når vi læser igennem vores socket er det således:
 	public String readSocket(){
 		String readMessage = "";
 		try {

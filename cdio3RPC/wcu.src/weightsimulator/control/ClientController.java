@@ -38,9 +38,10 @@ public class ClientController implements Runnable, IClientController {
 	}
 
 	public void runMenu() throws IOException, InterruptedException {
-
+		//Menuen bliver fremvist igennem tui.
 		tui.printMenu(vaegtdata);
 		String answer = getStringInput();
+		//Når vægt operatøren trykker på knapper, er det disse.
 		if (answer.equals("Q")) {
 			closeCC();
 		} else if (answer.equals("R")) {
@@ -88,6 +89,7 @@ public class ClientController implements Runnable, IClientController {
 	@Override
 	public void run() {
 		try {
+			//Kører nu menuen.
 			runMenu();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -101,6 +103,7 @@ public class ClientController implements Runnable, IClientController {
 		System.out.println("Starting " + name);
 		if (t == null) {
 			t = new Thread(this, name);
+			//Vi starter tråden t, denne går videre til run().
 			t.start();
 		}
 	}

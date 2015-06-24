@@ -21,7 +21,7 @@ import wcu.exceptions.InvalidInputException;
 import wcu.exceptions.WeightException;
 import wcu.functionality.FileHandler;
 
-
+//Afvejnings System Enhed
 public class WCUController {
 	ConsoleController CC = new ConsoleController();
 	public OperatoerDAO oprDAO;
@@ -76,6 +76,7 @@ public class WCUController {
 		}
 	}
 	public void connectToWeight() {
+		// Vælger om det er Simulator eller fysisk vægt.
 		if (mode.equals("Simulator")) {
 			WC = new WeightCommunicator("localhost", 8000);
 		}
@@ -194,6 +195,7 @@ public class WCUController {
 		String input = WC.readSocket().substring(7);
 		try {
 			CC.controlOKMessage(input);
+			// Den tara automatisk.
 			tara = WC.writeSocket("T");
 			CC.printMessage(tara);
 		} catch (InvalidInputException e) {
@@ -206,12 +208,17 @@ public class WCUController {
 	public void doWeighing(int loopNumber){
 		try {
 			raavare_id = 0;
+			// Nedenfor tager vi fat i en råvare ud fra recepten og finder navnet.
 			raavare_id = receptkompDAO.getReceptKompList(recept_id).get(loopNumber).getRaavareId();
 			raavare_name = raavareDAO.getRaavare(raavare_id).getRaavareNavn();
+			//RM20 kommando skriver besked til vægten at der skal indskrives hvilken råvarebatch at råvaren hører til.
 			WC.writeSocket("RM20 8 indtast raavarebatch nummer på raavare " + raavare_name);
 			produktbatch = WC.readSocket().substring(7);
+			//Vi definerer nu nummeret af råvarebatchen og parser.
 			rbID = Integer.parseInt(produktbatch);
+			// Vi tager nu råvare ID'et ud fra råvarebatchet og sammenligner med 
 			tempID = raavarebatchDAO.getRaavareBatch(rbID).getRaavareId();
+			// Vi tjekker om raavareId står overens med det råvareId vi fandt ud fra råvarebatchen.
 			if(tempID != raavare_id)
 				throw new WeightException();
 			doWeighingControl();
@@ -231,41 +238,54 @@ public class WCUController {
 	}
 	
 	public void doWeighingControl() {
+		// Vi indtaster vægten på den afvejede mængde.
 		WC.writeSocket("RM20 8 Fuldfør afvejningen med den ønskede mængde, og indtast OK");
 		String input = WC.readSocket();
 		input = input.substring(7);
 		CC.printMessage(input);
 		try {
 			CC.controlOKMessage(input);
+			//Aflæser vægten.
 			netto = WC.writeSocket("S");
 			int index3 = netto.indexOf("kg");
+			//Fjerner output i starten samt kg til sidst samt parser til double.
 			String tempnetto = netto.substring(7, index3);
 			double nettoDoub = Double.parseDouble(tempnetto);
+			//Tager tolerancen ud fra receptkomponenten.
 			tolerance = receptkompDAO.getReceptKomp(recept_id, raavare_id).getTolerance();
 			System.out.println(tolerance + "= tolerance");
+			//Tager netto værdien fra receptkomponenten.
 			double nomNetto = receptkompDAO.getReceptKomp(recept_id, raavare_id).getNomNetto();
 			System.out.println(nomNetto + "= nomnetto");
+			//Finder den øvre og nedre grænse for hvad vægten må være ud fra tolerancen.
 			CalculatedTol = ((nettoDoub / 100) * tolerance) + nomNetto;
 			System.out.println(CalculatedTol + "= CalTol");
 			NegCalculatedTol = nomNetto - ((nettoDoub / 100) * tolerance);
 			System.out.println(NegCalculatedTol + "= negCalTol");
+			
+			// Hvis netto værdien er højere eller lavere en den nominerede grænse, kastes en exception.
 			if (nettoDoub > CalculatedTol || nettoDoub < NegCalculatedTol){
 				throw new WeightException();
 			}
 			
+			// Vi ser på taraværdien og kalder den for finaltara
 			int index1 = tara.indexOf("kg");
 			String temptara = tara.substring(10, index1);
 			finaltara = Double.parseDouble(temptara);
 			finalnetto = nettoDoub;
 			
+			//Nu kører vi så metoden nedenfor, som sørger for at tømme vægten.
 			emptyWeight();
 			System.out.println(Curweight);
 			System.out.println(Negtara);
 			
+			// Da vi nu har fjernet råvaren burde vi have en vægt på -tara,
+			// da vi sletter vægten.
 			if(Curweight != Negtara){
 				throw new WeightException();
 			}
 			
+			// Vi kan nu tilføje informationerne ind i vores vareliste.
 			CC.printMessage(raavare_name+": \n"+"netto: "+finalnetto+"\n tara: "+finaltara+"\n brutto: "+finalnetto+finaltara);
 			vareliste.add(new TempVare(raavare_name, finalnetto, finalnetto+finaltara, finalnetto));
 		} catch (InvalidInputException e) {
@@ -288,14 +308,17 @@ public class WCUController {
 	}
 	
 	public void emptyWeight() {
+		// Giver en besked til vægten om at vjerne råvaren og beholderen.
 		WC.writeSocket("RM20 8 Fjern Råvare og Beholder og indtast OK");
 		String secInput = WC.readSocket().substring(7);
 		try{
 			CC.controlOKMessage(secInput);
+			// Aflæser den nuværende vægt.
 			String SCurweight = WC.writeSocket("S");
 			int index4 = SCurweight.indexOf("kg");
 			SCurweight = SCurweight.substring(8,index4);
 			Curweight = Double.parseDouble(SCurweight);
+			// Definerer den negative tara som værende det omvendte af final.
 			Negtara -= finaltara;
 		}catch (InvalidInputException e) {
 			WC.writeSocket("D Ukendt Input");
@@ -307,12 +330,17 @@ public class WCUController {
 	}
 	
 	public void endProduction() {
+		
 		try {
+			//Færdiggører produktionen ved at sætte status til 2, således at den er blevet færdig.
 			produktbatchDAO.getProduktBatch(BatchId).setStatus(2);
+			//Opdaterer produktbatchen
 			produktbatchDAO.updateProduktBatch(produktbatchDAO.getProduktBatch(BatchId));
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
+		
+		//Opdaterer loggen nedenfor.
 		if (mode.equals("Simulator")) {
 			WC.writeSocket("Q");
 		}

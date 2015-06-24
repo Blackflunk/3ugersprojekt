@@ -34,9 +34,12 @@ public class IOController implements Runnable, IIOController {
 	@Override
 	public void getUser() throws IOException {
 		try {
+			// Opretter en socket til at lytte fra kommandoer kommende fra ASE.
 			listener = new ServerSocket(portdst);
 			sock = listener.accept();
+			//Opretter WeightController med socket samt objektet vægtdata vi fik modtaget fra launch.
 			wc = new WeightController(sock, vaegtdata);
+			//Opstarter serveren.
 			int programTest = wc.server_Run();
 			if(programTest == 0){
 				closeServer();
@@ -73,6 +76,7 @@ public class IOController implements Runnable, IIOController {
 		System.out.println("Starting " + name);
 		if (t == null) {
 			t = new Thread(this, name);
+			//Vi starter tråden t, denne går videre til run().
 			t.start();
 		}
 	}
